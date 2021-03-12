@@ -25,5 +25,5 @@ public class Bet {
 	
 	private String selection;
 	
-	private BetResult result;
+	private BetStatus result;
 }
