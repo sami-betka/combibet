@@ -47,7 +47,7 @@ public class BetController {
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
 
-		return "addbet";
+		return "add-bet";
 //		return "register";
 
 
