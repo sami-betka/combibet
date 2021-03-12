@@ -1,5 +1,7 @@
 package combibet.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,19 +11,19 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Gambler {
-	
+public class Bet {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String userName;
+	private Date date;
 	
-	private String firstName;
+	private int meeting;
 	
-	private String lastName;
+	private int race;
 	
-	private String email;
+	private String selection;
 	
-	
+	private BetResult result;
 }
