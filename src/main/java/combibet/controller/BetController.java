@@ -3,8 +3,6 @@ package combibet.controller;
 import java.io.IOException;
 import java.security.Principal;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +54,7 @@ public class BetController {
 	}
 
 	@PostMapping(value = "/save-bet")
-	public String saveBet(@Valid Bet bet, BindingResult bindingresult)
+	public String saveBet(Bet bet, BindingResult bindingresult)
 			throws IllegalStateException, IOException {
 		
 		System.out.println(bindingresult.getAllErrors());
@@ -88,7 +86,7 @@ public class BetController {
 	}
 
 	@PostMapping(value = "/update-bet")
-	public String updateBet(@Valid Bet bet, BindingResult bindingresult, Model model, Principal principal, RedirectAttributes redirect) {
+	public String updateBet(Bet bet, BindingResult bindingresult, Model model, Principal principal, RedirectAttributes redirect) {
 		if (bindingresult.hasErrors()) {
 			redirect.addFlashAttribute("createsuccess", true);
 
