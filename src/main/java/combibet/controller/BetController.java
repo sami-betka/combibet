@@ -2,6 +2,9 @@ package combibet.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +42,20 @@ public class BetController {
 	
 	@GetMapping("/add-bet")
 	public String addBet(Model model) {
+		
+		Map<Long, Double> surveyMap = new LinkedHashMap<>();
+		
+			surveyMap.put(1l, 1d);
+			surveyMap.put(3l, 3d);
+			surveyMap.put(5l, 5d);
+
+
+		model.addAttribute("surveyMap", surveyMap);
+		
+		
+		
+		
+		
 
 
 		Bet bet = new Bet();
@@ -47,8 +64,8 @@ public class BetController {
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
 
-//		return "add-bet";
-		return "dashboard";
+		return "addbet";
+//		return "dashboard";
 
 	}
 
