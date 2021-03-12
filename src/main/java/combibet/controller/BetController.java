@@ -48,9 +48,6 @@ public class BetController {
 		model.addAttribute("status", BetStatus.values());
 
 		return "add-bet";
-//		return "register";
-
-
 	}
 
 	@PostMapping(value = "/save-bet")
