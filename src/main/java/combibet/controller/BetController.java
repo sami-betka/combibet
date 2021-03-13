@@ -34,7 +34,7 @@ public class BetController {
 		model.addAttribute("betList", betRepository.findAllBetsByOrderByIdAsc() );
 
 
-		return "table";
+		return "betlist";
 	}
 	
 	@GetMapping("/add-bet")

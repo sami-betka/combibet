@@ -18,99 +18,164 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    Now UI Dashboard by Creative Tim
-  </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <!-- CSS Files -->
-  <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" />
-  <link th:href="@{css/now-ui-dashboard.css?v=1.5.0}" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
+<meta charset="utf-8" />
+<link rel="apple-touch-icon" sizes="76x76"
+	href="../assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="../assets/img/favicon.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>Now UI Dashboard by Creative Tim</title>
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+	name='viewport' />
+<!--     Fonts and icons     -->
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+	crossorigin="anonymous">
+<!-- CSS Files -->
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{css/now-ui-dashboard.css?v=1.5.0}" rel="stylesheet" />
+<!-- CSS Just for demo purpose, don't include it in your project -->
 <!--   <link href="demo/demo.css" rel="stylesheet" /> -->
 </head>
 
 <body class="">
-  <div class="wrapper ">
-<!--   Sidebar -->
-	<div th:replace="_components :: sidebar">...</div>
+	<div class="wrapper ">
+		<!--   Sidebar -->
+		<div th:replace="_components :: sidebar">...</div>
 
-    <div class="main-panel" id="main-panel">
-      <!-- Navbar -->
-	<div th:replace="_components :: navbar">...</div>
-      <!-- End Navbar -->
-      
-      <div class="panel-header panel-header-lg">
-        <canvas id="bigDashboardChart"></canvas>
-      </div>
-      <div class="content" style="margin-top: 50px;">
-<!--   CONTENT -->
+		<div class="main-panel" id="main-panel">
+			<!-- Navbar -->
+			<div th:replace="_components :: navbar">...</div>
+			<!-- End Navbar -->
 
-    <form class="user" th:action="@{/save-bet}" th:object="${emptyBet}" method="POST">
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input th:field="*{date}" type="date" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Date">
-                                    </div>
-                                    <div class="col-sm-6">
-<!--                                         <input th:field="*{type}" type="text" class="form-control form-control-user" id="exampleLastName" -->
-<!--                                             placeholder="Type de pari"> -->
-                                            <label>Type de pari:</label><br>
-<select th:field="*{type}">
-    <option value="">--Choisir--</option>
+			<div class="panel-header panel-header-sm">
+				<!--         <canvas id="bigDashboardChart"></canvas> -->
+			</div>
+			<div class="content" style="">
+				<!--   CONTENT -->
 
-    <option th:each="t : ${types}" th:value="${t}" th:text="${t.name}"></option>
-</select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input th:field="*{selection}" type="text" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Sélection">
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input th:field="*{odd}" type="number" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Cote">
-                                    </div>
-                                    <div class="col-sm-6">
-<!--                                         <input th:field="*{status}" type="text" class="form-control form-control-user" -->
-<!--                                             id="exampleRepeatPassword" placeholder="statut"> -->                    
-                                            <label>Statut:</label><br>
-                                           <select th:field="*{status}">
-                                               <option value="">--Choisir--</option>
-                             
-                                              <option th:each="s : ${status}" th:value="${s}" th:text="${s.name}"></option>
-                                           </select>
-   
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Envoyer
-                                </button>
-                                <hr>
-<!--                                 <a href="index.html" class="btn btn-google btn-user btn-block"> -->
-<!--                                     <i class="fab fa-google fa-fw"></i> Register with Google -->
-<!--                                 </a> -->
-<!--                                 <a href="index.html" class="btn btn-facebook btn-user btn-block"> -->
-<!--                                     <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook -->
-<!--                                 </a> -->
-                            </form>
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">Ajouter un pari</h3>
+					</div>
+					<div class="card-body">
 
 
-      </div>
-<!--       Footer -->
-   	<div th:replace="_components :: footer">...</div>
+						<form class="user" th:action="@{/save-bet}"
+							th:object="${emptyBet}" method="POST">
 
-    </div>
-  </div>
-  
-  <script th:inline="javascript">
+							<div class="form-group">
+								<input th:field="*{date}" type="date"
+									class="form-control form-control-user" id="" placeholder="Date">
+							</div>
+
+							<div class="form-group">
+								<label>Type de pari:</label><br> <select th:field="*{type}">
+									<option value="">--Choisir--</option>
+
+									<option th:each="t : ${types}" th:value="${t}"
+										th:text="${t.name}"></option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<input th:field="*{selection}" type="text"
+									class="form-control form-control-user" id=""
+									placeholder="Sélection">
+							</div>
+
+							<div class="form-group">
+								<input th:field="*{odd}" type="number"
+									class="form-control form-control-user" id="" placeholder="Cote">
+							</div>
+
+							<div class="form-group">
+								<label>Statut:</label><br> <select th:field="*{status}">
+									<option value="">--Choisir--</option>
+
+									<option th:each="s : ${status}" th:value="${s}"
+										th:text="${s.name}"></option>
+								</select>
+							</div>
+						</form>
+
+
+
+
+
+
+
+<!-- 						<form class="user" th:action="@{/save-bet}" -->
+<!-- 							th:object="${emptyBet}" method="POST"> -->
+<!-- 							<div class="form-group row"> -->
+<!-- 								<div class="col-sm-6 mb-3 mb-sm-0"> -->
+<!-- 									<input th:field="*{date}" type="date" -->
+<!-- 										class="form-control form-control-user" id="exampleFirstName" -->
+<!-- 										placeholder="Date"> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-sm-6"> -->
+<!-- 									                                        <input th:field="*{type}" type="text" class="form-control form-control-user" id="exampleLastName" -->
+<!-- 									                                            placeholder="Type de pari"> -->
+<!-- 									<label>Type de pari:</label><br> <select -->
+<!-- 										th:field="*{type}"> -->
+<!-- 										<option value="">--Choisir--</option> -->
+
+<!-- 										<option th:each="t : ${types}" th:value="${t}" -->
+<!-- 											th:text="${t.name}"></option> -->
+<!-- 									</select> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="form-group"> -->
+<!-- 								<input th:field="*{selection}" type="text" -->
+<!-- 									class="form-control form-control-user" id="exampleInputEmail" -->
+<!-- 									placeholder="Sélection"> -->
+<!-- 							</div> -->
+<!-- 							<div class="form-group row"> -->
+<!-- 								<div class="col-sm-6 mb-3 mb-sm-0"> -->
+<!-- 									<input th:field="*{odd}" type="number" -->
+<!-- 										class="form-control form-control-user" -->
+<!-- 										id="exampleInputPassword" placeholder="Cote"> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-sm-6"> -->
+<!-- 									                                        <input th:field="*{status}" type="text" class="form-control form-control-user" -->
+<!-- 									                                            id="exampleRepeatPassword" placeholder="statut"> -->
+<!-- 									<label>Statut:</label><br> <select th:field="*{status}"> -->
+<!-- 										<option value="">--Choisir--</option> -->
+
+<!-- 										<option th:each="s : ${status}" th:value="${s}" -->
+<!-- 											th:text="${s.name}"></option> -->
+<!-- 									</select> -->
+
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<button type="submit" class="btn btn-primary btn-user btn-block"> -->
+<!-- 								Envoyer</button> -->
+<!-- 							<hr> -->
+<!-- 							                                <a href="index.html" class="btn btn-google btn-user btn-block"> -->
+<!-- 							                                    <i class="fab fa-google fa-fw"></i> Register with Google -->
+<!-- 							                                </a> -->
+<!-- 							                                <a href="index.html" class="btn btn-facebook btn-user btn-block"> -->
+<!-- 							                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook -->
+<!-- 							                                </a> -->
+<!-- 						</form> -->
+
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!--       Footer -->
+		<div th:replace="_components :: footer">...</div>
+
+	</div>
+	<!-- 	</div> -->
+
+	<script th:inline="javascript">
   /*<![CDATA[*/
 
 	  demo = {
@@ -720,22 +785,23 @@
   /*]]>*/
 
   </script>
-    
-  <!--   Core JS Files   -->
-  <script src="js/core/jquery.min.js"></script>
-  <script src="js/core/popper.min.js"></script>
-  <script src="js/core/bootstrap.min.js"></script>
-  <script src="js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chart JS -->
-  <script src="js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
-  <script src="js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
-<!--   <script src="demo/demo.js"></script> -->
-  <script>
+
+	<!--   Core JS Files   -->
+	<script src="js/core/jquery.min.js"></script>
+	<script src="js/core/popper.min.js"></script>
+	<script src="js/core/bootstrap.min.js"></script>
+	<script src="js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<!--  Google Maps Plugin    -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+	<!-- Chart JS -->
+	<script src="js/plugins/chartjs.min.js"></script>
+	<!--  Notifications Plugin    -->
+	<script src="js/plugins/bootstrap-notify.js"></script>
+	<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+	<script src="js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
+	<!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+	<!--   <script src="demo/demo.js"></script> -->
+	<script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
       demo.initDashboardPageCharts();
