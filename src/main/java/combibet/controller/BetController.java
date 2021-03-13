@@ -41,20 +41,11 @@ public class BetController {
 	public String addBet(Model model) {
 		
 		Map<Long, Double> surveyMap = new LinkedHashMap<>();
-		
 			surveyMap.put(1l, 1d);
 			surveyMap.put(3l, 3d);
 			surveyMap.put(5l, 5d);
-
-
 		model.addAttribute("surveyMap", surveyMap);
 		
-		
-		
-		
-		
-
-
 		Bet bet = new Bet();
 
 		model.addAttribute("emptyBet", bet);
@@ -77,7 +68,7 @@ public class BetController {
 		}
 
 		betRepository.save(bet);
-		return "redirect:/tables.html";
+		return "redirect:/list";
 
 	}	
 	
