@@ -35,6 +35,12 @@
               <p>Tableau de bord</p>
             </a>
           </li>
+           <li>
+            <a th:href="@{/list}">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Mes paris</p>
+            </a>
+          </li>
           <li>
             <a th:classappend="${#request.getServletPath() == '/add-bet' ? 'active' : ''}"
             th:href="@{/add-bet}">
