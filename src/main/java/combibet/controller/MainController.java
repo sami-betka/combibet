@@ -15,6 +15,11 @@ public class MainController {
 	
 	@Autowired
 	BetRepository betRepository;
+	
+	@GetMapping
+	public String home () {
+		return "redirect:/dashboard";
+	}
 
 	@GetMapping("/dashboard")
 	public String home(Model model) {
