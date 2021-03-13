@@ -25,5 +25,11 @@ public class Bet {
 	
 	private String selection;
 	
-	private BetStatus result;
+	private double odd;
+	
+	private BetType type;
+	
+	private BetStatus status;
+	
+	private String comment;
 }
