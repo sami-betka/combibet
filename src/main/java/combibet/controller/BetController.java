@@ -64,7 +64,7 @@ public class BetController {
 		System.out.println(bindingresult.getAllErrors());
 
 		if (bindingresult.hasErrors()) {
-			return "redirect:/bets/add-bet";
+			return "redirect:/add-bet";
 		}
 
 		betRepository.save(bet);
