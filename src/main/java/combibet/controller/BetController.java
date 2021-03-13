@@ -3,7 +3,6 @@ package combibet.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import combibet.entity.Bet;
@@ -22,7 +20,6 @@ import combibet.entity.BetType;
 import combibet.repository.BetRepository;
 
 @Controller
-@RequestMapping("/bets")
 public class BetController {
 	
 	@Autowired
