@@ -52,6 +52,7 @@ public class BetController {
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
 
+		model.addAttribute("active", true);
 		return "addbet";
 //		return "dashboard";
 

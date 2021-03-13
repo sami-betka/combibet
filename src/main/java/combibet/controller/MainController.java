@@ -34,16 +34,16 @@ public class MainController {
 	}
 	
 	
-	@GetMapping("/buttons.html")
-	public String getButtons () {
-		
-		return "buttons";
-	}
-	@GetMapping("/cards.html")
-	public String getCards () {
-		
-		return "cards";
-	}
+//	@GetMapping("/buttons.html")
+//	public String getButtons () {
+//		
+//		return "buttons";
+//	}
+//	@GetMapping("/cards.html")
+//	public String getCards () {
+//		
+//		return "cards";
+//	}
 	
 //	@GetMapping("/tables.html")
 //	public String getTables (Model model) {
@@ -56,17 +56,17 @@ public class MainController {
 //		return "tables";
 //	}
 	
-	@GetMapping("/charts.html")
-	public String getChartsPage () {
-		
-		return "charts";
-	}
-	
-	@GetMapping("/404.html")
-	public String get404 () {
-		
-		return "404";
-	}
+//	@GetMapping("/charts.html")
+//	public String getChartsPage () {
+//		
+//		return "charts";
+//	}
+//	
+//	@GetMapping("/404.html")
+//	public String get404 () {
+//		
+//		return "404";
+//	}
 	
 	@GetMapping("/login.html")
 	public String getLoginPage () {
