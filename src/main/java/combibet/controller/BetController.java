@@ -32,7 +32,7 @@ public class BetController {
 		
 //		model.addAttribute("user", userRepository.findById(1l).get());
 		model.addAttribute("betList", betRepository.findAllBetsByOrderByIdAsc() );
-
+		model.addAttribute("active", true);
 
 		return "betlist";
 	}

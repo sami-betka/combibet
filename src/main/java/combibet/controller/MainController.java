@@ -29,6 +29,8 @@ public class MainController {
 		surveyMap.put(3l, 3d);
 		surveyMap.put(5l, 5d);
 	model.addAttribute("surveyMap", surveyMap);
+	
+	model.addAttribute("active", true);
 		
 		return "dashboard";
 	}

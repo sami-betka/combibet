@@ -29,25 +29,24 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-            <li class="">
+            <li th:classappend="${#request.getServletPath() == '/dashboard' ? 'active' : ''}">
             <a th:href="@{/dashboard}">
               <i class="now-ui-icons design_app"></i>
               <p>Tableau de bord</p>
             </a>
           </li>
-           <li>
+           <li th:classappend="${#request.getServletPath() == '/list' ? 'active' : ''}">
             <a th:href="@{/list}">
               <i class="now-ui-icons users_single-02"></i>
               <p>Mes paris</p>
             </a>
           </li>
-          <li>
-            <a th:classappend="${#request.getServletPath() == '/add-bet' ? 'active' : ''}"
-            th:href="@{/add-bet}">
+          <li th:classappend="${#request.getServletPath() == '/add-bet' ? 'active' : ''}">
+            <a th:href="@{/add-bet}">
               <i class="now-ui-icons design_app"></i>
               <p>Ajouter un pari</p>
             </a>
-          <li>
+          <li th:classappend="${#request.getServletPath() == '/my-infos' ? 'active' : ''}">
             <a th:href="@{/my-infos}">
               <i class="now-ui-icons users_single-02"></i>
               <p>Mon profil</p>
