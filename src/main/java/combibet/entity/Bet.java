@@ -1,12 +1,12 @@
 package combibet.entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,6 +22,9 @@ public class Bet {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
+	
+	@ManyToOne
+	private Gambler gambler;
 	
 	private int meeting;
 	

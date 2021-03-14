@@ -17,7 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
+import combibet.entity.Gambler;
 import combibet.repository.BetRepository;
+import combibet.repository.GamblerRepository;
 
 @Controller
 public class BetController {
@@ -25,26 +27,40 @@ public class BetController {
 	@Autowired
 	BetRepository betRepository;
 	
+	@Autowired
+	GamblerRepository gamblerRepository;
+	
 	@GetMapping("/list")
-	public String getBetList (Model model) {
+	public String getBetList (Model model, Principal principal) {
+				
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 		
 //		List<Bet> betList = betRepository.findAll();
 		
-//		model.addAttribute("user", userRepository.findById(1l).get());
-		model.addAttribute("betList", betRepository.findAllBetsByOrderByIdAsc() );
+		model.addAttribute("betList", betRepository.findAllByGamblerOrderByDateDesc(gambler));
+//		model.addAttribute("betList", betRepository.findAllBetsByOrderByIdAsc());
+
 		model.addAttribute("active", true);
 
 		return "betlist";
 	}
 	
 	@GetMapping("/add-bet")
-	public String addBet(Model model) {
+	public String addBet(Model model, Principal principal) {
 		
-		Map<Long, Double> surveyMap = new LinkedHashMap<>();
-			surveyMap.put(1l, 1d);
-			surveyMap.put(3l, 3d);
-			surveyMap.put(5l, 5d);
-		model.addAttribute("surveyMap", surveyMap);
+//		Map<Long, Double> surveyMap = new LinkedHashMap<>();
+//			surveyMap.put(1l, 1d);
+//			surveyMap.put(3l, 3d);
+//			surveyMap.put(5l, 5d);
+//		model.addAttribute("surveyMap", surveyMap);
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
 		
 		Bet bet = new Bet();
 
@@ -59,7 +75,7 @@ public class BetController {
 	}
 
 	@PostMapping(value = "/save-bet")
-	public String saveBet(Bet bet, BindingResult bindingresult)
+	public String saveBet(Bet bet, BindingResult bindingresult, Principal principal)
 			throws IllegalStateException, IOException {
 		
 		System.out.println(bindingresult.getAllErrors());
@@ -67,7 +83,8 @@ public class BetController {
 		if (bindingresult.hasErrors()) {
 			return "redirect:/add-bet";
 		}
-
+        
+		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
 		betRepository.save(bet);
 		return "redirect:/list";
 

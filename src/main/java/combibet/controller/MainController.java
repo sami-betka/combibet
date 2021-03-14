@@ -1,5 +1,6 @@
 package combibet.controller;
 
+import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,14 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import combibet.entity.Gambler;
+import combibet.entity.UserRole;
 import combibet.repository.BetRepository;
+import combibet.repository.GamblerRepository;
+import combibet.repository.UserRoleRepository;
 
 @Controller
 public class MainController {
 	
 	@Autowired
 	BetRepository betRepository;
+	
+	@Autowired
+	GamblerRepository gamblerRepository;
+	
+	@Autowired
+	UserRoleRepository userRoleRepository;
 	
 	@GetMapping
 	public String home () {
@@ -36,38 +49,27 @@ public class MainController {
 	}
 	
 	
-//	@GetMapping("/buttons.html")
-//	public String getButtons () {
-//		
-//		return "buttons";
-//	}
-//	@GetMapping("/cards.html")
-//	public String getCards () {
-//		
-//		return "cards";
-//	}
-	
-//	@GetMapping("/tables.html")
-//	public String getTables (Model model) {
-//		
-////		List<Bet> betList = betRepository.findAll();
-//		
-////		model.addAttribute("user", userRepository.findById(1l).get());
-//		model.addAttribute("betList", betRepository.findAllBetsByOrderByDateDesc() );
-//
-//		return "tables";
-//	}
-	
-//	@GetMapping("/charts.html")
-//	public String getChartsPage () {
-//		
-//		return "charts";
-//	}
-//	
-//	@GetMapping("/404.html")
-//	public String get404 () {
-//		
-//		return "404";
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage(Model model, Principal principal) {
+    	
+    	if(principal != null) {
+    		return "redirect:/dashboard";
+    	}
+ 
+        return "login";
+    }
+    
+    @RequestMapping(value = "/userAccountInfo", method = RequestMethod.GET)
+    public String loginSuccess(Model model, Principal principal) {
+    	
+    	Gambler user = gamblerRepository.findByUserName(principal.getName());
+    	for(UserRole userRole: userRoleRepository.findAll()) {
+    		if(userRole.getAppRole().getRoleId() ==1 && userRole.getUser().getId()==user.getId()) {
+    			return "redirect:/admingate";
+    		}
+    	}
+		return "redirect:/dashboard";
+    }
 //	}
 	
 	@GetMapping("/login.html")

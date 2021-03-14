@@ -6,7 +6,7 @@ import combibet.entity.Gambler;
 
 public interface GamblerRepository extends JpaRepository<Gambler, Long>{
 
-	
+	Gambler findByUserName(String userName);
 	
 	
 	
