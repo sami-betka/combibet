@@ -2,24 +2,28 @@ package combibet.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.Gambler;
+import combibet.entity.HorseRacingBet;
+import combibet.entity.SportBet;
 import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
+import combibet.service.BetService;
 
 @Controller
 public class BetController {
@@ -29,6 +33,9 @@ public class BetController {
 	
 	@Autowired
 	GamblerRepository gamblerRepository;
+	
+	@Autowired
+	BetService betService;
 	
 	@GetMapping("/list")
 	public String getBetList (Model model, Principal principal) {
@@ -50,7 +57,7 @@ public class BetController {
 	}
 	
 	@GetMapping("/add-bet")
-	public String addBet(Model model, Principal principal) {
+	public String addBet(@RequestParam(name = "field", defaultValue = "") String field, Model model, Principal principal) {
 		
 //		Map<Long, Double> surveyMap = new LinkedHashMap<>();
 //			surveyMap.put(1l, 1d);
@@ -62,20 +69,29 @@ public class BetController {
 			return "redirect:/login";
 		}
 		
-		Bet bet = new Bet();
-
-		model.addAttribute("emptyBet", bet);
-		model.addAttribute("types", BetType.values());
-		model.addAttribute("status", BetStatus.values());
-
-		model.addAttribute("active", true);
-		return "addbet";
-//		return "dashboard";
-
+		if (field.equals("horseRacing")) {
+			
+			model.addAttribute("emptyBet", betService.addHorseRacingBet());
+			model.addAttribute("types", BetType.values());
+			model.addAttribute("status", BetStatus.values());
+			
+			return "add-horse-racing-bet";
+		}
+		
+	if (field.equals("sport")) {
+			
+			model.addAttribute("emptyBet", betService.addSportBet());
+			model.addAttribute("status", BetStatus.values());
+			
+			return "add-sport-bet";
+		}
+		
+	System.out.println(field + "jjjjjj");
+	return "redirect:/list";
 	}
 
-	@PostMapping(value = "/save-bet")
-	public String saveBet(Bet bet, BindingResult bindingresult, Principal principal)
+	@PostMapping(value = "/save-horse-racing-bet")
+	public String saveHorseRacingBet(HorseRacingBet bet, BindingResult bindingresult, Principal principal)
 			throws IllegalStateException, IOException {
 		
 		System.out.println(bindingresult.getAllErrors());
@@ -87,15 +103,29 @@ public class BetController {
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
 		betRepository.save(bet);
 		return "redirect:/list";
+	}	
+	
+	@PostMapping(value = "/save-sport-bet")
+	public String saveSportBet(SportBet bet, BindingResult bindingresult, Principal principal)
+			throws IllegalStateException, IOException {
+		
+		System.out.println(bindingresult.getAllErrors());
 
+		if (bindingresult.hasErrors()) {
+			return "redirect:/add-bet";
+		}
+        
+		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
+		betRepository.save(bet);
+		return "redirect:/list";
 	}	
 	
 	@GetMapping(value = "/edit-bet/{id}")
 	public String editBet(@PathVariable("id") Long id, Model model, Principal principal) {
 
-//		if (principal == null) {
-//			return "redirect:/login";
-//		}
+		if (principal == null) {
+			return "redirect:/login";
+		}
 
 		Bet bet = betRepository.findById(id).get();
 		
@@ -112,12 +142,25 @@ public class BetController {
 		if (bindingresult.hasErrors()) {
 			redirect.addFlashAttribute("createsuccess", true);
 
-			return "redirect:/bets/edit-bet/" + bet.getId();
+			return "redirect:/edit-bet/" + bet.getId();
 		}
 
 		betRepository.save(bet);
-		return "redirect:/bets/bet-list";
+		return "redirect:/list";
 
+	}
+	
+	@RequestMapping(value = "/delete-bet/{id}")
+	public String deleteBet(@PathVariable("id") Long id, Principal principal) {
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		betRepository.deleteById(id);
+		
+		return "redirect:/list";
+		
 	}
 
 }

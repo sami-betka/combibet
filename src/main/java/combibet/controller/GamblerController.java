@@ -34,7 +34,11 @@ public class GamblerController {
 	
 	
 	@GetMapping("/my-infos")
-	public String getMyInfos (Model model) {
+	public String getMyInfos (Model model, Principal principal) {
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
 		
 		model.addAttribute("active", true);
 
@@ -68,5 +72,7 @@ public class GamblerController {
 		return "redirect:/login";
 	}
 	
+	//////////////PRIVATE/////////////////
+
 
 }

@@ -33,6 +33,12 @@ public class MainController {
 	public String home () {
 		return "redirect:/dashboard";
 	}
+	
+//	@GetMapping("/choose-field")
+//	public String chooseField () {
+//		
+//		return "choose-field";
+//	}
 
 	@GetMapping("/dashboard")
 	public String home(Model model) {
