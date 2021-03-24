@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template"><head>
 <meta charset="ISO-8859-1">
 <title></title>
  <!--     Fonts and icons     -->
@@ -60,6 +62,18 @@
               <p>Mon profil</p>
             </a>
           </li>
+           <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Me d&eacute;connecter</p>
+            </a>
+          </li>
+          
+<!--           	<button class="btn my-2 my-sm-0 text-white" -->
+<!-- 					style="font-size: 125%; margin-left: 5px;" -->
+<!-- 					sec:authorize="isAuthenticated()" type="button" -->
+<!-- 					onclick="location.href='/logout';" value="Déconnexion" /> -->
+<!-- 				</button> -->
 <!--           <li class="active-pro"> -->
 <!--             <a href="./upgrade.html"> -->
 <!--               <i class="now-ui-icons arrows-1_cloud-download-93"></i> -->
@@ -82,7 +96,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a th:if="${#request.getServletPath() == '/dashboard'}" class="navbar-brand" href="#pablo">Evolution du capital...</a>
+            <a th:if="${#request.getServletPath() == '/dashboard'}" class="navbar-brand" href="">&Eacute;volution du capital...</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -123,7 +137,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+                <a class="nav-link" href="/my-infos">
                   <i class="now-ui-icons users_single-02"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
@@ -142,18 +156,18 @@
           <nav>
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
+                <a href="">
+                  Sam Bet
                 </a>
               </li>
               <li>
-                <a href="http://presentation.creative-tim.com">
-                  About Us
+                <a href="">
+                  A propos
                 </a>
               </li>
               <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
+                <a href="">
+                  Contact
                 </a>
               </li>
             </ul>
@@ -161,7 +175,7 @@
           <div class="copyright" id="copyright">
             &copy; <script>
               document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            </script>, Designed by <a href="" target="_blank">Sam bet</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Sam Bet</a>.
           </div>
         </div>
       </footer>

@@ -65,6 +65,15 @@ public class MainController {
         return "login";
     }
     
+    @RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)
+    public String logoutSuccessfulPage(Model model, Principal principal) {
+        model.addAttribute("title", "Logout");
+//        navbarAttributes(model, principal);
+		return "redirect:/list";
+
+//        return "logoutSuccessfulPage";
+    }
+    
     @RequestMapping(value = "/userAccountInfo", method = RequestMethod.GET)
     public String loginSuccess(Model model, Principal principal) {
     	

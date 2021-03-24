@@ -97,7 +97,7 @@ public class BetController {
 		System.out.println(bindingresult.getAllErrors());
 
 		if (bindingresult.hasErrors()) {
-			return "redirect:/add-bet";
+			return "redirect:/add-bet?field=horseRacing";
 		}
         
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
@@ -112,7 +112,7 @@ public class BetController {
 		System.out.println(bindingresult.getAllErrors());
 
 		if (bindingresult.hasErrors()) {
-			return "redirect:/add-bet";
+			return "redirect:/add-bet?field=sport";
 		}
         
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));

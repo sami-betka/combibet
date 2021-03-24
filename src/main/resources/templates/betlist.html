@@ -120,6 +120,7 @@
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.status.name}">Perdant</td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${bet.status.name}">En attente...</td>
                                        
+                                            <td> <a class="text-primary" th:href="@{'/edit-bet/'+${bet.id}}">Modifier</a></td>
                                             <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet/'+${bet.id}}">Supprimer</a></td>
                                        
                                        </tr>
