@@ -42,123 +42,73 @@
 <!--   <link href="demo/demo.css" rel="stylesheet" /> -->
 </head>
 
-<body class="">
-	<div class="wrapper ">
-		<!--   Sidebar -->
-		<div th:replace="_components :: sidebar">...</div>
+<body class="user-profile">
+  <div class="wrapper ">
+        <!--   Sidebar -->
+      <div th:replace="_components :: sidebar"></div>
 
-		<div class="main-panel" id="main-panel">
-			<!-- Navbar -->
-			<div th:replace="_components :: navbar">...</div>
-			<!-- End Navbar -->
+    <div class="main-panel" id="main-panel">
+      <!-- Navbar -->
+         <div th:replace="_components :: navbar"></div>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-sm">
+      </div>
+      <div class="content">
+        <div class="row">
+                  <div class="col-md-2"></div>
+        
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Se connecter</h5>
+              </div>
+              <div class="card-body">
+                <form th:action="@{/j_spring_security_check}" name='f' th:object="${emptyUser}" method="POST">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Nom d'utilisateur</label>
+                        <input name="username" required type="text" class="form-control form-control-user" placeholder="Nom d'utilisateur" value="">
+                      </div>
+                    </div>
+                  </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Mot de passe</label>
+                        <input name="password" required type="password" class="form-control form-control-user" placeholder="Mot de passe" value="">
+                      </div>
+                    </div>
+                  </div>  
+                  
+<!--                   <div class="row"> -->
+<!--                     <div class="col-md-12"> -->
+<!--                       <div class="form-group"> -->
+<!--                         <label>Confirmation mot de passe</label> -->
+<!--                         <input name="passwordConfirmation" type="text" class="form-control" placeholder="" value=""> -->
+<!--                       </div> -->
+<!--                     </div> -->
+<!--                   </div> -->
 
-			<div class="panel-header panel-header-sm">
-				<!--         <canvas id="bigDashboardChart"></canvas> -->
-			</div>
-			<div class="content" style="">
-				<!--   CONTENT -->
-
-				<div class="card">
-					<div class="card-header">
-						<h3 class="card-title">Connexion</h3>
-					</div>
-					<div class="card-body">
-
-
-					   <form class="" name='f' th:action="@{/j_spring_security_check}" method='POST'>
-						
-							<div class="form-group">
-								<input type="text" name="username" required
-									class="form-control form-control-user" id=""
-									placeholder="Nom d'utilisateur">
-							</div>
-							<div class="form-group">
-								<input type="password" name="password" required
-									class="form-control form-control-user" id=""
-									placeholder="Mot de passe">
-							</div>
+                     			<div class="">Mot de passe oublié ?</div>
+							    <br>
 							
-							<div class="">Mot de passe oublié ?</div>
-							</br>
-			<div class="">
-				Pas encore membre? <a th:href="@{/create-account}">S'inscrire</a>
-			</div>
-						
-							
-							<button type="submit" class="btn btn-primary btn-user btn-block"> 
- 								Me connecter</button> 
-						</form>
+			              <div class="">Pas encore membre? <a th:href="@{/create-account}">S'inscrire</a></div>
+                  
+                       <button type="submit" class="btn btn-primary btn-user btn-block">Me connecter</button> 
+                       
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--      Footer -->
+         <div th:replace="_components :: footer"></div>
 
-
-
-
-
-
-
-<!-- 						<form class="user" th:action="@{/save-bet}" -->
-<!-- 							th:object="${emptyBet}" method="POST"> -->
-<!-- 							<div class="form-group row"> -->
-<!-- 								<div class="col-sm-6 mb-3 mb-sm-0"> -->
-<!-- 									<input th:field="*{date}" type="date" -->
-<!-- 										class="form-control form-control-user" id="exampleFirstName" -->
-<!-- 										placeholder="Date"> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-sm-6"> -->
-<!-- 									                                        <input th:field="*{type}" type="text" class="form-control form-control-user" id="exampleLastName" -->
-<!-- 									                                            placeholder="Type de pari"> -->
-<!-- 									<label>Type de pari:</label><br> <select -->
-<!-- 										th:field="*{type}"> -->
-<!-- 										<option value="">--Choisir--</option> -->
-
-<!-- 										<option th:each="t : ${types}" th:value="${t}" -->
-<!-- 											th:text="${t.name}"></option> -->
-<!-- 									</select> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group"> -->
-<!-- 								<input th:field="*{selection}" type="text" -->
-<!-- 									class="form-control form-control-user" id="exampleInputEmail" -->
-<!-- 									placeholder="Sélection"> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group row"> -->
-<!-- 								<div class="col-sm-6 mb-3 mb-sm-0"> -->
-<!-- 									<input th:field="*{odd}" type="number" -->
-<!-- 										class="form-control form-control-user" -->
-<!-- 										id="exampleInputPassword" placeholder="Cote"> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-sm-6"> -->
-<!-- 									                                        <input th:field="*{status}" type="text" class="form-control form-control-user" -->
-<!-- 									                                            id="exampleRepeatPassword" placeholder="statut"> -->
-<!-- 									<label>Statut:</label><br> <select th:field="*{status}"> -->
-<!-- 										<option value="">--Choisir--</option> -->
-
-<!-- 										<option th:each="s : ${status}" th:value="${s}" -->
-<!-- 											th:text="${s.name}"></option> -->
-<!-- 									</select> -->
-
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<button type="submit" class="btn btn-primary btn-user btn-block"> -->
-<!-- 								Envoyer</button> -->
-<!-- 							<hr> -->
-<!-- 							                                <a href="index.html" class="btn btn-google btn-user btn-block"> -->
-<!-- 							                                    <i class="fab fa-google fa-fw"></i> Register with Google -->
-<!-- 							                                </a> -->
-<!-- 							                                <a href="index.html" class="btn btn-facebook btn-user btn-block"> -->
-<!-- 							                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook -->
-<!-- 							                                </a> -->
-<!-- 						</form> -->
-
-
-					</div>
-				</div>
-			</div>
-
-		</div>
-		<!--       Footer -->
-		<div th:replace="_components :: footer">...</div>
-
-	</div>
+    </div>
+  </div>
+  
 	<!-- 	</div> -->
 
 

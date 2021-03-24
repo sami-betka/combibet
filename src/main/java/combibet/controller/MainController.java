@@ -59,7 +59,7 @@ public class MainController {
     public String loginPage(Model model, Principal principal) {
     	
     	if(principal != null) {
-    		return "redirect:/dashboard";
+    		return "redirect:/bet-list";
     	}
  
         return "login";
@@ -69,7 +69,7 @@ public class MainController {
     public String logoutSuccessfulPage(Model model, Principal principal) {
         model.addAttribute("title", "Logout");
 //        navbarAttributes(model, principal);
-		return "redirect:/list";
+		return "redirect:/bet-list";
 
 //        return "logoutSuccessfulPage";
     }
@@ -83,7 +83,7 @@ public class MainController {
     			return "redirect:/admingate";
     		}
     	}
-		return "redirect:/dashboard";
+		return "redirect:/bet-list";
     }
 //	}
 	

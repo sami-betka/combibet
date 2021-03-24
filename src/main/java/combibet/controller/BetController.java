@@ -37,7 +37,7 @@ public class BetController {
 	@Autowired
 	BetService betService;
 	
-	@GetMapping("/list")
+	@GetMapping("/bet-list")
 	public String getBetList (Model model, Principal principal) {
 				
 		if (principal == null) {
@@ -53,7 +53,7 @@ public class BetController {
 
 		model.addAttribute("active", true);
 
-		return "betlist";
+		return "bet-list";
 	}
 	
 	@GetMapping("/add-bet")
@@ -117,7 +117,7 @@ public class BetController {
         
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
 		betRepository.save(bet);
-		return "redirect:/list";
+		return "redirect:/bet-list";
 	}	
 	
 	@GetMapping(value = "/edit-bet/{id}")
@@ -146,7 +146,7 @@ public class BetController {
 		}
 
 		betRepository.save(bet);
-		return "redirect:/list";
+		return "redirect:/bet-list";
 
 	}
 	
@@ -159,7 +159,7 @@ public class BetController {
 		
 		betRepository.deleteById(id);
 		
-		return "redirect:/list";
+		return "redirect:/bet-list";
 		
 	}
 

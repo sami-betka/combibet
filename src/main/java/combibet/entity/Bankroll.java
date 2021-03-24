@@ -35,4 +35,8 @@ public class Bankroll {
 
 	@OneToMany
 	private List<Bet> bets;
+	
+	private boolean isActive;
+	
+	
 }

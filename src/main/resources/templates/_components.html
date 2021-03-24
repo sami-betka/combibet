@@ -17,19 +17,64 @@
 <body>
 
        <!-- SIDEBAR -->
- <div th:fragment="sidebar" class="sidebar" data-color="orange">
+ <div th:fragment="sidebar" class="sidebar" data-color="red">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="" class="simple-text logo-mini">
-          SB
+      <h5 style="font-family: Impact, fantasy">
+        <a href="" class="simple-text logo-normal" style="text-align: center;">
+          Sam's Bet
         </a>
-        <a href="" class="simple-text logo-normal">
-          Sam'Bet
-        </a>
+       </h5>
       </div>
-      <div class="sidebar-wrapper" id="sidebar-wrapper">
+      
+<!--             <div class="logo"> -->
+<!--         <a href="" class="simple-text logo-mini"> -->
+<!--           SB -->
+<!--         </a> -->
+
+
+<!--         <a href="" class="simple-text logo-normal" style="text-align: center;"> -->
+<!--           Bankrolls -->
+<!--         </a> -->
+        
+<!--            <ul class="nav"> -->
+<!--             <li th:classappend="${#request.getServletPath() == '/bankroll-list' ? 'active' : ''}"> -->
+<!--                 <a th:href="@{/bankroll-list}"> -->
+<!--                   <i class="now-ui-icons design_app"></i> -->
+<!--                   <p>Mes bankrolls</p> -->
+<!--                 </a> -->
+<!--             </li> -->
+<!--              <li th:classappend="${#request.getServletPath() == '/add-bankroll' ? 'active' : ''}"> -->
+<!--                 <a th:href="@{/add-bankroll}"> -->
+<!--                   <i class="now-ui-icons design_app"></i> -->
+<!--                   <p>Cr&eacute;er bankroll</p> -->
+<!--                 </a> -->
+<!--             </li> -->
+<!--            </ul> -->
+<!--       </div> -->
+      
+      <div sec:authorize="isAuthenticated()" class="sidebar-wrapper" id="sidebar-wrapper">                 
+           <ul class="nav">
+            <li th:classappend="${#request.getServletPath() == '/bankroll-list' ? 'active' : ''}">
+                <a th:href="@{/bankroll-list}">
+                  <i class="now-ui-icons design_app"></i>
+                  <p>Mes bankrolls</p>
+                </a>
+            </li>
+             <li th:classappend="${#request.getServletPath() == '/add-bankroll' ? 'active' : ''}">
+                <a th:href="@{/add-bankroll}">
+                  <i class="now-ui-icons design_app"></i>
+                  <p>Cr&eacute;er bankroll</p>
+                </a>
+            </li>
+           </ul>
+           
+           
+           <hr style="border-color: white; margin-left: 14px; margin-right: 14px;">
+      
+      
         <ul class="nav">
             <li th:classappend="${#request.getServletPath() == '/dashboard' ? 'active' : ''}">
             <a th:href="@{/dashboard}">
@@ -38,7 +83,7 @@
             </a>
           </li>
            <li th:classappend="${#request.getServletPath() == '/list' ? 'active' : ''}">
-            <a th:href="@{/list}">
+            <a th:href="@{/bet-list}">
               <i class="now-ui-icons users_single-02"></i>
               <p>Mes paris</p>
             </a>
@@ -96,7 +141,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a th:if="${#request.getServletPath() == '/dashboard'}" class="navbar-brand" href="">&Eacute;volution du capital...</a>
+            <a th:if="${#request.getServletPath() == '/dashboard'}" class="navbar-brand" href="">&Eacute;volution bankroll</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
