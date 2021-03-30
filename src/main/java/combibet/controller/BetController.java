@@ -56,6 +56,14 @@ public class BetController {
 		return "bet-list";
 	}
 	
+	@GetMapping("/validate-rules")
+	public String validateRules() {
+		
+//		if()
+		
+		return "redirect:/add-bet";
+	}
+	
 	@GetMapping("/add-bet")
 	public String addBet(@RequestParam(name = "field", defaultValue = "") String field, Model model, Principal principal) {
 		
@@ -71,7 +79,7 @@ public class BetController {
 		
 		if (field.equals("horseRacing")) {
 			
-			model.addAttribute("emptyBet", betService.addHorseRacingBet());
+			model.addAttribute("emptyBet", new HorseRacingBet());
 			model.addAttribute("types", BetType.values());
 			model.addAttribute("status", BetStatus.values());
 			
@@ -80,7 +88,7 @@ public class BetController {
 		
 	if (field.equals("sport")) {
 			
-			model.addAttribute("emptyBet", betService.addSportBet());
+			model.addAttribute("emptyBet", new SportBet());
 			model.addAttribute("status", BetStatus.values());
 			
 			return "add-sport-bet";

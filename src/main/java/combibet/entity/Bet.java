@@ -32,6 +32,8 @@ public abstract class Bet {
 	
 	private double odd;
 	
+	private double ante;
+	
 	@ManyToOne
 	private Gambler gambler;
 		

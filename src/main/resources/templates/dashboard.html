@@ -295,6 +295,7 @@
 
 		</div>
 	</div>
+	
 
 	<script th:inline="javascript">
   /*<![CDATA[*/
@@ -530,8 +531,9 @@
 //         labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
         labels:  [[${surveyMap.keySet()}]],
 
+
         datasets: [{
-          label: "Pari",
+          label: "",
           borderColor: chartColor,
           pointBorderColor: chartColor,
           pointBackgroundColor: "#1e3d60",
@@ -544,8 +546,9 @@
           fill: true,
           backgroundColor: gradientFill,
           borderWidth: 2,
-//           data: [50, 150, 100, 190, 130, 90, 150, 160, 120, 140, 190, 95]
+//           data: [50, 150, 100, 190, 130, 90, 150, 160, 120, 140, 190, 95],
           data: [[${surveyMap.values()}]]
+
 
         }]
       },
@@ -696,8 +699,7 @@
     var a = {
       type: "bar",
       data: {
-//         labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        labels:  [[${surveyMap.keySet()}]],
+        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 
         datasets: [{
           label: "Mes paris",
@@ -711,8 +713,7 @@
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-//           data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
-          data: [[${surveyMap.values()}]]
+          data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
 
         }]
       },

@@ -43,11 +43,21 @@ public class MainController {
 	@GetMapping("/dashboard")
 	public String home(Model model) {
 		
-		Map<Long, Double> surveyMap = new LinkedHashMap<>();
-		surveyMap.put(1l, 1d);
-		surveyMap.put(3l, 3d);
-		surveyMap.put(5l, 5d);
+		Map<String, Double> surveyMap = new LinkedHashMap<>();
+		surveyMap.put("1", 1d);
+		surveyMap.put("2", 3d);
+		surveyMap.put("3", 5d);
+		surveyMap.put("4", 2d);
+		surveyMap.put("5", 4d);
+		surveyMap.put("6", 8d);
+		surveyMap.put("7", 2d);
+		surveyMap.put("8", 3d);
+		surveyMap.put("9", 7d);
 	model.addAttribute("surveyMap", surveyMap);
+	
+//	model.addAttribute("keys", surveyMap.keySet());
+//	model.addAttribute("values", surveyMap.values());
+
 	
 	model.addAttribute("active", true);
 		
