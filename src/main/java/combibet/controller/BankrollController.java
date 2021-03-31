@@ -2,6 +2,7 @@ package combibet.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,6 +87,7 @@ public class BankrollController {
 		}
 
 		bankroll.setGambler(gamblerRepository.findByUserName(principal.getName()));
+		bankroll.setStartDate(LocalDate.now());
 		bankrollRepository.save(bankroll);
 				
 		return "redirect:/bankroll-list";

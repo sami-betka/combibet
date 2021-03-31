@@ -45,19 +45,19 @@ public class Bankroll {
 	
 	
 	
-	double calculateCurrentAmount() {
+	public double calculateCurrentAmount() {
 		
 		
 		
 		return 1000000d;
 	}
 	
-	int betNumber() {
+	public int betNumber() {
 		
 		return this.bets.size();
 	}
 	
-	double benefit () {
+	public double benefit () {
 		
 		double benefitAmount = 0;
 		

@@ -56,11 +56,13 @@
             <div class="card op" style="">
               <div class="card-header">
                 <h4 class="card-title">Bankrolls</h4>
+                
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-sm">
-                    <thead class="">
+                  <table class="table table-sm table-bordered table-hover">
+                    <thead>
+                    <tr>
                       <th>
                         Nom
                       </th>
@@ -79,12 +81,11 @@
                       <th>
                         Bénéfice
                       </th>
-                       <th>
-                       .
-                      </th>
-                      <th>
-                      .
-                      </th>
+                       <th></th>
+                       <th></th>
+                       <th></th>
+                       
+                      </tr>
                     </thead>
                      <tfoot>
 											<tr>
@@ -94,9 +95,9 @@
 												<th>Capital actuel</th>
 												<th>Nombre de paris </th>
 												<th>Bénéfice</th>
-												<th>.</th>
-												<th>.</th>
-												
+												<th></th>
+												<th></th>
+	     										<th></th>
 											</tr>
 										</tfoot>
                     <tbody>
@@ -109,15 +110,15 @@
                                             
                                             <td class="text-dark" style="" th:text="${bankroll.calculateCurrentAmount}"></td>
                                             
-                                            
                                             <td class="text-dark" style="" th:text="${bankroll.betNumber}"></td>
                                             
-                                                                                        
                                             <td class="text-dark" style="" th:text="${bankroll.benefit}"></td>
                                        
-                                            <td> <a class="text-primary" th:href="@{'/bankroll-details/'+${bankroll.id}}">Afficher détails</a></td>
-                                            <td> <a class="text-primary" th:href="@{'/edit-bankroll/'+${bet.id}}">Modifier</a></td>
-                                            <td> <a onclick="confirm('Etes vous sur de vouloir supprimer bankroll ?')" th:href="@{'/delete-bankroll/'+${bankroll.id}}">Supprimer</a></td>
+                                            <td> <a class="text-primary" th:href="@{'/bankroll-details/'+${bankroll.id}}">Détails</a></td>
+                                            <td> <a class="text-success" th:href="@{'/edit-bankroll/'+${bankroll.id}}">Modifier</a></td>
+                                            <td> <a class="text-danger" onclick="confirm('Etes vous sur de vouloir supprimer bankroll ?')" th:href="@{'/delete-bankroll/'+${bankroll.id}}">Supprimer</a></td>
+                                            <td> <a class="text-success" th:href="@{'/edit-bankroll-start-date/'+${bankroll.id}}">Modifier date de création</a></td>
+                                            
                                        
                                        </tr>
                     </tbody>
