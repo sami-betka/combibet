@@ -69,7 +69,7 @@ public class MainController {
     public String loginPage(Model model, Principal principal) {
     	
     	if(principal != null) {
-    		return "redirect:/bet-list";
+    		return "redirect:/bankroll-list";
     	}
  
         return "login";
@@ -93,7 +93,7 @@ public class MainController {
     			return "redirect:/admingate";
     		}
     	}
-		return "redirect:/bet-list";
+		return "redirect:/bankroll-list";
     }
 //	}
 	
