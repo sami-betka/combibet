@@ -36,6 +36,9 @@ public abstract class Bet {
 	
 	@ManyToOne
 	private Gambler gambler;
+	
+	@ManyToOne
+	private Bankroll bankroll;
 		
 	private BetStatus status;
 	

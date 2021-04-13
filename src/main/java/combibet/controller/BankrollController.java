@@ -9,22 +9,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import combibet.entity.Bankroll;
+import combibet.entity.Bet;
+import combibet.entity.Combi;
 import combibet.entity.Gambler;
 import combibet.repository.BankrollRepository;
+import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
 
 @Controller
 public class BankrollController {
 
 	@Autowired
+	BetRepository betRepository;
+	
+	@Autowired
 	BankrollRepository bankrollRepository;
 
 	@Autowired
 	GamblerRepository gamblerRepository;
+	
 
 	@GetMapping("/bankroll-list")
 	public String getBankrollList(Model model, Principal principal) {
@@ -43,10 +50,11 @@ public class BankrollController {
 		model.addAttribute("active", true);
 
 		return "bankroll-list";
+
 	}
 	
-	@GetMapping("/bankroll-details/{id}")
-	public String bankrollDetails (@PathVariable("id") Long id, Model model, Principal principal) {
+	@GetMapping("/bankroll-details")
+	public String bankrollDetails (@RequestParam(name = "id") Long id, Model model, Principal principal) {
 				
 		if (principal == null) {
 			return "redirect:/login";
@@ -56,12 +64,14 @@ public class BankrollController {
 		
 //		List<Bet> betList = betRepository.findAll();
 		
-		model.addAttribute("bankroll", bankrollRepository.findById(id));
-//		model.addAttribute("betList", betRepository.findAllBetsByOrderByIdAsc());
+		model.addAttribute("id", id);
+		model.addAttribute("betList", bankrollRepository.findById(id).get().getBets());
 
 //		model.addAttribute("active", true);
 
 		return "bankroll-details";
+//		return "bankroll-list";
+
 	}
 
 	@GetMapping("/add-bankroll")
@@ -91,6 +101,88 @@ public class BankrollController {
 		bankrollRepository.save(bankroll);
 				
 		return "redirect:/bankroll-list";
+	}
+	
+	@GetMapping("/add-combi-to-bankroll")
+	public String addCombiToBankroll(@RequestParam(name = "id") Long id, Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		Bankroll bankroll = bankrollRepository.findById(id).get();
+		Combi combi = new Combi();
+		combi.setBankroll(bankroll);
+		bankroll.getBets().add(combi);
+		betRepository.save(combi);
+		bankrollRepository.save(bankroll);
+
+//		model.addAttribute("emptyBet", new Combi());
+		System.out.println(bankrollRepository.findById(id).get().getBets().size());
+
+		return "redirect:/bankroll-details?id=" + id;
+	}	
+	
+	
+	@GetMapping("/add-horse-racing-bet-to-combi")
+	public String addBetToCombi(Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+
+		model.addAttribute("emptyBet", new Combi());
+
+		return "add-horse-racing-bet";
+	}
+
+	@PostMapping(value = "/save-bet-to-combi")
+	public String saveBetToCombi(Bet bet, BindingResult bindingresult, Principal principal)
+			throws IllegalStateException, IOException {
+
+		System.out.println(bindingresult.getAllErrors());
+
+		if (bindingresult.hasErrors()
+//				&& field != "sport"
+				) {
+			return "redirect:/add-horse-racing-bet-to-combi";
+		}
+
+		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
+//		bet.setCombi;
+		//////////////////
+//		bankrollRepository.save(bankroll);
+				
+		return "redirect:/bankroll-details";
+	}
+	
+	@GetMapping("/add-bet-to-bankroll")
+	public String addBetToBankroll(Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+
+		model.addAttribute("emptyBet", new Combi());
+
+		return "add-combi";
+	}
+
+	@PostMapping(value = "/save-bet-to-bankroll")
+	public String saveBetToBankroll(Bet bet, BindingResult bindingresult, Principal principal)
+			throws IllegalStateException, IOException {
+
+		System.out.println(bindingresult.getAllErrors());
+
+		if (bindingresult.hasErrors()) {
+			return "redirect:/add-bet-to-bankroll";
+		}
+
+		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
+//		bet.setStartDate(LocalDate.now());
+//		bankrollRepository.save(bankroll);
+				
+		return "redirect:/bankroll-details";
 	}
 
 }

@@ -32,7 +32,7 @@ public class Bankroll {
 
 	private double startAmount;
 	
-	private double currentAmount;
+//	private double currentAmount;
 
 	@ManyToOne
 	private Gambler gambler;
@@ -46,10 +46,8 @@ public class Bankroll {
 	
 	
 	public double calculateCurrentAmount() {
-		
-		
-		
-		return 1000000d;
+
+		return this.startAmount + benefit();
 	}
 	
 	public int betNumber() {

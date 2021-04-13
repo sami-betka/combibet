@@ -27,6 +27,8 @@ public class Combi extends Bet{
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
+	
+	private boolean isCurrent;
 	    
     @OneToMany
     private List<Bet> bets;

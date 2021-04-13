@@ -44,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
  
         http.csrf().disable();
+        
+        http.authorizeRequests().antMatchers("/js/**", "/css/**").permitAll();
  
         // The pages does not require login
         http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
