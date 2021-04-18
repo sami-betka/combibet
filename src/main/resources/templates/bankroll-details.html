@@ -56,29 +56,48 @@
             <div class="card op" style="">
               <div class="card-header">
                 <h4 class="card-title"  style="font-weight: bold; color: blue;">Détails bankroll</h4>
-<a th:href="@{/add-combi-to-bankroll?id={id}(id=${id})}"><button>Ajouter combi</button></a>    </div>
+<a th:href="@{/add-combi-to-bankroll?id={id}(id=${id})}"><button class="btn btn-primary">Ajouter combi</button></a>    
+</div>
               
               
-              <div th:each="b:${betlist}" class="card-body">
+              <div class="card-body">
  
- 
- 
- <div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button th:utext="hhhhhh" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        </button>
-      </h2>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
-      </div>
+ <div th:each="c:${combiList}">
+<p>
+<!--   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> -->
+<!--     Link with href -->
+<!--   </a> -->
+  <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" th:data-target="${'#collapseExample'+c.id}"
+ aria-expanded="false" aria-controls="collapseExample">
+    Button with data-target
+  </button>
+</p>
+<div class="collapse show" th:id="${'collapseExample'+c.id}" style="padding-left: 40px;">
+  <div th:each="b:${c.bets}" class="card card-body" th:classappend ="${b.status.name == 'Gagnant'} ? 'text-white btn-success' : '' " th:style ="${b.status.name == 'Gagnant'} ? 'background-color: ' : '' ">
+    <div th:utext="b.name">
+    
     </div>
   </div>
+</div> 
+
+
 </div>
+<!--  <div class="accordion" id="accordionExample"> -->
+<!--   <div class="card"> -->
+<!--     <div class="card-header" id="headingOne"> -->
+<!--       <h2 class="mb-0"> -->
+<!--         <button th:utext="hhhhhh" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
+<!--         </button> -->
+<!--       </h2> -->
+<!--     </div> -->
+
+<!--     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample"> -->
+<!--       <div class="card-body"> -->
+<!--         Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class. -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
  
  
  

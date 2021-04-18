@@ -58,6 +58,7 @@
                 <h4 class="card-title"  style="font-weight: bold; color: blue;">Bankrolls</h4>
                 
               </div>
+              
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-sm table-bordered table-hover">
@@ -72,10 +73,9 @@
                        <th></th>
                        <th></th>
                        <th></th>
-                       
-                      </tr>
+                     </tr>
                     </thead>
-                     <tfoot>
+                        <tfoot>
 											<tr>
 												<th>Nom</th>
 												<th>Date de création</th>
@@ -83,14 +83,14 @@
 												<th>Capital actuel</th>
 												<th>Nombre de paris </th>
 												<th>Bénéfice</th>
-<!-- 												<th></th> -->
-<!-- 												<th></th> -->
-<!-- 	     										<th></th> -->
+												<th></th>
+												<th></th>
+	     										<th></th>
 											</tr>
-										</tfoot>
+						</tfoot>
                     <tbody>
                                       <tr th:each="bankroll:${bankrollList}">
-                                            <td class="text-dark" style="" th:text="${bankroll.name}"></td>
+                                            <td class="text-dark" style="" th:text="${bankroll.name + '-' + bankroll.id}"></td>
 
                                             <td class="text-dark" style="" th:text="${bankroll.startDate}"></td>
                                             

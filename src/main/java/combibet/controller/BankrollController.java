@@ -3,19 +3,23 @@ package combibet.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import combibet.entity.Bankroll;
 import combibet.entity.Bet;
+import combibet.entity.BetStatus;
 import combibet.entity.Combi;
 import combibet.entity.Gambler;
+import combibet.entity.HorseRacingBet;
 import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
@@ -65,9 +69,11 @@ public class BankrollController {
 //		List<Bet> betList = betRepository.findAll();
 		
 		model.addAttribute("id", id);
-		model.addAttribute("betList", bankrollRepository.findById(id).get().getBets());
+		model.addAttribute("combiList", bankrollRepository.findById(id).get().getBets());
 
 //		model.addAttribute("active", true);
+		System.out.println(bankrollRepository.findById(id).get().getBets().size());
+
 
 		return "bankroll-details";
 //		return "bankroll-list";
@@ -103,6 +109,14 @@ public class BankrollController {
 		return "redirect:/bankroll-list";
 	}
 	
+	@GetMapping("/delete-bankroll/{id}")
+	public String deleteBankroll(@PathVariable("id") Long id) {
+		
+		bankrollRepository.deleteById(id);
+		
+		return "redirect:/bankroll-list";
+	}
+	
 	@GetMapping("/add-combi-to-bankroll")
 	public String addCombiToBankroll(@RequestParam(name = "id") Long id, Model model, Principal principal) {
 
@@ -112,13 +126,32 @@ public class BankrollController {
 		
 		Bankroll bankroll = bankrollRepository.findById(id).get();
 		Combi combi = new Combi();
+		combi.setBets(new ArrayList<>());
+		
+//A suuprimer		
+		for (int i=0; i<5; i++) {
+			Bet bet = new HorseRacingBet();
+			bet.setDate(LocalDate.now());
+			bet.setSelection("selecta");
+			bet.setOdd(i+1);
+			if(i == 2 || i == 4) {
+				bet.setStatus(BetStatus.WON);
+			}else {
+				bet.setStatus(BetStatus.PENDING);
+			}
+			betRepository.save(bet);
+			System.out.println(bet.getStatus().toString());
+			
+			combi.getBets().add(bet);
+		}
+		///////////////////////
+		
 		combi.setBankroll(bankroll);
 		bankroll.getBets().add(combi);
 		betRepository.save(combi);
 		bankrollRepository.save(bankroll);
 
 //		model.addAttribute("emptyBet", new Combi());
-		System.out.println(bankrollRepository.findById(id).get().getBets().size());
 
 		return "redirect:/bankroll-details?id=" + id;
 	}	

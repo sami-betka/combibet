@@ -3,6 +3,7 @@ package combibet.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,7 +38,7 @@ public class Bankroll {
 	@ManyToOne
 	private Gambler gambler;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Bet> bets;
 	
 	private boolean isActive;
@@ -61,13 +62,14 @@ public class Bankroll {
 		
 		for(Bet bet : this.bets){
 			
-			if (bet.getStatus().equals(BetStatus.WON)) {
+			if (bet.getStatus() == BetStatus.WON) {
 				benefitAmount += (bet.getOdd() * bet.getAnte()) - bet.getAnte();
 			}
-			if (bet.getStatus().equals(BetStatus.LOSE)) {
+			if (bet.getStatus() == BetStatus.LOSE) {
 				benefitAmount -= bet.getAnte();
 			}
 		}
+	
 		
 		return benefitAmount;
 	}
