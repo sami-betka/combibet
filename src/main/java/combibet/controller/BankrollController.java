@@ -3,6 +3,7 @@ package combibet.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,6 +146,7 @@ public class BankrollController {
 			System.out.println(bet.getStatus().toString());
 			
 			combi.getBets().add(bet);
+			combi.setStartDate(LocalDate.now());
 		}
 		///////////////////////
 		
@@ -160,19 +162,20 @@ public class BankrollController {
 	
 	
 	@GetMapping("/add-horse-racing-bet-to-combi")
-	public String addBetToCombi(Model model, Principal principal) {
+	public String addBetToCombi(@RequestParam(name = "id") Long id, Model model, Principal principal) {
 
 		if (principal == null) {
 			return "redirect:/login";
 		}
-
+		
+		model.addAttribute("id", id);
 		model.addAttribute("emptyBet", new Combi());
 
 		return "add-horse-racing-bet";
 	}
 
 	@PostMapping(value = "/save-bet-to-combi")
-	public String saveBetToCombi(Bet bet, BindingResult bindingresult, Principal principal)
+	public String saveBetToCombi(@RequestParam(name = "id") Long id, Bet bet, BindingResult bindingresult, Principal principal)
 			throws IllegalStateException, IOException {
 
 		System.out.println(bindingresult.getAllErrors());

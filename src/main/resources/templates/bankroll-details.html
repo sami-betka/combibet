@@ -65,12 +65,12 @@
  
  <div th:each="c:${combiList}">
 <p>
-  <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" th:data-target="${'#collapseExample'+c.id}"
+  <button th:utext="${c.startDate}" class="btn btn-primary btn-block" type="button" data-toggle="collapse" th:data-target="${'#collapseExample'+c.id}"
  aria-expanded="false" aria-controls="collapseExample">
-    Button with data-target
   </button>
+  <a class="" href="">Ajouter un pari</a>
 </p>
-<div class="collapse show" th:id="${'collapseExample'+c.id}" style="padding-left: 40px; padding-right: 40px;">
+<div class="collapse" th:id="${'collapseExample'+c.id}" style="padding-left: 40px; padding-right: 40px;">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="">
@@ -137,8 +137,8 @@
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.status.name}">Perdant</td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${bet.status.name}">En attente...</td>
                                        
-<!--                                             <td> <a class="text-primary" th:href="@{'/edit-bet/'+${bet.id}}">Modifier</a></td> -->
-<!--                                             <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet/'+${bet.id}}">Supprimer</a></td> -->
+                                            <td> <a class="text-primary" th:href="@{'/edit-bet/'+${bet.id}}">Modifier</a></td>
+                                            <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet/'+${bet.id}}">Supprimer</a></td>
                                        
                                        </tr>
                     </tbody>
