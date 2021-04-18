@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import combibet.entity.Bankroll;
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
+import combibet.entity.BetType;
 import combibet.entity.Combi;
 import combibet.entity.Gambler;
 import combibet.entity.HorseRacingBet;
@@ -139,6 +140,7 @@ public class BankrollController {
 			}else {
 				bet.setStatus(BetStatus.PENDING);
 			}
+			bet.setType(BetType.COUPLE_GAGNANT);
 			betRepository.save(bet);
 			System.out.println(bet.getStatus().toString());
 			

@@ -42,6 +42,8 @@ public abstract class Bet {
 		
 	private BetStatus status;
 	
+	private BetType type;
+	
 	private String beforeComment;
 	
 	private String afterComment;
