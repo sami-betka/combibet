@@ -187,7 +187,7 @@ public class BankrollController {
 		}
 
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
-//		bet.setCombi;
+		bet.setCombi((Combi) betRepository.findById(id).get());
 		//////////////////
 //		bankrollRepository.save(bankroll);
 				

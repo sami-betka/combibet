@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -39,6 +40,9 @@ public abstract class Bet {
 	
 	@ManyToOne
 	private Bankroll bankroll;
+	
+	@ManyToOne
+	private Combi combi;
 		
 	private BetStatus status;
 	
