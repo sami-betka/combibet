@@ -1,6 +1,6 @@
 package combibet.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,8 +25,10 @@ public abstract class Bet {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime date;
+	
+	private String formattedDate;
 	
 	private String selection;
 	
@@ -38,11 +39,11 @@ public abstract class Bet {
 	@ManyToOne
 	private Gambler gambler;
 	
-	@ManyToOne
-	private Bankroll bankroll;
+//	@ManyToOne
+//	private Bankroll bankroll;
 	
-	@ManyToOne
-	private Combi combi;
+//	@ManyToOne
+//	private Combi combi;
 		
 	private BetStatus status;
 	

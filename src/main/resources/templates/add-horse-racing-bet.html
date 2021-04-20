@@ -67,11 +67,11 @@
 					<div class="card-body">
 
 
-						<form class="user" th:action="@{/save-horse-racing-bet}"
+						<form class="user" th:action="@{/save-horse-racing-bet-to-combi?id={id}(id=${id})}"
 							th:object="${emptyBet}" method="POST">
 
 							<div class="form-group">
-								<input th:field="*{date}" type="date"
+								<input th:field="*{date}" type="datetime-local"
 									class="form-control form-control-user" id="" placeholder="Date">
 							</div>
 

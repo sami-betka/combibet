@@ -1,6 +1,6 @@
 package combibet.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,11 +25,13 @@ public class Bankroll {
 	
 	private String name;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime startDate;
+	
+	private String formattedStartDate;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate endDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime endDate;
 
 	private double startAmount;
 	
@@ -39,7 +41,7 @@ public class Bankroll {
 	private Gambler gambler;
 
 	@OneToMany(cascade = CascadeType.REMOVE)
-	private List<Bet> bets;
+	private List<Combi> bets;
 	
 	private boolean isActive;
 	

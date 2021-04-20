@@ -57,7 +57,8 @@
             <div class="card op" style="">
               <div class="card-header">
                 <h4 class="card-title"  style="font-weight: bold; color: blue;">Détails bankroll</h4>
-<a th:href="@{/add-combi-to-bankroll?id={id}(id=${id})}"><button class="btn btn-primary">Ajouter combi</button></a>    
+<a th:href="@{/add-combi-to-bankroll?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+">Ajouter combi</button></a>    
 </div>
               
               
@@ -65,12 +66,14 @@
  
  <div th:each="c:${combiList}">
 <p>
-  <button th:utext="${c.startDate}" class="btn btn-primary btn-block" type="button" data-toggle="collapse" th:data-target="${'#collapseExample'+c.id}"
- aria-expanded="false" aria-controls="collapseExample">
+  <button th:utext="${c.formatStartDate()}" class="btn btn-primary btn-block" type="button" data-toggle="collapse" th:data-target="${'#collapseExample'+c.id}"
+ aria-expanded="false" aria-controls="collapseExample" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ ">
   </button>
-  <a class="" href="">Ajouter un pari</a>
 </p>
-<div class="collapse" th:id="${'collapseExample'+c.id}" style="padding-left: 40px; padding-right: 40px;">
+<div class="collapse" th:classappend="${show} ? show : '' " th:id="${'collapseExample'+c.id}" style="padding-left: 40px; padding-right: 40px;">
+                 <button class="btn btn-primary" th:href="@{'/add-horse-racing-bet-to-combi'+ ${c.id}}" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Ajouter un pari</button>
+               
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="">
