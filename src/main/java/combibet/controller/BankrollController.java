@@ -3,7 +3,6 @@ package combibet.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,18 @@ import combibet.entity.Combi;
 import combibet.entity.Gambler;
 import combibet.entity.HorseRacingBet;
 import combibet.repository.BankrollRepository;
-import combibet.repository.BetRepository;
+import combibet.repository.CombiRepository;
 import combibet.repository.GamblerRepository;
+import combibet.repository.HorseRacingBetRepository;
 
 @Controller
 public class BankrollController {
 
 	@Autowired
-	BetRepository betRepository;
+	CombiRepository combiRepository;
+	
+	@Autowired
+	HorseRacingBetRepository horseRacingBetRepository;
 
 	@Autowired
 	BankrollRepository bankrollRepository;
@@ -152,7 +155,7 @@ public class BankrollController {
 
 		combi.setBankroll(bankroll);
 		bankroll.getBets().add(combi);
-		Combi savedCombi = betRepository.save(combi);
+		Combi savedCombi = combiRepository.save(combi);
 		bankrollRepository.save(bankroll);
 
         System.out.println(savedCombi.getId());
@@ -170,7 +173,7 @@ public class BankrollController {
 		model.addAttribute("id", id);
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
-		model.addAttribute("emptyBet", new Combi());
+		model.addAttribute("emptyBet", new HorseRacingBet());
 
 		return "add-horse-racing-bet";
 	}
@@ -182,27 +185,27 @@ public class BankrollController {
 		if (principal == null) {
 			return "redirect:/login";
 		}
-		if (bindingresult.hasErrors()
-//				&& field != "sport"
-		) {
+		if (bindingresult.hasErrors()) {
+//			System.out.println(bet.getDate().toString());
+			System.out.println(bindingresult.getAllErrors().toString());
 			return "redirect:/add-horse-racing-bet-to-combi?id=" + id;
 		}
 		
-		Combi combi = (Combi) betRepository.findById(id).get();
+		Combi combi = combiRepository.findById(id).get();
 		combi.setStartDate(LocalDateTime.now());
-		if(combi.getBets() == null || combi.getBets().isEmpty()) {
+		if(combi.getBets() == null) {
 			combi.setBets(new ArrayList<>());
 		}
 
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
-//		bet.setCombi(combi);
+		bet.setCombi(combi);
 		
 		combi.getBets().add(bet);
 		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get(); 
 		bankroll.getBets().add(combi);
 		
-		betRepository.save(bet);
-		betRepository.save(combi);
+		horseRacingBetRepository.save(bet);
+		combiRepository.save(combi);
 		bankrollRepository.save(bankroll);
 		
 		//////////////////

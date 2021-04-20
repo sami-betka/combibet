@@ -40,7 +40,7 @@ public class Bankroll {
 	@ManyToOne
 	private Gambler gambler;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "bankroll")
 	private List<Combi> bets;
 	
 	private boolean isActive;
@@ -62,14 +62,10 @@ public class Bankroll {
 		
 		double benefitAmount = 0;
 		
-		for(Bet bet : this.bets){
+		for(Combi combi : this.bets){
 			
-			if (bet.getStatus() == BetStatus.WON) {
-				benefitAmount += (bet.getOdd() * bet.getAnte()) - bet.getAnte();
-			}
-			if (bet.getStatus() == BetStatus.LOSE) {
-				benefitAmount -= bet.getAnte();
-			}
+			benefitAmount += combi.benefit();
+		
 		}
 	
 		
