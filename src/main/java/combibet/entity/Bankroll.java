@@ -41,11 +41,9 @@ public class Bankroll {
 	private Gambler gambler;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "bankroll")
-	private List<Combi> bets;
+	private List<Combi> combis;
 	
 	private boolean isActive;
-	
-	
 	
 	
 	public double calculateCurrentAmount() {
@@ -55,14 +53,14 @@ public class Bankroll {
 	
 	public int betNumber() {
 		
-		return this.bets.size();
+		return this.combis.size();
 	}
 	
 	public double benefit () {
 		
 		double benefitAmount = 0;
 		
-		for(Combi combi : this.bets){
+		for(Combi combi : this.combis){
 			
 			benefitAmount += combi.benefit();
 		

@@ -1,12 +1,13 @@
 package combibet.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -52,6 +53,7 @@ private String selection;
 //	private Bankroll bankroll;
 	
 	@ManyToOne
+	@JoinColumn( name="combi_id" )
 	private Combi combi;
 		
 	private BetStatus status;
@@ -61,4 +63,19 @@ private String selection;
 	private String beforeComment;
 	
 	private String afterComment;
+	
+	
+	   public String formatDate() {
+	    	
+	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+			LocalDateTime dateTime = this.date;
+			String formattedDateTime = dateTime.format(formatter);
+//			System.out.println(formattedDateTime);
+			
+//			formattedDateTime.replace("T", " ");
+			
+			return formattedDateTime.replace("T", " ");
+	    }
+	
+	
 }

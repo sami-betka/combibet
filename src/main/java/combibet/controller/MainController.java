@@ -13,16 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import combibet.entity.Gambler;
 import combibet.entity.UserRole;
-import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
 import combibet.repository.UserRoleRepository;
 
 @Controller
 public class MainController {
-	
-	@Autowired
-	BetRepository betRepository;
-	
+		
 	@Autowired
 	GamblerRepository gamblerRepository;
 	

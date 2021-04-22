@@ -30,7 +30,7 @@ public class Gambler {
 	private String email;
 	
 	@OneToMany(mappedBy="gambler")
-	private List <Bet> bets = new ArrayList<Bet>();
+	private List <HorseRacingBet> bets = new ArrayList<HorseRacingBet>();
 	
 	
 }
