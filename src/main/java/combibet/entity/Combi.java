@@ -20,6 +20,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +28,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @EqualsAndHashCode
+@ToString
 //@DiscriminatorValue("C")
 public class Combi {
 	
@@ -68,15 +70,15 @@ public class Combi {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "combi")
     private List<HorseRacingBet> bets;
     
-    public String formatStartDate() {
-    	
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		LocalDateTime dateTime = this.startDate;
-		String formattedDateTime = dateTime.format(formatter);
-//		System.out.println(formattedDateTime);
-		
-		return formattedDateTime;
-    }
+//    public String formatStartDate() {
+//    	
+//    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//		LocalDateTime dateTime = this.startDate;
+//		String formattedDateTime = dateTime.format(formatter);
+////		System.out.println(formattedDateTime);
+//		
+//		return formattedDateTime;
+//    }
     
 	public int betNumber() {
 		
@@ -100,6 +102,80 @@ public class Combi {
 		
 		return benefitAmount;
 	}
+	
+
+	
+	
+	  public String formatStartDate() {
+  		
+		  LocalDateTime date = this.startDate;
+  		
+  		String day = "";
+  		String month = "";
+
+  		
+  		if(date.getDayOfWeek().toString() == "MONDAY") {
+  			day = "Lundi";
+  		}
+  		if(date.getDayOfWeek().toString() == "TUESDAY") {
+  			day = "Mardi";
+  		}
+  		if(date.getDayOfWeek().toString() == "WEDNESDAY") {
+  			day = "Mercredi";
+  		}
+  		if(date.getDayOfWeek().toString() == "THURSDAY") {
+  			day = "Jeudi";
+  		}
+  		if(date.getDayOfWeek().toString() == "FRIDAY") {
+  			day = "Vendredi";
+  		}
+  		if(date.getDayOfWeek().toString() == "SATURDAY") {
+  			day = "Samedi";
+  		}
+  		if(date.getDayOfWeek().toString() == "SUNDAY") {
+  			day = "Dimanche";
+  		}
+  		
+  		
+  		if(date.getMonth().toString() == "JANUARY") {
+  			month = "Janvier";
+  		}
+  		if(date.getMonth().toString() == "FEBRUARY") {
+  			month = "Février";
+  		}
+  		if(date.getMonth().toString() == "MARCH") {
+  			month = "Mars";
+  		}
+  		if(date.getMonth().toString() == "APRIL") {
+  			month = "Avril";
+  		}
+  		if(date.getMonth().toString() == "MAY") {
+  			month = "Mai";
+  		}
+  		if(date.getMonth().toString() == "JUNE") {
+  			month = "Juin";
+  		}
+  		if(date.getMonth().toString() == "JULY") {
+  			month = "Juillet";
+  		}
+  		if(date.getMonth().toString() == "AUGUST") {
+  			month = "Août";
+  		}
+  		if(date.getMonth().toString() == "SEPTEMBER") {
+  			month = "Septembre";
+  		}
+  		if(date.getMonth().toString() == "OCTOBER") {
+  			month = "Octobre";
+  		}
+  		if(date.getMonth().toString() == "NOVEMBER") {
+  			month = "Novembre";
+  		}
+  		if(date.getMonth().toString() == "DECEMBER") {
+  			month = "Décembre";
+  		}
+  		
+  		return day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
+  	}
     
     
 }

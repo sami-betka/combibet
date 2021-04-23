@@ -32,5 +32,8 @@ public class Gambler {
 	@OneToMany(mappedBy="gambler")
 	private List <HorseRacingBet> bets = new ArrayList<HorseRacingBet>();
 	
+	@OneToMany(mappedBy="gambler")
+	private List <Combi> combis = new ArrayList<Combi>();
+	
 	
 }

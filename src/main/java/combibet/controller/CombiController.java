@@ -13,7 +13,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
+import combibet.entity.Combi;
 import combibet.entity.HorseRacingBet;
+import combibet.repository.CombiRepository;
 import combibet.repository.HorseRacingBetRepository;
 
 
@@ -22,6 +24,10 @@ public class CombiController {
 	
 	@Autowired
 	HorseRacingBetRepository horseRacingBetRepository;
+	
+	@Autowired
+	CombiRepository combiRepository;
+
 	
 	@RequestMapping(value = "/edit-bet")
 	public String editHorseRacingBet(@RequestParam("id") Long id, Model model, Principal principal) {
@@ -53,12 +59,24 @@ public class CombiController {
 		}
 
 		HorseRacingBet hrb =  horseRacingBetRepository.findById(bet.getId()).get();
-		System.out.println(hrb.getCombi());
-		horseRacingBetRepository.save(bet);
+		hrb.setDate(bet.getDate());
+		hrb.setType(bet.getType());
+		hrb.setSelection(bet.getSelection());
+		hrb.setOdd(bet.getOdd());
+		hrb.setStatus(bet.getStatus());
+		
+//		System.out.println(hrb.toString());
+		horseRacingBetRepository.save(hrb);
+		
+		if(bet.getStatus().equals(BetStatus.LOSE)) {
+			Combi combi = combiRepository.findById(hrb.getCombi().getId()).get();
+			combi.setCurrent(false);
+			combiRepository.save(combi);
+		}
 
 		redirect.addFlashAttribute("show", hrb.getCombi().getId());
 		
-		return "redirect:/bankroll-details?=" + hrb.getCombi().getBankroll().getId();
+		return "redirect:/bankroll-details?id=" + hrb.getCombi().getBankroll().getId();
 		
 	}
 }

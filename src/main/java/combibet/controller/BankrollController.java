@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,7 +77,7 @@ public class BankrollController {
 		model.addAttribute("combiList", bankrollRepository.findById(id).get().getCombis());
 
 //		model.addAttribute("active", true);
-		System.out.println(bankrollRepository.findById(id).get().getCombis().size());
+		System.out.println(bankrollRepository.findById(id).get().getStartDate().getDayOfWeek());
 
 		return "bankroll-details";
 //		return "bankroll-list";
@@ -155,8 +156,8 @@ public class BankrollController {
 		combi.setBankroll(bankroll);
 		combi.setStartDate(LocalDateTime.now());
 		combi.setCurrent(true);
-		bankroll.getCombis().add(combi);
 		Combi savedCombi = combiRepository.save(combi);
+		bankroll.getCombis().add(savedCombi);
 		bankrollRepository.save(bankroll);
 
         System.out.println(savedCombi.getId());
@@ -194,24 +195,34 @@ public class BankrollController {
 		
 		Combi combi = combiRepository.findById(id).get();
 //		combi.setStartDate(LocalDateTime.now());
-		if(combi.getBets() == null) {
-			combi.setBets(new ArrayList<>());
-		}
+//		if(combi.getBets() == null) {
+//			combi.setBets(new ArrayList<>());
+//		}
 
-		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
+		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));		
 		bet.setCombi(combi);
 		
-		combi.getBets().add(bet);
-		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get(); 
-		bankroll.getCombis().add(combi);
+		System.out.println(combi.getBets().size());
+		List <HorseRacingBet> betList = combi.getBets();
+		betList.add(horseRacingBetRepository.save(bet));
+//		combi.getBets().clear();
+		combi.setBets(betList);
+		System.out.println(combi.getBets().size());
+
+		if(bet.getStatus().equals(BetStatus.LOSE)) {
+			combi.setCurrent(false);
+		}
 		
-		horseRacingBetRepository.save(bet);
-		combiRepository.save(combi);
+		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get(); 
+		bankroll.getCombis().add(combiRepository.save(combi));
+		
 		bankrollRepository.save(bankroll);
 		
 		//////////////////
 
 		redirectAttributes.addFlashAttribute("show", id);
+//		System.out.println(combi.toString());
+		System.out.println(combi.getBets().size());
 		
 		return "redirect:/bankroll-details?id=" + bankroll.getId() ;
 	}
