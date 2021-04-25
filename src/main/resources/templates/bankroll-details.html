@@ -97,6 +97,9 @@
                       <th>
                         Cote
                       </th>
+                       <th>
+                        Mise
+                      </th>
                       <th>
                         Statut
                       </th>
@@ -139,6 +142,10 @@
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.odd}"></td>
+                                            
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.ante}"></td>
                                             
                                                                                         
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.status.name}"></td>
