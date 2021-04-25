@@ -17,15 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import combibet.entity.Bankroll;
+import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.Combi;
 import combibet.entity.Gambler;
 import combibet.entity.HorseRacingBet;
+import combibet.entity.SportBet;
 import combibet.repository.BankrollRepository;
+import combibet.repository.BetRepository;
 import combibet.repository.CombiRepository;
 import combibet.repository.GamblerRepository;
-import combibet.repository.HorseRacingBetRepository;
 
 @Controller
 public class BankrollController {
@@ -34,7 +36,7 @@ public class BankrollController {
 	CombiRepository combiRepository;
 	
 	@Autowired
-	HorseRacingBetRepository horseRacingBetRepository;
+	BetRepository betRepository;
 
 	@Autowired
 	BankrollRepository bankrollRepository;
@@ -154,6 +156,7 @@ public class BankrollController {
 		Combi combi = new Combi();
 		combi.setBets(new ArrayList<>());
 
+
 		combi.setBankroll(bankroll);
 		combi.setStartDate(LocalDateTime.now());
 		combi.setCurrent(true);
@@ -167,7 +170,7 @@ public class BankrollController {
 	}
 
 	@GetMapping("/add-horse-racing-bet-to-combi")
-	public String addBetToCombi(@RequestParam(name = "id") Long id, Model model, Principal principal) {
+	public String addHorseRacingBetToCombi(@RequestParam(name = "id") Long id, Model model, Principal principal) {
 
 		if (principal == null) {
 			return "redirect:/login";
@@ -200,12 +203,75 @@ public class BankrollController {
 
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));		
 		bet.setCombi(combi);
+		bet.setField("Hippique");
 		
-		List <HorseRacingBet> betList = combi.getBets();
-		HorseRacingBet savedHrb = horseRacingBetRepository.save(bet);
+		List <Bet> betList = combi.getBets();
+		HorseRacingBet savedHrb = betRepository.save(bet);
 		System.out.println(bet.getId());
 		System.out.println(savedHrb.getId());
 		betList.add(savedHrb);
+//		combi.getBets().clear();
+		combi.setBets(betList);
+
+		if(bet.getStatus().equals(BetStatus.LOSE)) {
+			combi.setCurrent(false);
+		}
+		
+		Combi savedCombi = combiRepository.save(combi);
+		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get(); 
+		bankroll.getCombis().add(savedCombi);
+		
+		bankrollRepository.save(bankroll);
+		
+		//////////////////
+
+		redirectAttributes.addFlashAttribute("show", id);
+		
+		return "redirect:/bankroll-details?id=" + bankroll.getId() ;
+	}
+	
+	@GetMapping("/add-sport-bet-to-combi")
+	public String addSportBetToCombi(@RequestParam(name = "id") Long id, Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+
+		model.addAttribute("id", id);
+//		model.addAttribute("types", BetType.values());
+		model.addAttribute("status", BetStatus.values());
+		model.addAttribute("emptyBet", new SportBet());
+
+		return "add-sport-bet";
+	}
+
+	@PostMapping(value = "/save-sport-bet-to-combi")
+	public String saveSportBetToCombi(@RequestParam(name = "id") Long id, SportBet bet, BindingResult bindingresult,
+			Principal principal, RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		if (bindingresult.hasErrors()) {
+//			System.out.println(bet.getDate().toString());
+			System.out.println(bindingresult.getAllErrors().toString());
+			return "redirect:/add-horse-racing-bet-to-combi?id=" + id;
+		}
+		
+		bet.setId(null);
+		Combi combi = combiRepository.findById(id).get();
+
+
+		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));		
+		bet.setCombi(combi);
+		bet.setField("Sport");
+		bet.setType(BetType.PARI_SPORTIF);
+		
+		List <Bet> betList = combi.getBets();
+		SportBet savedSb = betRepository.save(bet);
+		System.out.println(bet.getId());
+		System.out.println(savedSb.getId());
+		betList.add(savedSb);
 //		combi.getBets().clear();
 		combi.setBets(betList);
 

@@ -71,7 +71,7 @@ import lombok.ToString;
 	private Bankroll bankroll;
 	    
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "combi")
-    private List<HorseRacingBet> bets;
+    private List<Bet> bets;
     
 //    public String formatStartDate() {
 //    	
@@ -92,7 +92,7 @@ import lombok.ToString;
 		
 		double benefitAmount = 0;
 		
-		for(HorseRacingBet bet : this.bets){
+		for(Bet bet : this.bets){
 			
 			if (bet.getStatus() == BetStatus.WON) {
 				benefitAmount += (bet.getOdd() * bet.getAnte()) - bet.getAnte();

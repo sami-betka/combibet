@@ -11,7 +11,9 @@ public enum BetType {
 	TRIO_ORDRE("Trio ordre"),
 	TIERCE("Tiercé"),
 	DEUX_SUR_QUATRE("2sur4"),
-	MULTI("Multi");
+	MULTI("Multi"),
+	
+	PARI_SPORTIF("");
 	
 	private String name; 
 	
