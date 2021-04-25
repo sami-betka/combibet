@@ -80,7 +80,7 @@ public class BetController {
 //		hrb.setBeforeComment(bet.getBeforeComment());
 //		hrb.setField(bet.getField());
 		
-		betRepository.save(bet);
+		betRepository.save(hrb);
 
 		if (bet.getStatus().equals(BetStatus.LOSE)) {
 			Combi combi = hrb.getCombi();
@@ -145,11 +145,15 @@ public class BetController {
 		betRepository.deleteById(bet.getId());
 
 		Combi combi = combiRepository.findById(bet.getCombi().getId()).get();
-		for (Bet b : combi.getBets()) {
-			if (b.getStatus().equals(BetStatus.LOSE)) {
-				combi.setCurrent(false);
-				combiRepository.save(combi);
-			}
+//		for (Bet b : combi.getBets()) {
+//			if (b.getStatus().equals(BetStatus.LOSE)) {
+//				combi.setCurrent(false);
+//				combiRepository.save(combi);
+//			}
+//		}
+		if(bet.getStatus().equals(BetStatus.LOSE)) {
+			combi.setCurrent(true);
+			combiRepository.save(combi);
 		}
 		
 		redirectAttributes.addFlashAttribute("show", bet.getCombi().getId());

@@ -33,7 +33,9 @@ import lombok.ToString;
 @SequenceGenerator(
 		  name = "COMBI_SEQ_GENERATOR",
 		  sequenceName = "COMBI_SEQ",
-		  initialValue = 1, allocationSize = 1)public class Combi {
+		  initialValue = 1, allocationSize = 1)
+
+public class Combi {
 	
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
