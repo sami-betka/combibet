@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,10 +18,14 @@ import lombok.Data;
 
 @Entity
 @Data
+@SequenceGenerator(
+		  name = "BANKROLL_SEQ_GENERATOR",
+		  sequenceName = "BANKROLL_SEQ",
+		  initialValue = 1, allocationSize = 1)
 public class Bankroll {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BANKROLL_SEQ_GENERATOR")
 	private Long id;
 	
 	private String name;

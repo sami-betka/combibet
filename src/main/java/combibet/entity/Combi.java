@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,12 +30,14 @@ import lombok.ToString;
 @Entity
 @EqualsAndHashCode
 @ToString
-//@DiscriminatorValue("C")
-public class Combi {
+@SequenceGenerator(
+		  name = "COMBI_SEQ_GENERATOR",
+		  sequenceName = "COMBI_SEQ",
+		  initialValue = 1, allocationSize = 1)public class Combi {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BET_SEQ_GENERATOR")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMBI_SEQ_GENERATOR")
 	private Long id;
 		
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")

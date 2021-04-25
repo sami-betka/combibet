@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,11 +27,14 @@ import lombok.ToString;
 @Entity
 @ToString
 @EqualsAndHashCode
-//@DiscriminatorValue("HR")
-public class HorseRacingBet {
+@SequenceGenerator(
+		  name = "HORSE_RACING_BET_SEQ_GENERATOR",
+		  sequenceName = "HORSE_RACING_BET_SEQ",
+		  initialValue = 1, allocationSize = 1)public class HorseRacingBet {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HORSE_RACING_BET_SEQ_GENERATOR")
 	private Long id;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")

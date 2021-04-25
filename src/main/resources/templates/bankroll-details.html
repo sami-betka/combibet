@@ -66,7 +66,7 @@
  
  <div th:each="c:${combiList}">
 <p>
-  <button th:utext="${c.formatStartDate}" th:class="${c.isCurrent eq true} ? 'btn btn-warning btn-block' : 'btn btn-primary btn-block' " type="button" data-toggle="collapse" th:data-target="${'#collapseExample'+c.id}"
+  <button th:text="${c.isCurrent eq true} ? '(En cours) ' + *{c.formatStartDate} : *{c.formatStartDate}" th:class="${c.isCurrent eq true} ? 'btn btn-warning btn-block text-dark' : 'btn btn-primary btn-block' " type="button" data-toggle="collapse" th:data-target="${'#collapseExample'+c.id}"
  aria-expanded="false" aria-controls="collapseExample" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
  ">
   </button>

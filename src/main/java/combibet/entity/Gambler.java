@@ -8,15 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
 
 @Entity
 @Data
+@SequenceGenerator(
+		  name = "GAMBLER_SEQ_GENERATOR",
+		  sequenceName = "GAMBLER_SEQ",
+		  initialValue = 1, allocationSize = 1)
 public class Gambler {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GAMBLER_SEQ_GENERATOR")
+
 	private Long id;
 	
 	private String userName;

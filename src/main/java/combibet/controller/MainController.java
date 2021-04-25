@@ -75,7 +75,7 @@ public class MainController {
     public String logoutSuccessfulPage(Model model, Principal principal) {
         model.addAttribute("title", "Logout");
 //        navbarAttributes(model, principal);
-		return "redirect:/bet-list";
+		return "redirect:/bankroll-list";
 
 //        return "logoutSuccessfulPage";
     }

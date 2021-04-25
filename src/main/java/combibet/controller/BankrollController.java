@@ -71,13 +71,34 @@ public class BankrollController {
 
 //		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
-//		List<Bet> betList = betRepository.findAll();
+        Bankroll bankroll = bankrollRepository.findById(id).get();
+		
+//		for(Combi c : bankroll.getCombis()) {
+//			System.out.println(c.isCurrent());
+//			System.out.println(c.getBets().size());
+//			
+//			if(c.getBets().size() == 0) {
+//				c.setCurrent(true);
+//				combiRepository.save(c);
+//			}
+//			if(c.getBets().size() < 0) {
+//				
+//				for(HorseRacingBet b : c.getBets()) {
+//					if(b.getStatus().equals(BetStatus.LOSE)) {
+//						c.setCurrent(false);
+//						combiRepository.save(c);
+//					}
+//				}
+//		
+//			}			
+//			
+//		}
 
 		model.addAttribute("id", id);
-		model.addAttribute("combiList", bankrollRepository.findById(id).get().getCombis());
-
+		model.addAttribute("combiList", bankroll.getCombis());
+		
 //		model.addAttribute("active", true);
-		System.out.println(bankrollRepository.findById(id).get().getStartDate().getDayOfWeek());
+//		System.out.println(bankrollRepository.findById(id).get().getStartDate().getDayOfWeek());
 
 		return "bankroll-details";
 //		return "bankroll-list";
@@ -133,26 +154,6 @@ public class BankrollController {
 		Combi combi = new Combi();
 		combi.setBets(new ArrayList<>());
 
-//A suuprimer		
-//		for (int i = 0; i < 5; i++) {
-//			Bet bet = new HorseRacingBet();
-//			bet.setDate(LocalDateTime.now());
-//			bet.setSelection("selecta");
-//			bet.setOdd(i + 1);
-//			if (i == 2 || i == 4) {
-//				bet.setStatus(BetStatus.WON);
-//			} else {
-//				bet.setStatus(BetStatus.PENDING);
-//			}
-//			bet.setType(BetType.COUPLE_GAGNANT);
-//			betRepository.save(bet);
-//			System.out.println(bet.getStatus().toString());
-//
-//			combi.getBets().add(bet);
-//			combi.setStartDate(LocalDateTime.now());
-//		}
-		///////////////////////
-
 		combi.setBankroll(bankroll);
 		combi.setStartDate(LocalDateTime.now());
 		combi.setCurrent(true);
@@ -181,7 +182,7 @@ public class BankrollController {
 	}
 
 	@PostMapping(value = "/save-horse-racing-bet-to-combi")
-	public String saveBetToCombi(@RequestParam(name = "id") Long id, HorseRacingBet bet, BindingResult bindingresult,
+	public String saveHorseRacingBetToCombi(@RequestParam(name = "id") Long id, HorseRacingBet bet, BindingResult bindingresult,
 			Principal principal, RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
 
 		if (principal == null) {
@@ -193,36 +194,34 @@ public class BankrollController {
 			return "redirect:/add-horse-racing-bet-to-combi?id=" + id;
 		}
 		
+		bet.setId(null);
 		Combi combi = combiRepository.findById(id).get();
-//		combi.setStartDate(LocalDateTime.now());
-//		if(combi.getBets() == null) {
-//			combi.setBets(new ArrayList<>());
-//		}
+
 
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));		
 		bet.setCombi(combi);
 		
-		System.out.println(combi.getBets().size());
 		List <HorseRacingBet> betList = combi.getBets();
-		betList.add(horseRacingBetRepository.save(bet));
+		HorseRacingBet savedHrb = horseRacingBetRepository.save(bet);
+		System.out.println(bet.getId());
+		System.out.println(savedHrb.getId());
+		betList.add(savedHrb);
 //		combi.getBets().clear();
 		combi.setBets(betList);
-		System.out.println(combi.getBets().size());
 
 		if(bet.getStatus().equals(BetStatus.LOSE)) {
 			combi.setCurrent(false);
 		}
 		
+		Combi savedCombi = combiRepository.save(combi);
 		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get(); 
-		bankroll.getCombis().add(combiRepository.save(combi));
+		bankroll.getCombis().add(savedCombi);
 		
 		bankrollRepository.save(bankroll);
 		
 		//////////////////
 
 		redirectAttributes.addFlashAttribute("show", id);
-//		System.out.println(combi.toString());
-		System.out.println(combi.getBets().size());
 		
 		return "redirect:/bankroll-details?id=" + bankroll.getId() ;
 	}
