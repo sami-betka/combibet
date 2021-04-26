@@ -74,6 +74,8 @@
 <div class="collapse" th:classappend="${show eq c.id} ? show : '' " th:id="${'collapseExample'+c.id}" style="padding-left: 40px; padding-right: 40px;">
     <a th:href="@{/add-horse-racing-bet-to-combi?id={id}(id=${c.id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Ajouter un pari hippique</button></a>
     <a th:href="@{/add-sport-bet-to-combi?id={id}(id=${c.id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Ajouter un pari sportif</button></a>
+    <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-combi?id='+${c.id}}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Supprimer le combi</button></a>
+    
                
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">

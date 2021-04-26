@@ -148,7 +148,7 @@ public class BankrollController {
 	}
 
 	@GetMapping("/add-combi-to-bankroll")
-	public String addCombiToBankroll(@RequestParam(name = "id") Long id, Model model, Principal principal) {
+	public String addCombiToBankroll(@RequestParam(name = "id") Long id, Model model, Principal principal, RedirectAttributes redirectAttributes) {
 
 		if (principal == null) {
 			return "redirect:/login";
@@ -168,7 +168,9 @@ public class BankrollController {
 
         System.out.println(savedCombi.getId());
 		
-		return "redirect:/add-horse-racing-bet-to-combi?id=" + savedCombi.getId();
+		redirectAttributes.addFlashAttribute("show", savedCombi.getId());
+		return "redirect:/bankroll-details?id=" + id;
+//		return "redirect:/add-horse-racing-bet-to-combi?id=" + savedCombi.getId();
 	}
 
 	@GetMapping("/add-horse-racing-bet-to-combi")
