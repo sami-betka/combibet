@@ -75,5 +75,74 @@ public class Bankroll {
 		return benefitAmount;
 	}
 	
+	public String formatStartDate() {
+
+		LocalDateTime date = this.startDate;
+
+		String day = "";
+		String month = "";
+
+		if (date.getDayOfWeek().toString() == "MONDAY") {
+			day = "Lundi";
+		}
+		if (date.getDayOfWeek().toString() == "TUESDAY") {
+			day = "Mardi";
+		}
+		if (date.getDayOfWeek().toString() == "WEDNESDAY") {
+			day = "Mercredi";
+		}
+		if (date.getDayOfWeek().toString() == "THURSDAY") {
+			day = "Jeudi";
+		}
+		if (date.getDayOfWeek().toString() == "FRIDAY") {
+			day = "Vendredi";
+		}
+		if (date.getDayOfWeek().toString() == "SATURDAY") {
+			day = "Samedi";
+		}
+		if (date.getDayOfWeek().toString() == "SUNDAY") {
+			day = "Dimanche";
+		}
+
+		if (date.getMonth().toString() == "JANUARY") {
+			month = "Janvier";
+		}
+		if (date.getMonth().toString() == "FEBRUARY") {
+			month = "Février";
+		}
+		if (date.getMonth().toString() == "MARCH") {
+			month = "Mars";
+		}
+		if (date.getMonth().toString() == "APRIL") {
+			month = "Avril";
+		}
+		if (date.getMonth().toString() == "MAY") {
+			month = "Mai";
+		}
+		if (date.getMonth().toString() == "JUNE") {
+			month = "Juin";
+		}
+		if (date.getMonth().toString() == "JULY") {
+			month = "Juillet";
+		}
+		if (date.getMonth().toString() == "AUGUST") {
+			month = "Août";
+		}
+		if (date.getMonth().toString() == "SEPTEMBER") {
+			month = "Septembre";
+		}
+		if (date.getMonth().toString() == "OCTOBER") {
+			month = "Octobre";
+		}
+		if (date.getMonth().toString() == "NOVEMBER") {
+			month = "Novembre";
+		}
+		if (date.getMonth().toString() == "DECEMBER") {
+			month = "Décembre";
+		}
+
+		return day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
+	}
+	
 	
 }

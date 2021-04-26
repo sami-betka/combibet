@@ -75,37 +75,37 @@
                        <th></th>
                      </tr>
                     </thead>
-                        <tfoot>
-											<tr>
-												<th>Nom</th>
-												<th>Date de création</th>
-												<th>Capital de départ</th>
-												<th>Capital actuel</th>
-												<th>Nombre de paris </th>
-												<th>Bénéfice</th>
-												<th></th>
-												<th></th>
-	     										<th></th>
-											</tr>
-						</tfoot>
+<!--                         <tfoot> -->
+<!-- 											<tr> -->
+<!-- 												<th>Nom</th> -->
+<!-- 												<th>Date de création</th> -->
+<!-- 												<th>Capital de départ</th> -->
+<!-- 												<th>Capital actuel</th> -->
+<!-- 												<th>Nombre de paris </th> -->
+<!-- 												<th>Bénéfice</th> -->
+<!-- 												<th></th> -->
+<!-- 												<th></th> -->
+<!-- 	     										<th></th> -->
+<!-- 											</tr> -->
+<!-- 						</tfoot> -->
                     <tbody>
                                       <tr th:each="bankroll:${bankrollList}">
-                                            <td class="text-dark" style="" th:text="${bankroll.name + '-' + bankroll.id}"></td>
+                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.name + '-' + bankroll.id}"></td>
 
-                                            <td class="text-dark" style="" th:text="${bankroll.startDate}"></td>
+                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.formatStartDate}"></td>
                                             
-                                            <td class="text-dark" style="" th:text="${bankroll.startAmount}"></td>
+                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.startAmount}"></td>
                                             
-                                            <td class="text-dark" style="" th:text="${bankroll.calculateCurrentAmount}"></td>
+                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.calculateCurrentAmount}"></td>
                                             
-                                            <td class="text-dark" style="" th:text="${bankroll.betNumber}"></td>
+                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
                                             
-                                            <td class="text-dark" style="" th:text="${bankroll.benefit}"></td>
+                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.benefit}"></td>
                                        
                                             <td> <a class="text-primary" th:href="@{'/bankroll-details?id='+${bankroll.id}}">Détails</a></td>
                                             <td> <a class="text-success" th:href="@{'/edit-bankroll/'+${bankroll.id}}">Modifier</a></td>
                                             <td> <a class="text-danger" onclick="confirm('Etes vous sur de vouloir supprimer bankroll ?')" th:href="@{'/delete-bankroll/'+${bankroll.id}}">Supprimer</a></td>
-                                            <td> <a class="text-success" th:href="@{'/edit-bankroll-start-date/'+${bankroll.id}}">Modifier date de création</a></td>
+<!--                                             <td> <a class="text-success" th:href="@{'/edit-bankroll-start-date/'+${bankroll.id}}">Modifier date de création</a></td> -->
                                             
                                        
                                        </tr>
