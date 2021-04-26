@@ -97,7 +97,9 @@ public class BankrollController {
 //		}
 
 		model.addAttribute("id", id);
-		model.addAttribute("combiList", bankroll.getCombis());
+//		model.addAttribute("combiListAsc", bankroll.getCombis());
+		model.addAttribute("combiListAsc", combiRepository.findAllByBankrollOrderByStartDateAsc(bankroll));
+
 		
 //		model.addAttribute("active", true);
 //		System.out.println(bankrollRepository.findById(id).get().getStartDate().getDayOfWeek());

@@ -90,17 +90,17 @@
 									class="form-control form-control-user" id=""
 									placeholder="Sélection">
 							</div>
-
-							<div class="form-group">
-								<input th:field="*{odd}" type="number" step="0.01"
-									class="form-control form-control-user" id="" placeholder="Cote">
-							</div>
 							
 							<div class="form-group">
 								<input th:field="*{ante}" type="number" step="0.01"
 									class="form-control form-control-user" id="" placeholder="Mise">
 							</div>
 
+							<div class="form-group">
+								<input th:field="*{odd}" type="number" step="0.01"
+									class="form-control form-control-user" id="" placeholder="Cote">
+							</div>
+						
 							<div class="form-group">
 								<label>Statut:</label><br> 
 								<select th:field="*{status}" required="required">

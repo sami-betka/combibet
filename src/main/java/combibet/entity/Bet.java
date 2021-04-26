@@ -50,6 +50,8 @@ public abstract class Bet {
 	private String selection;
 
 	private double odd;
+	
+	private double currentOddInCombi;
 
 	private double ante;
 
