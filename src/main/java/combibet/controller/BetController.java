@@ -82,7 +82,12 @@ public class BetController {
 		
 		betRepository.save(hrb);
 
-		if (bet.getStatus().equals(BetStatus.LOSE)) {
+		if (!hrb.getStatus().equals(BetStatus.LOSE)) {
+			Combi combi = hrb.getCombi();
+			combi.setCurrent(true);
+			combiRepository.save(combi);
+		}
+		if (hrb.getStatus().equals(BetStatus.LOSE)) {
 			Combi combi = hrb.getCombi();
 			combi.setCurrent(false);
 			combiRepository.save(combi);
@@ -123,7 +128,12 @@ public class BetController {
 
 		betRepository.save(sb);
 
-		if (bet.getStatus().equals(BetStatus.LOSE)) {
+		if (!sb.getStatus().equals(BetStatus.LOSE)) {
+			Combi combi = sb.getCombi();
+			combi.setCurrent(true);
+			combiRepository.save(combi);
+		}
+		if (sb.getStatus().equals(BetStatus.LOSE)) {
 			Combi combi = sb.getCombi();
 			combi.setCurrent(false);
 			combiRepository.save(combi);
