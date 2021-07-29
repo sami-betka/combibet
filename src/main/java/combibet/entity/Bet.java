@@ -22,10 +22,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Getter
+//@Setter
 @Entity
 @ToString
 @EqualsAndHashCode
@@ -34,6 +34,30 @@ import lombok.ToString;
 @SequenceGenerator(name = "BET_SEQ_GENERATOR", sequenceName = "BET_SEQ", initialValue = 1, allocationSize = 1)
 
 public abstract class Bet {
+
+	public Bet() {
+		super();
+	}
+
+	public Bet(Long id, LocalDateTime date, String formattedDate, String field, String selection, double odd,
+			double currentOddInCombi, double ante, Gambler gambler, Combi combi, BetType type, BetStatus status,
+			String beforeComment, String afterComment) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.formattedDate = formattedDate;
+		this.field = field;
+		this.selection = selection;
+		this.odd = odd;
+		this.currentOddInCombi = currentOddInCombi;
+		this.ante = ante;
+		this.gambler = gambler;
+		this.combi = combi;
+		this.type = type;
+		this.status = status;
+		this.beforeComment = beforeComment;
+		this.afterComment = afterComment;
+	}
 
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,6 +161,118 @@ public abstract class Bet {
 		}
 
 		return day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public String getFormattedDate() {
+		return formattedDate;
+	}
+
+	public void setFormattedDate(String formattedDate) {
+		this.formattedDate = formattedDate;
+	}
+
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public String getSelection() {
+		return selection;
+	}
+
+	public void setSelection(String selection) {
+		this.selection = selection;
+	}
+
+	public double getOdd() {
+		return odd;
+	}
+
+	public void setOdd(double odd) {
+		this.odd = odd;
+	}
+
+	public double getCurrentOddInCombi() {
+		return currentOddInCombi;
+	}
+
+	public void setCurrentOddInCombi(double currentOddInCombi) {
+		this.currentOddInCombi = currentOddInCombi;
+	}
+
+	public double getAnte() {
+		return ante;
+	}
+
+	public void setAnte(double ante) {
+		this.ante = ante;
+	}
+
+	public Gambler getGambler() {
+		return gambler;
+	}
+
+	public void setGambler(Gambler gambler) {
+		this.gambler = gambler;
+	}
+
+	public Combi getCombi() {
+		return combi;
+	}
+
+	public void setCombi(Combi combi) {
+		this.combi = combi;
+	}
+
+	public BetType getType() {
+		return type;
+	}
+
+	public void setType(BetType type) {
+		this.type = type;
+	}
+
+	public BetStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(BetStatus status) {
+		this.status = status;
+	}
+
+	public String getBeforeComment() {
+		return beforeComment;
+	}
+
+	public void setBeforeComment(String beforeComment) {
+		this.beforeComment = beforeComment;
+	}
+
+	public String getAfterComment() {
+		return afterComment;
+	}
+
+	public void setAfterComment(String afterComment) {
+		this.afterComment = afterComment;
 	}
 
 }

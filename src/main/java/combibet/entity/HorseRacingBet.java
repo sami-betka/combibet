@@ -1,24 +1,17 @@
 package combibet.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Getter
+//@Setter
 @Entity
 @ToString
 //@EqualsAndHashCode
@@ -26,6 +19,17 @@ import lombok.ToString;
 @SequenceGenerator(name = "HORSE_RACING_BET_SEQ_GENERATOR", sequenceName = "HORSE_RACING_BET_SEQ", initialValue = 1, allocationSize = 1)
 
 public class HorseRacingBet extends Bet {
+
+public HorseRacingBet() {
+		super();
+	}
+
+public HorseRacingBet(int meeting, int race, Combi combi) {
+		super();
+		this.meeting = meeting;
+		this.race = race;
+		this.combi = combi;
+	}
 
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HORSE_RACING_BET_SEQ_GENERATOR")
@@ -52,6 +56,30 @@ public class HorseRacingBet extends Bet {
 	@ManyToOne
 	@JoinColumn(name = "combi_id")
 	private Combi combi;
+
+	public int getMeeting() {
+		return meeting;
+	}
+
+	public void setMeeting(int meeting) {
+		this.meeting = meeting;
+	}
+
+	public int getRace() {
+		return race;
+	}
+
+	public void setRace(int race) {
+		this.race = race;
+	}
+
+	public Combi getCombi() {
+		return combi;
+	}
+
+	public void setCombi(Combi combi) {
+		this.combi = combi;
+	}
 
 //	private BetStatus status;
 

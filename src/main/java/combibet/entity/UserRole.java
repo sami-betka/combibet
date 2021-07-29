@@ -16,9 +16,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
  
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Entity
 @SequenceGenerator(
 		  name = "USER_ROLE_SEQ_GENERATOR",
@@ -29,7 +29,18 @@ import lombok.NoArgsConstructor;
                 @UniqueConstraint(name = "USER_ROLE_UK", columnNames = { "User_Id", "Role_Id" }) })
 public class UserRole {
  
-    @Id
+    public UserRole() {
+		super();
+	}
+
+	public UserRole(Long id, Gambler user, AppRole appRole) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.appRole = appRole;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_ROLE_SEQ_GENERATOR")
     @Column(name = "Id", nullable = false)
     private Long id;
@@ -45,6 +56,30 @@ public class UserRole {
 	public UserRole(Gambler user, AppRole appRole) {
 		super();
 		this.user = user;
+		this.appRole = appRole;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Gambler getUser() {
+		return user;
+	}
+
+	public void setUser(Gambler user) {
+		this.user = user;
+	}
+
+	public AppRole getAppRole() {
+		return appRole;
+	}
+
+	public void setAppRole(AppRole appRole) {
 		this.appRole = appRole;
 	}
  

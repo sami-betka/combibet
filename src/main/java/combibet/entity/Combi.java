@@ -1,8 +1,6 @@
 package combibet.entity;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,23 +15,42 @@ import javax.persistence.SequenceGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Getter
+//@Setter
 @Entity
 @EqualsAndHashCode
 @ToString
 @SequenceGenerator(name = "COMBI_SEQ_GENERATOR", sequenceName = "COMBI_SEQ", initialValue = 1, allocationSize = 1)
 
 public class Combi {
+
+	public Combi() {
+		super();
+	}
+
+	public Combi(Long id, LocalDateTime startDate, String formattedStartDate, LocalDateTime endDate, double ante,
+			Gambler gambler, BetStatus status, BetType type, String beforeComment, String afterComment,
+			boolean isCurrent, Bankroll bankroll, List<Bet> bets) {
+		super();
+		this.id = id;
+		this.startDate = startDate;
+		this.formattedStartDate = formattedStartDate;
+		this.endDate = endDate;
+		this.ante = ante;
+		this.gambler = gambler;
+		this.status = status;
+		this.type = type;
+		this.beforeComment = beforeComment;
+		this.afterComment = afterComment;
+		this.isCurrent = isCurrent;
+		this.bankroll = bankroll;
+		this.bets = bets;
+	}
 
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -176,6 +193,110 @@ public class Combi {
 		}
 
 		return day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getFormattedStartDate() {
+		return formattedStartDate;
+	}
+
+	public void setFormattedStartDate(String formattedStartDate) {
+		this.formattedStartDate = formattedStartDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public double getAnte() {
+		return ante;
+	}
+
+	public void setAnte(double ante) {
+		this.ante = ante;
+	}
+
+	public Gambler getGambler() {
+		return gambler;
+	}
+
+	public void setGambler(Gambler gambler) {
+		this.gambler = gambler;
+	}
+
+	public BetStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(BetStatus status) {
+		this.status = status;
+	}
+
+	public BetType getType() {
+		return type;
+	}
+
+	public void setType(BetType type) {
+		this.type = type;
+	}
+
+	public String getBeforeComment() {
+		return beforeComment;
+	}
+
+	public void setBeforeComment(String beforeComment) {
+		this.beforeComment = beforeComment;
+	}
+
+	public String getAfterComment() {
+		return afterComment;
+	}
+
+	public void setAfterComment(String afterComment) {
+		this.afterComment = afterComment;
+	}
+
+	public boolean isCurrent() {
+		return isCurrent;
+	}
+
+	public void setCurrent(boolean isCurrent) {
+		this.isCurrent = isCurrent;
+	}
+
+	public Bankroll getBankroll() {
+		return bankroll;
+	}
+
+	public void setBankroll(Bankroll bankroll) {
+		this.bankroll = bankroll;
+	}
+
+	public List<Bet> getBets() {
+		return bets;
+	}
+
+	public void setBets(List<Bet> bets) {
+		this.bets = bets;
 	}
 
 }

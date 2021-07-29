@@ -24,6 +24,23 @@ import lombok.Setter;
 		  initialValue = 1, allocationSize = 1)
 public class Gambler {
 	
+	public Gambler() {
+		super();
+	}
+
+	public Gambler(Long id, String userName, String password, String firstName, String lastName, String email,
+			List<HorseRacingBet> bets, List<Combi> combis) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.bets = bets;
+		this.combis = combis;
+	}
+
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GAMBLER_SEQ_GENERATOR")

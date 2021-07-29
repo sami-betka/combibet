@@ -7,8 +7,8 @@ import javax.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 @Entity
 @DiscriminatorColumn(name="sb")
 @SequenceGenerator(

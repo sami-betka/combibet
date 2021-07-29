@@ -17,12 +17,30 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Entity
-@Data
+//@Data
 @SequenceGenerator(
 		  name = "BANKROLL_SEQ_GENERATOR",
 		  sequenceName = "BANKROLL_SEQ",
 		  initialValue = 1, allocationSize = 1)
 public class Bankroll {
+
+	public Bankroll() {
+		super();
+	}
+
+	public Bankroll(Long id, String name, LocalDateTime startDate, String formattedStartDate, LocalDateTime endDate,
+			double startAmount, Gambler gambler, List<Combi> combis, boolean isActive) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.startDate = startDate;
+		this.formattedStartDate = formattedStartDate;
+		this.endDate = endDate;
+		this.startAmount = startAmount;
+		this.gambler = gambler;
+		this.combis = combis;
+		this.isActive = isActive;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BANKROLL_SEQ_GENERATOR")
@@ -142,6 +160,78 @@ public class Bankroll {
 		}
 
 		return day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getFormattedStartDate() {
+		return formattedStartDate;
+	}
+
+	public void setFormattedStartDate(String formattedStartDate) {
+		this.formattedStartDate = formattedStartDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public double getStartAmount() {
+		return startAmount;
+	}
+
+	public void setStartAmount(double startAmount) {
+		this.startAmount = startAmount;
+	}
+
+	public Gambler getGambler() {
+		return gambler;
+	}
+
+	public void setGambler(Gambler gambler) {
+		this.gambler = gambler;
+	}
+
+	public List<Combi> getCombis() {
+		return combis;
+	}
+
+	public void setCombis(List<Combi> combis) {
+		this.combis = combis;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 	

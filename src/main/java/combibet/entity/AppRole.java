@@ -13,10 +13,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
  
-@Data
+//@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Table(name = "App_Role", //
         uniqueConstraints = { //
                 @UniqueConstraint(name = "APP_ROLE_UK", columnNames = "Role_Name") })
@@ -28,12 +28,38 @@ import lombok.NoArgsConstructor;
 
 public class AppRole {
      
-    @Id
+    public AppRole() {
+		super();
+	}
+
+	public AppRole(Long roleId, String roleName) {
+		super();
+		this.roleId = roleId;
+		this.roleName = roleName;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "APP_ROLE_SEQ_GENERATOR")
     @Column(name = "Role_Id", nullable = false)
     private Long roleId;
  
     @Column(name = "Role_Name", length = 30, nullable = false)
     private String roleName;
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
      
 }
