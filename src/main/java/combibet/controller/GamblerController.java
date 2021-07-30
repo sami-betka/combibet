@@ -45,6 +45,22 @@ public class GamblerController {
 		return "user";
 	}
 	
+	@GetMapping("/bet-list")
+	public String getMyBets (Model model, Principal principal) {
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
+		
+		
+		
+		model.addAttribute("betList", gambler.getBets());
+
+		return "bet-list";
+	}
+	
 	// Ajouter un utilisateur
 
 	@GetMapping(value = "/create-account")

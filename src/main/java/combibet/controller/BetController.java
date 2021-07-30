@@ -75,7 +75,7 @@ public class BetController {
 		hrb.setSelection(bet.getSelection());
 		hrb.setOdd(bet.getOdd());
 		hrb.setStatus(bet.getStatus());
-//		hrb.setAnte(bet.getAnte());
+		hrb.setAnte(bet.getAnte());
 //		hrb.setAfterComment(bet.getAfterComment());
 //		hrb.setBeforeComment(bet.getBeforeComment());
 //		hrb.setField(bet.getField());
