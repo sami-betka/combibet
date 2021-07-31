@@ -2,6 +2,7 @@ package combibet.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import combibet.entity.Bet;
+import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.Gambler;
 import combibet.entity.UserRole;
@@ -97,7 +99,9 @@ public class GamblerController {
 			sum = sum + b.getOdd();
 		}
 		Double benef = sum-bets.size();
-		model.addAttribute("benef", "Nombre de paris = " + bets.size() + ", gains = " + sum + ", Benefice = " + benef);
+		model.addAttribute("benef", "Nombre de paris = " + bets.size() + ", gains = " + sum + ", Benefice = " 
+		        + benef + ", Paris gagnants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.WON)).collect(Collectors.toList()).size() + ", Paris perdants = " 
+				+ bets.stream().filter(b-> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size());
 
 		return "bet-list";
 	}
