@@ -57,7 +57,35 @@
               <div class="card-header">
                 <h4 class="card-title">Tous mes paris</h4>
               </div>
+              <br>
+
               <div class="card-body">
+              
+                            <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filtrer par type de pari
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   <div th:each="t : ${types}" >
+    <a class="dropdown-item" th:text="${t.name}" th:href="@{'/filtered-bet-list?type='+${t}}"></a>
+<!--     <a class="dropdown-item" href="#">Another action</a> -->
+<!--     <a class="dropdown-item" href="#">Something else here</a> -->
+   </div>
+  </div>
+                           </div>
+                           
+                           <p th:text="${benef}"></p>
+                           
+<!--                            <div class="form-group"> -->
+<!-- 								<label class="text-dark" style="font-weight: bold;">Statut:</label><br>  -->
+<!-- 								<select class="form-control form-control-user" required="required"> -->
+<!-- 									<option value="">--Choisir--</option> -->
+
+<!-- 									<option th:each="t : ${types}" th:value="${t}" th:text="${t.name}"></option> -->
+<!-- 								</select> -->
+<!-- 							</div> -->
+                           
+              
                 <div class="table-responsive">
                   <table class="table table-sm table-bordered table-hover">
                     <thead class="">
@@ -72,6 +100,9 @@
                       </th>
                       <th>
                         Sélection
+                      </th>
+                       <th>
+                        Mise
                       </th>
                       <th>
                         Cote
@@ -89,6 +120,7 @@
 												<th>Date</th>
 												<th>Type</th>
 												<th>Sélection</th>
+												<th>Mise</th>
 												<th>Cote</th>
 												<th>Statut</th>
 												<th></th>
@@ -100,33 +132,35 @@
                                       <tr th:each="bet:${betList}">
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
 
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.date}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.date}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${bet.date}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.date}"></td>
                                             
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.type.name}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.type.name}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.type.name}"></td>
                                             
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.selection}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.selection}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.selection}"></td>
                                             
                                             
-                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.odd}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            
+                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.odd}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${bet.odd}"></td>
-                                            
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                                                                         
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.status.name}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.status.name}">Perdant</td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark" style="font-weight: bold;" th:text="${bet.status.name}">En attente...</td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.status.name}">En attente...</td>
                                        
-                                            <td> <a class="text-primary" th:href="@{'/edit-bet/'+${bet.id}}">Modifier</a></td>
-                                            <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet/'+${bet.id}}">Supprimer</a></td>
-                                       
+                                            <td> <a class="text-primary" th:href="@{'/edit-bet?id='+${bet.id}}">Modifier</a></td>
+                                            <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet?id='+${bet.id}}">Supprimer</a></td>                                       
                                        </tr>
                     </tbody>
                   </table>

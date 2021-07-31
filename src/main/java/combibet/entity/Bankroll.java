@@ -97,8 +97,9 @@ public class Bankroll {
 
 		LocalDateTime date = this.startDate;
 		
-		date = this.combis.get(0).getBets().get(0).getDate();
-
+		if(!this.combis.isEmpty() && !this.combis.get(0).getBets().isEmpty()) {
+		date = this.combis.get(0).betsAsc().get(0).getDate();
+		}
 		String day = "";
 		String month = "";
 

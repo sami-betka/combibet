@@ -127,8 +127,10 @@ public class Combi {
 	}
 
 	public String formatStartDate() {
+        
+		LocalDateTime date = this.startDate;
 
-		LocalDateTime date = this.bets.get(0).getDate();
+//		LocalDateTime date = this.bets.get(0).getDate();
 		
 
 		String day = "";

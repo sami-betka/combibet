@@ -75,12 +75,17 @@ public class BetController {
 		hrb.setSelection(bet.getSelection());
 		hrb.setOdd(bet.getOdd());
 		hrb.setStatus(bet.getStatus());
+		if(bet.getStatus().equals(BetStatus.LOSE)) {
+			hrb.setOdd(0d);
+		}
 		hrb.setAnte(bet.getAnte());
 //		hrb.setAfterComment(bet.getAfterComment());
 //		hrb.setBeforeComment(bet.getBeforeComment());
 //		hrb.setField(bet.getField());
 		
-		betRepository.save(hrb);
+		Bet savedHrb = betRepository.save(hrb);
+		savedHrb.getCombi().setStartDate(savedHrb.getCombi().betsAsc().get(0).getDate());
+		savedHrb.getCombi().getBankroll().setStartDate(savedHrb.getCombi().betsAsc().get(0).getDate());
 
 		if (!hrb.getStatus().equals(BetStatus.LOSE)) {
 			Combi combi = hrb.getCombi();
@@ -155,6 +160,9 @@ public class BetController {
 		betRepository.deleteById(bet.getId());
 
 		Combi combi = combiRepository.findById(bet.getCombi().getId()).get();
+		combi.setStartDate(combi.betsAsc().get(0).getDate());
+		combi.getBankroll().setStartDate(combi.betsAsc().get(0).getDate());	
+		combiRepository.save(combi);
 //		for (Bet b : combi.getBets()) {
 //			if (b.getStatus().equals(BetStatus.LOSE)) {
 //				combi.setCurrent(false);

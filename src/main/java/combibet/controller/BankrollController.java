@@ -132,8 +132,8 @@ public class BankrollController {
 		}
 
 		bankroll.setGambler(gamblerRepository.findByUserName(principal.getName()));
-//		bankroll.setStartDate(LocalDateTime.now());
-		bankroll.setStartDate(combiRepository.findAllByBankrollOrderByStartDateAsc(bankroll).get(0).getStartDate());
+		bankroll.setStartDate(LocalDateTime.now());
+//		bankroll.setStartDate(combiRepository.findAllByBankrollOrderByStartDateAsc(bankroll).get(0).getStartDate());
 		bankroll.setCombis(new ArrayList<>());
 		bankrollRepository.save(bankroll);
 
@@ -209,6 +209,9 @@ public class BankrollController {
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));		
 		bet.setCombi(combi);
 		bet.setField("Hippique");
+		if(bet.getStatus().equals(BetStatus.LOSE)) {
+			bet.setOdd(0d);
+		}
 		
 		List <Bet> betList = combi.getBets();
 		HorseRacingBet savedHrb = betRepository.save(bet);
@@ -221,10 +224,14 @@ public class BankrollController {
 		if(bet.getStatus().equals(BetStatus.LOSE)) {
 			combi.setCurrent(false);
 		}
-		
+		combi.setStartDate(combi.betsAsc().get(0).getDate());
 		Combi savedCombi = combiRepository.save(combi);
 		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get(); 
 		bankroll.getCombis().add(savedCombi);
+		
+		 if(bankroll.getCombis().size() == 1) {
+				bankroll.setStartDate(bankroll.getCombis().get(0).getBets().get(0).getDate());
+			}
 		
 		bankrollRepository.save(bankroll);
 		
