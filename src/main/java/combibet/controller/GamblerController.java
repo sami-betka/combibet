@@ -1,7 +1,9 @@
 package combibet.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +103,7 @@ public class GamblerController {
 			sum = sum + b.getOdd();
 		}
 		Double benef = sum-bets.size();
-		model.addAttribute("benef", "Nombre de paris = " + bets.size() + ", gains = " + sum + ", Benefice = " 
+		model.addAttribute("betListInfos", "Nombre de paris = " + bets.size() + ", gains = " + sum + ", Benefice = " 
 		        + benef + ", Paris gagnants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.WON)).collect(Collectors.toList()).size() + ", Paris perdants = " 
 				+ bets.stream().filter(b-> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size());
 
@@ -135,7 +137,46 @@ public class GamblerController {
 		return "redirect:/login";
 	}
 	
-	//////////////PRIVATE/////////////////
+///////////////////////////////////////////////////////PRIVATE///////////////////////////////////////////////////////////////////
+	
+	
+	
+	private Map<String, String> betListInfos (List<Bet> bets){
+		
+		Map<String, String> betListInfos = new HashMap<>();
+		
+		Double earnings = 0d;
+		for(Bet b : bets) {
+			earnings = earnings + b.getOdd();
+		}
+		Double benefit = earnings-bets.size();
+		
+		betListInfos.put("earnings", String.valueOf(earnings));
+		betListInfos.put("benefit", String.valueOf(benefit));
+		betListInfos.put("betsNumber", String.valueOf(bets.size()));
+		List<Double> wonBetsOdds = bets
+				.stream()
+				.filter(b-> b.getStatus().equals(BetStatus.WON))
+				.map(Bet::getOdd)
+				.collect(Collectors.toList());
+		
+		betListInfos.put("wonBetsNumber", String.valueOf(wonBetsOdds.size()));
+		betListInfos.put("lostBetsNumber", String.valueOf(bets
+				.stream()
+				.filter(b-> b.getStatus().equals(BetStatus.LOSE))
+				.collect(Collectors.toList())
+				.size()));
+
+		betListInfos.put("averageOdd", String.valueOf(wonBetsOdds
+				.stream()
+				.collect(Collectors.summingDouble(Double::doubleValue))));
+
+
+
+
+		
+		return betListInfos;
+	}
 
 
 }
