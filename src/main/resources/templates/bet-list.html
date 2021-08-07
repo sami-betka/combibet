@@ -61,6 +61,10 @@
 
               <div class="card-body">
               
+              
+               <a class="btn btn-primary" type="button" th:href="@{bet-list}">
+                          Tous types de paris
+               </a>
                             <div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Filtrer par type de pari
@@ -74,7 +78,13 @@
   </div>
                            </div>
                            
-                           <p th:text="${betListInfos}"></p>
+                           
+                           <div th:each="entry : ${betListInfos}" >
+                           
+                              <p th:text="${entry.key + ' : ' + entry.value}"></p>
+                           
+                           
+                           </div>
                            
 <!--                            <div class="form-group"> -->
 <!-- 								<label class="text-dark" style="font-weight: bold;">Statut:</label><br>  -->

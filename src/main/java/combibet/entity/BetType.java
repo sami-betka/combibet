@@ -2,6 +2,8 @@ package combibet.entity;
 
 public enum BetType {
 	
+//	TOUS_PARIS(""),
+	
 	SIMPLE_GAGNANT("Simple-gagnant"),
 	SIMPLE_PLACE("Simple-placé"),
 	COUPLE_GAGNANT("Couplé-gagnant"),

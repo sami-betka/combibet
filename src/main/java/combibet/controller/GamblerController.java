@@ -2,11 +2,13 @@ package combibet.controller;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,7 @@ import combibet.repository.AppRoleRepository;
 import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
 import combibet.repository.UserRoleRepository;
+import combibet.service.BankrollService;
 import combibet.utils.EncrytedPasswordUtils;
 
 @Controller
@@ -40,6 +43,9 @@ public class GamblerController {
 	
 	@Autowired
 	BetRepository betRepository;
+	
+	@Autowired
+	BankrollService bankrollService;
 	
 	@Autowired
 	static EncrytedPasswordUtils encrytedPasswordUtils;
@@ -84,7 +90,10 @@ public class GamblerController {
 	}
 	
 	@GetMapping("/filtered-bet-list")
-	public String getMyBetsByType (@RequestParam("type") BetType type, Model model, Principal principal) {
+	public String getMyBetsByType (@RequestParam(name="type", defaultValue = "") BetType type, Model model, Principal principal) {
+		
+		System.out.println(type);
+		
 		
 		if (principal == null) {
 			return "redirect:/login";
@@ -98,14 +107,21 @@ public class GamblerController {
 		model.addAttribute("betList", bets);
 		model.addAttribute("types", BetType.values());
 		
-		Double sum = 0d;
-		for(Bet b : bets) {
-			sum = sum + b.getOdd();
-		}
-		Double benef = sum-bets.size();
-		model.addAttribute("betListInfos", "Nombre de paris = " + bets.size() + ", gains = " + sum + ", Benefice = " 
-		        + benef + ", Paris gagnants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.WON)).collect(Collectors.toList()).size() + ", Paris perdants = " 
-				+ bets.stream().filter(b-> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size());
+//		Double sum = 0d;
+//		for(Bet b : bets) {
+//			sum = sum + b.getOdd();
+//		}
+//		Double benef = sum-bets.size();
+//		model.addAttribute("betListInfos", 
+//				"Nombre de paris = " + bets.size() 
+//				+ ", Paris gagnants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.WON)).collect(Collectors.toList()).size() 
+//		        + ", Paris perdants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()
+//		        + ", gains = " + sum 
+//		        + ", Benefice = " + benef);
+		
+//		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
+		model.addAttribute("betListInfos", bankrollService.betListInfos(bankrollService.managedBankrollSimulation(bets,5, 1000d), 1000d));
+
 
 		return "bet-list";
 	}
@@ -141,42 +157,41 @@ public class GamblerController {
 	
 	
 	
-	private Map<String, String> betListInfos (List<Bet> bets){
-		
-		Map<String, String> betListInfos = new HashMap<>();
-		
-		Double earnings = 0d;
-		for(Bet b : bets) {
-			earnings = earnings + b.getOdd();
-		}
-		Double benefit = earnings-bets.size();
-		
-		betListInfos.put("earnings", String.valueOf(earnings));
-		betListInfos.put("benefit", String.valueOf(benefit));
-		betListInfos.put("betsNumber", String.valueOf(bets.size()));
-		List<Double> wonBetsOdds = bets
-				.stream()
-				.filter(b-> b.getStatus().equals(BetStatus.WON))
-				.map(Bet::getOdd)
-				.collect(Collectors.toList());
-		
-		betListInfos.put("wonBetsNumber", String.valueOf(wonBetsOdds.size()));
-		betListInfos.put("lostBetsNumber", String.valueOf(bets
-				.stream()
-				.filter(b-> b.getStatus().equals(BetStatus.LOSE))
-				.collect(Collectors.toList())
-				.size()));
-
-		betListInfos.put("averageOdd", String.valueOf(wonBetsOdds
-				.stream()
-				.collect(Collectors.summingDouble(Double::doubleValue))));
-
-
-
-
-		
-		return betListInfos;
-	}
+//	private LinkedHashMap<String, String> betListInfos (List<Bet> bets, Double bankrollAmount){
+//		
+//		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
+//		
+//		Double earnings = 0d;
+//		for(Bet b : bets) {
+//			earnings = earnings + b.getOdd();
+//		}
+//		Double benefit = earnings-bets.size();
+//		
+//		betListInfos.put("Nombre de paris", String.valueOf(bets.size()));
+//		
+//		List<Double> wonBetsOdds = bets
+//				.stream()
+//				.filter(b-> b.getStatus().equals(BetStatus.WON))
+//				.map(Bet::getOdd)
+//				.collect(Collectors.toList());
+//		
+//		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
+//		betListInfos.put("Paris perdants", String.valueOf(bets
+//				.stream()
+//				.filter(b-> b.getStatus().equals(BetStatus.LOSE))
+//				.collect(Collectors.toList())
+//				.size()));
+//		
+//		betListInfos.put("Gains", String.valueOf(earnings));
+//		betListInfos.put("Bénéfice", String.valueOf(benefit));
+//		
+//		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(wonBetsOdds
+//				.stream()
+//				.collect(Collectors.summingDouble(Double::doubleValue))/wonBetsOdds.size()));
+//
+//
+//		return betListInfos;
+//	}
 
 
 }

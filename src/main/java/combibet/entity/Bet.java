@@ -39,7 +39,7 @@ public abstract class Bet {
 		super();
 	}
 
-	public Bet(Long id, LocalDateTime date, String formattedDate, String field, String selection, double odd,
+	public Bet(Long id, LocalDateTime date, Bankroll bankroll, String formattedDate, String field, String selection, double odd,
 			double currentOddInCombi, double ante, Gambler gambler, Combi combi, BetType type, BetStatus status,
 			String beforeComment, String afterComment) {
 		super();
@@ -54,6 +54,7 @@ public abstract class Bet {
 		this.gambler = gambler;
 		this.combi = combi;
 		this.type = type;
+		this.bankroll = bankroll;
 		this.status = status;
 		this.beforeComment = beforeComment;
 		this.afterComment = afterComment;
@@ -81,6 +82,9 @@ public abstract class Bet {
 
 	@ManyToOne
 	private Gambler gambler;
+	
+	@ManyToOne
+	Bankroll bankroll;
 
 	@ManyToOne
 	@JoinColumn(name = "combi_id")
