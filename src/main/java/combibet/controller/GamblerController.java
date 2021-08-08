@@ -90,7 +90,10 @@ public class GamblerController {
 	}
 	
 	@GetMapping("/filtered-bet-list")
-	public String getMyBetsByType (@RequestParam(name="type", defaultValue = "") BetType type, Model model, Principal principal) {
+	public String getMyBetsByType (
+			@RequestParam(name="type", defaultValue = "") BetType type,
+			@RequestParam(name="bankrollAmount", required = false) Integer bankrollAmount,
+			Model model, Principal principal) {
 		
 		System.out.println(type);
 		
@@ -120,7 +123,7 @@ public class GamblerController {
 //		        + ", Benefice = " + benef);
 		
 //		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
-		model.addAttribute("betListInfos", bankrollService.betListInfos(bankrollService.managedBankrollSimulation(bets,5, 1000d), 1000d));
+		model.addAttribute("betListInfos", bankrollService.betListInfos(bankrollService.managedBankrollSimulation(bets,5, 200d)));
 
 
 		return "bet-list";
