@@ -89,10 +89,96 @@ public class GamblerController {
 		return "bet-list";
 	}
 	
+	@GetMapping("/bet-list-simulation")
+	public String getSimulatedBetList (Model model, Principal principal) {
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
+		
+		List<Bet> bets =  betRepository.findAllByGamblerOrderByDateAsc(gambler);
+		
+		model.addAttribute("betList", bets);
+		model.addAttribute("types", BetType.values());
+		
+		Double sum = 0d;
+		for(Bet b : bets) {
+			sum = sum + b.getOdd();
+		}
+		Double benef = sum-bets.size();
+		model.addAttribute("benef", "Nombre de paris = " + bets.size() + ", gains = " + sum + ", Benefice = " 
+		        + benef + ", Paris gagnants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.WON)).collect(Collectors.toList()).size() + ", Paris perdants = " 
+				+ bets.stream().filter(b-> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size());
+		
+		return "bet-list-simulation";
+	}
+	
 	@GetMapping("/filtered-bet-list")
 	public String getMyBetsByType (
 			@RequestParam(name="type", defaultValue = "") BetType type,
 			@RequestParam(name="bankrollAmount", required = false) Integer bankrollAmount,
+			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
+
+			Model model, Principal principal) {
+		
+		System.out.println(type);
+		
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
+		
+		List<Bet> bets = betRepository.findAllByGamblerAndTypeOrderByDateAsc(gambler, type);
+
+		
+		model.addAttribute("betList", bets);
+		model.addAttribute("types", BetType.values());
+		
+//		Double sum = 0d;
+//		for(Bet b : bets) {
+//			sum = sum + b.getOdd();
+//		}
+//		Double benef = sum-bets.size();
+//		model.addAttribute("betListInfos", 
+//				"Nombre de paris = " + bets.size() 
+//				+ ", Paris gagnants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.WON)).collect(Collectors.toList()).size() 
+//		        + ", Paris perdants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()
+//		        + ", gains = " + sum 
+//		        + ", Benefice = " + benef);
+		
+		
+		
+//		Map<String, Object> finalMap = new HashMap<>();
+//		finalMap.put("betList", bets);
+//		Double initialBankrollAmount = bets.get(0).getBankroll().getStartAmount();
+//		finalMap.put("initialBankrollAmount", initialBankrollAmount);
+//		Double actualBankrollAmount = initialBankrollAmount;
+//		for(Bet b:bets) {
+//			if (!b.getStatus().equals(BetStatus.WON)) {
+//				b.setOdd(0d);
+//			}			actualBankrollAmount = actualBankrollAmount - b.getAnte();
+//			actualBankrollAmount = actualBankrollAmount + (b.getAnte()*b.getOdd());
+//		}
+//		finalMap.put("actualBankrollAmount", actualBankrollAmount);
+		
+//		model.addAttribute("betListInfos", bankrollService.betListInfos(finalMap));
+		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, 200d)));
+
+
+		return "bet-list";
+	}
+	
+	@GetMapping("/filtered-bet-list-simulation")
+	public String getSimulatedBetListByType (
+			@RequestParam(name="type", defaultValue = "") BetType type,
+			@RequestParam(name="bankrollAmount", required = false) Integer bankrollAmount,
+			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
+
+			
 			Model model, Principal principal) {
 		
 		System.out.println(type);
@@ -123,10 +209,10 @@ public class GamblerController {
 //		        + ", Benefice = " + benef);
 		
 //		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
-		model.addAttribute("betListInfos", bankrollService.betListInfos(bankrollService.managedBankrollSimulation(bets,5, 200d)));
+		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, 200d)));
 
 
-		return "bet-list";
+		return "bet-list-simulation";
 	}
 	
 	// Ajouter un utilisateur

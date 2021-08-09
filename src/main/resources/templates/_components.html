@@ -89,6 +89,12 @@
               <p>Mes paris</p>
             </a>
           </li>
+            <li th:classappend="${#request.getServletPath() == '/bet-list-simulation' ? 'active' : ''}">
+            <a th:href="@{/bet-list-simulation}">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Gestion Bankroll (Simulation)</p>
+            </a>
+          </li>
           <li th:classappend="${#request.getServletPath() == '/add-bet/horseRacing' ? 'active' : ''}">
             <a th:href="@{/add-bet?field=horseRacing}">
               <i class="now-ui-icons design_app"></i>

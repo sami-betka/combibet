@@ -1,0 +1,256 @@
+<!--
+
+=========================================================
+* Now UI Dashboard - v1.5.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/now-ui-dashboard
+* Copyright 2019 Creative Tim (http://www.creative-tim.com)
+
+* Designed by www.invisionapp.com Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>Mes paris</title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <!-- CSS Files -->
+  <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{css/now-ui-dashboard.css?v=1.5.0}" rel="stylesheet" />
+  <link th:href="@{css/style.css}" rel="stylesheet" />
+  
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link th:href="@{demo/demo.css}" rel="stylesheet" />
+</head>
+
+<body class="">
+  <div class="wrapper ">
+                 <div th:replace="_components :: sidebar"></div>
+  
+
+    <div class="main-panel" id="main-panel">
+<!--       Navbar -->
+                 <div th:replace="_components :: navbar"></div>
+
+
+      <div class="panel-header panel-header-sm">
+      </div>
+      <div class="content backg">
+      
+      
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card op" style="">
+              <div class="card-header">
+                <h4 class="card-title">Gestion de Bankroll (Simulation)</h4>
+              </div>
+              <br>
+
+              <div class="card-body">
+              
+              
+               <a class="btn btn-primary" type="button" th:href="@{bet-list-simulation}">
+                          Tous types de paris
+               </a>
+               
+               
+                            <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filtrer par type de pari
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   <div th:each="t : ${types}" >
+    <a class="dropdown-item" th:text="${t.name}" th:href="@{'/filtered-bet-list-simulation?type='+${t}}"></a>
+<!--     <a class="dropdown-item" href="#">Another action</a> -->
+<!--     <a class="dropdown-item" href="#">Something else here</a> -->
+   </div>
+  </div>
+                           </div>
+                           
+                          	<form class="user" th:action="@{/filtered-bet-list-simulation}"
+							th:object="${betFilter}" method="POST">
+
+							<div class="form-group">
+							    <label class="text-dark" style="font-weight: bold;">Montant Bankroll</label>
+								<input th:field="*{bankrollAmount}" type="text"
+									class="form-control form-control-user" id="" placeholder="Montant Bankroll
+							</div>
+							
+							<div class="form-group">
+							    <label class="text-dark" style="font-weight: bold;">Diviseur</label>
+								<input th:field="*{divider}" type="text"
+									class="form-control form-control-user" id="" placeholder="Date">
+							</div>
+
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Type de pari:</label><br> 
+								<select class="form-control form-control-user" th:field="*{type}" required="required">
+									<option value="">--Choisir--</option>
+
+									<option th:each="t : ${types}" th:value="${t}"
+										th:text="${t.name}"></option>
+								</select>
+							</div>
+
+											
+							
+							<button type="submit" class="btn btn-primary btn-user btn-block"> 
+ 								Envoyer</button> 
+						</form> 
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           <div th:each="entry : ${betListInfos}" >
+                           
+                              <p th:text="${entry.key + ' : ' + entry.value}"></p>
+                           
+                           
+                           </div>
+                           
+<!--                            <div class="form-group"> -->
+<!-- 								<label class="text-dark" style="font-weight: bold;">Statut:</label><br>  -->
+<!-- 								<select class="form-control form-control-user" required="required"> -->
+<!-- 									<option value="">--Choisir--</option> -->
+
+<!-- 									<option th:each="t : ${types}" th:value="${t}" th:text="${t.name}"></option> -->
+<!-- 								</select> -->
+<!-- 							</div> -->
+                           
+              
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered table-hover">
+                    <thead class="">
+                      <th>
+                        N°
+                      </th>
+                      <th>
+                        Date
+                      </th>
+                      <th>
+                        Type
+                      </th>
+                      <th>
+                        Sélection
+                      </th>
+                       <th>
+                        Mise
+                      </th>
+                      <th>
+                        Cote
+                      </th>
+                      <th>
+                        Statut
+                      </th>
+                       <th>
+                        
+                      </th>
+                    </thead>
+                     <tfoot>
+											<tr>
+												<th>N°</th>
+												<th>Date</th>
+												<th>Type</th>
+												<th>Sélection</th>
+												<th>Mise</th>
+												<th>Cote</th>
+												<th>Statut</th>
+												<th></th>
+												<th></th>
+												
+											</tr>
+										</tfoot>
+                    <tbody>
+                                      <tr th:each="bet:${betList}">
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
+
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.date}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.date}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.date}"></td>
+                                            
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.type.name}"></td>
+                                            
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.selection}"></td>
+                                            
+                                            
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            
+                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.odd}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.odd}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.odd}"></td>
+                                                                                        
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.status.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.status.name}">Perdant</td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.status.name}">En attente...</td>
+                                       
+                                            <td> <a class="text-primary" th:href="@{'/edit-bet?id='+${bet.id}}">Modifier</a></td>
+                                            <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet?id='+${bet.id}}">Supprimer</a></td>                                       
+                                       </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+                    <div th:replace="_components :: footer"></div>
+
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="js/core/jquery.min.js"></script>
+  <script src="js/core/popper.min.js"></script>
+  <script src="js/core/bootstrap.min.js"></script>
+  <script src="js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+  <script src="demo/demo.js"></script>
+</body>
+
+</html>

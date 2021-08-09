@@ -15,7 +15,7 @@ import combibet.entity.BetStatus;
 @Service
 public class BankrollService {
 
-	public Map<String, Object> managedBankrollSimulation(List<Bet> betList,int anteDivider, Double initialBankrollAmount) {
+	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, int anteDivider, Double initialBankrollAmount) {
 
 		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
@@ -23,9 +23,9 @@ public class BankrollService {
 //		Map<String, Object> finalMap = new HashMap<>();
 //		finalMap.put("InitialBankrollAmount", initialBankrollAmount);
 
-
+//        Double initialBankrollAmount = bets.get(0).getBankroll().getStartAmount();
 		Double actualBankrollAmount = initialBankrollAmount;
-		Double topAmount = initialBankrollAmount;
+		Double topAmount = actualBankrollAmount;
 		Double ante = topAmount / anteDivider;
 
 //		bets.get(0).setAnte(ante);
@@ -69,6 +69,8 @@ public class BankrollService {
 		finalMap.put("betList", arrangedBets);
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
+		finalMap.put("initialAnte", initialBankrollAmount/anteDivider );
+
 
 
 //		return arrangedBets;
@@ -76,6 +78,7 @@ public class BankrollService {
 
 	}
 
+	
 	public LinkedHashMap<String, String> betListInfos(Map<String, Object> map) {
 
 		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
@@ -93,6 +96,7 @@ public class BankrollService {
 		List<Bet> betList = (List<Bet>) map.get("betList");
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
+		Double initialAnte = (Double) map.get("initialAnte");
 		
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
@@ -102,7 +106,8 @@ public class BankrollService {
 
 
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
-		betListInfos.put("Montant bankroll actuel", String.valueOf(actualBankrollAmount));
+		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
+		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
 
 		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
 
@@ -116,9 +121,59 @@ public class BankrollService {
 		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
 		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 
-		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(
+		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()
+				.collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
 
-				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size()));
+		betListInfos.put("Multiplication du capital : X",
+				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
+
+		return betListInfos;
+	}
+	
+	public LinkedHashMap<String, String> betListInfosSimulation(Map<String, Object> map) {
+
+		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
+
+
+//		Double earnings = 0d;
+//		for (Bet b : bets) {
+//			earnings = earnings + (b.getOdd() * b.getAnte());
+//			if(b.getStatus().equals(BetStatus.LOSE)) {
+//				earnings = earnings - b.getAnte();
+//			}
+//		}
+//		Double benefit = earnings - bankrollAmount;
+		
+		List<Bet> betList = (List<Bet>) map.get("betList");
+		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
+		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
+		Double initialAnte = (Double) map.get("initialAnte");
+		
+		Double earnings = actualBankrollAmount;
+		Double benefit = earnings - initialBankrollAmount;
+
+
+		
+
+
+		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
+		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
+		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
+
+		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
+
+		List<Double> wonBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
+				.collect(Collectors.toList());
+
+		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
+		betListInfos.put("Paris perdants", String.valueOf(
+				betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
+
+		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
+		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
+
+		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()
+				.collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
 
 		betListInfos.put("Multiplication du capital : X",
 				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));

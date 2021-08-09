@@ -279,4 +279,12 @@ public abstract class Bet {
 		this.afterComment = afterComment;
 	}
 
+	public Bankroll getBankroll() {
+		return bankroll;
+	}
+
+	public void setBankroll(Bankroll bankroll) {
+		this.bankroll = bankroll;
+	}
+
 }
