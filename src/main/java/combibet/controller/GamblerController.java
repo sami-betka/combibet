@@ -118,7 +118,7 @@ public class GamblerController {
 	@GetMapping("/filtered-bet-list")
 	public String getMyBetsByType (
 			@RequestParam(name="type", defaultValue = "") BetType type,
-			@RequestParam(name="bankrollAmount", required = false) Integer bankrollAmount,
+			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
 			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
 
 			Model model, Principal principal) {
@@ -166,7 +166,7 @@ public class GamblerController {
 //		finalMap.put("actualBankrollAmount", actualBankrollAmount);
 		
 //		model.addAttribute("betListInfos", bankrollService.betListInfos(finalMap));
-		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, 200d)));
+		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
 
 
 		return "bet-list";
@@ -175,7 +175,7 @@ public class GamblerController {
 	@GetMapping("/filtered-bet-list-simulation")
 	public String getSimulatedBetListByType (
 			@RequestParam(name="type", defaultValue = "") BetType type,
-			@RequestParam(name="bankrollAmount", required = false) Integer bankrollAmount,
+			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
 			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
 
 			
@@ -209,7 +209,7 @@ public class GamblerController {
 //		        + ", Benefice = " + benef);
 		
 //		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
-		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, 200d)));
+		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
 
 
 		return "bet-list-simulation";
