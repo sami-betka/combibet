@@ -3,6 +3,7 @@ package combibet.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,6 +20,8 @@ public class BankrollService {
 
 		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
+		LinkedList<Double> bankrollAmounts = new LinkedList<>();
+		LinkedList<String> betsDates = new LinkedList<>();
 		
 //		Map<String, Object> finalMap = new HashMap<>();
 //		finalMap.put("InitialBankrollAmount", initialBankrollAmount);
@@ -47,6 +50,8 @@ public class BankrollService {
 				System.out.println(i+1 + " 2) bank actuelle " + actualBankrollAmount);
 				System.out.println(i+1 + " 3) bank precedente " + topAmount);
 
+				bankrollAmounts.add(actualBankrollAmount);
+				betsDates.add(String.valueOf(bet.getDate()));
 
 			if (actualBankrollAmount > topAmount) {
 
@@ -54,6 +59,7 @@ public class BankrollService {
 				
 				topAmount = actualBankrollAmount;
 //				System.out.print(newBankrollAmount);
+				
 			}
 			
 				System.out.println("");
@@ -70,6 +76,13 @@ public class BankrollService {
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
 		finalMap.put("initialAnte", initialBankrollAmount/anteDivider );
+		
+		///////////////////Dashboard Infos
+		
+		finalMap.put("bankrollAmounts", bankrollAmounts);
+		finalMap.put("betsDates", betsDates);
+
+		
 
 
 
@@ -180,4 +193,6 @@ public class BankrollService {
 
 		return betListInfos;
 	}
+	
+//	public Map <List<String>, List<E>> dashboardInfos(){}
 }

@@ -66,6 +66,9 @@ public class Bankroll {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "bankroll")
 	private List<Combi> combis;
 	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "bankroll")
+	private List<Bet> bets;
+	
 	private boolean isActive;
 	
 	

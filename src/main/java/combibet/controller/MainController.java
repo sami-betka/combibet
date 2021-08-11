@@ -1,7 +1,9 @@
 package combibet.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import combibet.entity.Bet;
+import combibet.entity.BetType;
 import combibet.entity.Gambler;
 import combibet.entity.UserRole;
 import combibet.repository.BetRepository;
@@ -50,13 +53,35 @@ public class MainController {
 	@GetMapping("/dashboard")
 	public String home(Model model, Principal principal,
 			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
+			@RequestParam(name="type", defaultValue = "", required = false) BetType type,
 			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider) {
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
 
 		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
+		List<Bet> bets = new ArrayList<>();
+		
+		if(type != null && !type.equals("")) {
+			bets = betRepository.findAllByGamblerAndTypeOrderByDateAsc(gambler, type);
+		}else {
+			bets = betRepository.findAllByGamblerOrderByDateAsc(gambler);
 
-		List<Bet> bets = betRepository.findAllByGamblerOrderByDateAsc(gambler);
+		}
 
-//		Map<String, Double> surveyMap = new LinkedHashMap<>();
+		Map<String, Double> surveyMap = new LinkedHashMap<>();
+		
+		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
+		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
+		
+		for(int i = 0; i<bankrollAmounts.size();i++) {
+			
+			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
+
+			
+		}
+		
 //		surveyMap.put("1", 1d);
 //		surveyMap.put("2", 3d);
 //		surveyMap.put("3", 5d);
@@ -66,9 +91,10 @@ public class MainController {
 //		surveyMap.put("7", 2d);
 //		surveyMap.put("8", 3d);
 //		surveyMap.put("9", 7d);
-//		model.addAttribute("surveyMap", surveyMap);
-		model.addAttribute("surveyMap",
-				bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount)));
+		model.addAttribute("surveyMap", surveyMap);
+		
+//		model.addAttribute("surveyMap",
+//				bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount)));
 
 //	model.addAttribute("keys", surveyMap.keySet());
 //	model.addAttribute("values", surveyMap.values());
@@ -76,6 +102,8 @@ public class MainController {
 		model.addAttribute("active", true);
 
 		return "dashboard";
+//		return "highchart-dashboard";
+
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

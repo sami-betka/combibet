@@ -123,8 +123,7 @@ public class GamblerController {
 
 			Model model, Principal principal) {
 		
-		System.out.println(type);
-		
+
 		
 		if (principal == null) {
 			return "redirect:/login";

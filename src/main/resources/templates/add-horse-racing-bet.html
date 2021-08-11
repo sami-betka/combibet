@@ -65,9 +65,62 @@
 						<h3 class="card-title">Ajouter un pari hippique</h3>
 					</div>
 					<div class="card-body">
+					
+						<form th:if="${#request.getServletPath() == '/add-horse-racing-bet-to-bankroll'}" class="user" th:action="@{/save-horse-racing-bet-to-bankroll?id={id}(id=${id})}"
+							th:object="${emptyBet}" method="POST">
+
+							<div class="form-group">
+							    <label class="text-dark" style="font-weight: bold;">Date</label>
+								<input th:field="*{date}" type="datetime-local"
+									class="form-control form-control-user" id="" placeholder="Date">
+							</div>
+
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Type de pari:</label><br> 
+								<select class="form-control form-control-user" th:field="*{type}" required="required">
+									<option value="">--Choisir--</option>
+
+									<option th:each="t : ${types}" th:value="${t}"
+										th:text="${t.name}"></option>
+								</select>
+							</div>
+
+							<div class="form-group">
+							    <label class="text-dark" style="font-weight: bold;">Sélection</label>
+								<input th:field="*{selection}" type="text"
+									class="form-control form-control-user" id=""
+									placeholder="Sélection">
+							</div>
+
+							<div class="form-group">
+							    <label class="text-dark" style="font-weight: bold;">Cote</label>
+								<input th:field="*{odd}" type="number" step="0.01"
+									class="form-control form-control-user" id="" placeholder="Cote">
+							</div>
+								
+							<div class="form-group">
+							    <label class="text-dark" style="font-weight: bold;">Mise</label>
+								<input th:field="*{ante}" type="number" step="0.01"
+									class="form-control form-control-user" id="" placeholder="Mise">
+							</div>
+						
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Statut:</label><br> 
+								<select class="form-control form-control-user" th:field="*{status}" required="required">
+									<option value="">--Choisir--</option>
+
+									<option th:each="s : ${status}" th:value="${s}"
+										th:text="${s.name}"></option>
+								</select>
+							</div>
+							
+							
+							<button type="submit" class="btn btn-primary btn-user btn-block"> 
+ 								Envoyer</button> 
+						</form>
 
 
-						<form class="user" th:action="@{/save-horse-racing-bet-to-combi?id={id}(id=${id})}"
+						<form th:if="${#request.getServletPath() == '/add-horse-racing-bet-to-combi'}" class="user" th:action="@{/save-horse-racing-bet-to-combi?id={id}(id=${id})}"
 							th:object="${emptyBet}" method="POST">
 
 							<div class="form-group">
@@ -122,63 +175,6 @@
 
 
 
-
-
-
-
-<!-- 						<form class="user" th:action="@{/save-bet}" -->
-<!-- 							th:object="${emptyBet}" method="POST"> -->
-<!-- 							<div class="form-group row"> -->
-<!-- 								<div class="col-sm-6 mb-3 mb-sm-0"> -->
-<!-- 									<input th:field="*{date}" type="date" -->
-<!-- 										class="form-control form-control-user" id="exampleFirstName" -->
-<!-- 										placeholder="Date"> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-sm-6"> -->
-<!-- 									                                        <input th:field="*{type}" type="text" class="form-control form-control-user" id="exampleLastName" -->
-<!-- 									                                            placeholder="Type de pari"> -->
-<!-- 									<label>Type de pari:</label><br> <select -->
-<!-- 										th:field="*{type}"> -->
-<!-- 										<option value="">--Choisir--</option> -->
-
-<!-- 										<option th:each="t : ${types}" th:value="${t}" -->
-<!-- 											th:text="${t.name}"></option> -->
-<!-- 									</select> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group"> -->
-<!-- 								<input th:field="*{selection}" type="text" -->
-<!-- 									class="form-control form-control-user" id="exampleInputEmail" -->
-<!-- 									placeholder="Sélection"> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group row"> -->
-<!-- 								<div class="col-sm-6 mb-3 mb-sm-0"> -->
-<!-- 									<input th:field="*{odd}" type="number" -->
-<!-- 										class="form-control form-control-user" -->
-<!-- 										id="exampleInputPassword" placeholder="Cote"> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-sm-6"> -->
-<!-- 									                                        <input th:field="*{status}" type="text" class="form-control form-control-user" -->
-<!-- 									                                            id="exampleRepeatPassword" placeholder="statut"> -->
-<!-- 									<label>Statut:</label><br> <select th:field="*{status}"> -->
-<!-- 										<option value="">--Choisir--</option> -->
-
-<!-- 										<option th:each="s : ${status}" th:value="${s}" -->
-<!-- 											th:text="${s.name}"></option> -->
-<!-- 									</select> -->
-
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<button type="submit" class="btn btn-primary btn-user btn-block"> -->
-<!-- 								Envoyer</button> -->
-<!-- 							<hr> -->
-<!-- 							                                <a href="index.html" class="btn btn-google btn-user btn-block"> -->
-<!-- 							                                    <i class="fab fa-google fa-fw"></i> Register with Google -->
-<!-- 							                                </a> -->
-<!-- 							                                <a href="index.html" class="btn btn-facebook btn-user btn-block"> -->
-<!-- 							                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook -->
-<!-- 							                                </a> -->
-<!-- 						</form> -->
 
 
 					</div>

@@ -84,7 +84,8 @@ public abstract class Bet {
 	private Gambler gambler;
 	
 	@ManyToOne
-	Bankroll bankroll;
+	@JoinColumn(name = "bankroll_id")
+	private Bankroll bankroll;
 
 	@ManyToOne
 	@JoinColumn(name = "combi_id")
