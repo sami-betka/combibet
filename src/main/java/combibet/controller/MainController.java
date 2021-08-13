@@ -101,8 +101,8 @@ public class MainController {
 
 		model.addAttribute("active", true);
 
-		return "dashboard";
-//		return "highchart-dashboard";
+//		return "dashboard";
+		return "highchart-dashboard";
 
 	}
 

@@ -42,12 +42,12 @@
 <link href="demo/demo.css" rel="stylesheet" />
 <link href="css/highchart-dashboard.css" rel="stylesheet" />
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<!--   <script src="https://code.highcharts.com/highcharts.js"></script> -->
+<!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+<!-- <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
+<!-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> -->
 
 </head>
 
@@ -63,14 +63,14 @@
 			<!-- End Navbar -->
 
 			<div class="panel-header panel-header-lg" style="padding-bottom: 100px;">
-<!-- 				<canvas id="bigDashboardChart"></canvas> -->
-<div class="highcharts-figure">
-  <div id="container"></div>
-  <p class="highcharts-description">
-    This chart shows how data labels can be added to the data series. This
-    can increase readability and comprehension for small datasets.
-  </p>
-</div>
+				<canvas id="myChart"></canvas>
+				<!-- <div class="highcharts-figure"> -->
+				<!--   <div id="container"></div> -->
+				<!--   <p class="highcharts-description"> -->
+				<!--     This chart shows how data labels can be added to the data series. This -->
+				<!--     can increase readability and comprehension for small datasets. -->
+				<!--   </p> -->
+				<!-- </div> -->
 			</div>
 			<div class="content">
 				<div class="row">
@@ -252,58 +252,58 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="card">
-							<div class="card-header">
-								<h5 class="card-category">All Persons List</h5>
-								<h4 class="card-title">Employees Stats</h4>
-							</div>
-							<div class="card-body">
-								<div class="table-responsive">
-									<table class="table">
-										<thead class=" text-primary">
-											<th>Name</th>
-											<th>Country</th>
-											<th>City</th>
-											<th class="text-right">Salary</th>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Dakota Rice</td>
-												<td>Niger</td>
-												<td>Oud-Turnhout</td>
-												<td class="text-right">$36,738</td>
-											</tr>
-											<tr>
-												<td>Minerva Hooper</td>
-												<td>Curaçao</td>
-												<td>Sinaai-Waas</td>
-												<td class="text-right">$23,789</td>
-											</tr>
-											<tr>
-												<td>Sage Rodriguez</td>
-												<td>Netherlands</td>
-												<td>Baileux</td>
-												<td class="text-right">$56,142</td>
-											</tr>
-											<tr>
-												<td>Doris Greene</td>
-												<td>Malawi</td>
-												<td>Feldkirchen in Kärnten</td>
-												<td class="text-right">$63,542</td>
-											</tr>
-											<tr>
-												<td>Mason Porter</td>
-												<td>Chile</td>
-												<td>Gloucester</td>
-												<td class="text-right">$78,615</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
+<!-- 					<div class="col-md-6"> -->
+<!-- 						<div class="card"> -->
+<!-- 							<div class="card-header"> -->
+<!-- 								<h5 class="card-category">All Persons List</h5> -->
+<!-- 								<h4 class="card-title">Employees Stats</h4> -->
+<!-- 							</div> -->
+<!-- 							<div class="card-body"> -->
+<!-- 								<div class="table-responsive"> -->
+<!-- 									<table class="table"> -->
+<!-- 										<thead class=" text-primary"> -->
+<!-- 											<th>Name</th> -->
+<!-- 											<th>Country</th> -->
+<!-- 											<th>City</th> -->
+<!-- 											<th class="text-right">Salary</th> -->
+<!-- 										</thead> -->
+<!-- 										<tbody> -->
+<!-- 											<tr> -->
+<!-- 												<td>Dakota Rice</td> -->
+<!-- 												<td>Niger</td> -->
+<!-- 												<td>Oud-Turnhout</td> -->
+<!-- 												<td class="text-right">$36,738</td> -->
+<!-- 											</tr> -->
+<!-- 											<tr> -->
+<!-- 												<td>Minerva Hooper</td> -->
+<!-- 												<td>Curaçao</td> -->
+<!-- 												<td>Sinaai-Waas</td> -->
+<!-- 												<td class="text-right">$23,789</td> -->
+<!-- 											</tr> -->
+<!-- 											<tr> -->
+<!-- 												<td>Sage Rodriguez</td> -->
+<!-- 												<td>Netherlands</td> -->
+<!-- 												<td>Baileux</td> -->
+<!-- 												<td class="text-right">$56,142</td> -->
+<!-- 											</tr> -->
+<!-- 											<tr> -->
+<!-- 												<td>Doris Greene</td> -->
+<!-- 												<td>Malawi</td> -->
+<!-- 												<td>Feldkirchen in Kärnten</td> -->
+<!-- 												<td class="text-right">$63,542</td> -->
+<!-- 											</tr> -->
+<!-- 											<tr> -->
+<!-- 												<td>Mason Porter</td> -->
+<!-- 												<td>Chile</td> -->
+<!-- 												<td>Gloucester</td> -->
+<!-- 												<td class="text-right">$78,615</td> -->
+<!-- 											</tr> -->
+<!-- 										</tbody> -->
+<!-- 									</table> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 			<!--       Footer -->
@@ -311,49 +311,95 @@
 
 		</div>
 	</div>
-	
+
 
 	<script th:inline="javascript">
   /*<![CDATA[*/
+  
+	  
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+//         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [[${surveyMap.keySet()}]],
 
-Highcharts.chart('container', {
-  chart: {
-    type: 'line'
-  },
-  title: {
-    text: 'Monthly Average Temperature'
-  },
-  subtitle: {
-    text: 'Source: WorldClimate.com'
-  },
-  xAxis: {
+        datasets: [{
+            label: '# of Votes',
+//             data: [12, 19, 3, 5, 2, 3],
+    data: [[${surveyMap.values()}]],
+
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+		
+		
+		
+		
+		
+
+// Highcharts.chart('container', {
+//   chart: {
+//     type: 'line'
+//   },
+//   title: {
+//     text: 'Monthly Average Temperature'
+//   },
+//   subtitle: {
+//     text: 'Source: WorldClimate.com'
+//   },
+//   xAxis: {
 //     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-	    categories: [[${surveyMap.keySet()}]]
+// 	    categories: [[${surveyMap.keySet()}]]
 
-  },
-  yAxis: {
-    title: {
-      text: 'Temperature (°C)'
-    }
-  },
-  plotOptions: {
-    line: {
-      dataLabels: {
-        enabled: true
-      },
-      enableMouseTracking: false
-    }
-  },
-  series: [{
-    name: 'Tokyo',
-    data: [[${surveyMap.values()}]]
-  }
+//   },
+//   yAxis: {
+//     title: {
+//       text: 'Temperature (°C)'
+//     }
+//   },
+//   plotOptions: {
+//     line: {
+//       dataLabels: {
+//         enabled: true
+//       },
+//       enableMouseTracking: false
+//     }
+//   },
+//   series: [{
+//     name: 'Tokyo',
+//     data: [[${surveyMap.values()}]]
+//   }
 //   , {
 //     name: 'London',
 //     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
 //   }
-  ]
-});
+//   ]
+// });
 
   /*]]>*/
 
@@ -368,6 +414,8 @@ Highcharts.chart('container', {
 	<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 	<!-- Chart JS -->
 	<script src="js/plugins/chartjs.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
 	<!--  Notifications Plugin    -->
 	<script src="js/plugins/bootstrap-notify.js"></script>
 	<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
@@ -375,11 +423,12 @@ Highcharts.chart('container', {
 	<!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
 	<!--   <script src="demo/demo.js"></script> -->
 
-  
-  
-  
-  
-  
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
 
 </body>
 
