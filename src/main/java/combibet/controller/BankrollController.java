@@ -90,6 +90,8 @@ public class BankrollController {
 
 	}
 	
+	
+	
 	@GetMapping("/new-bankroll-details")
 	public String newBankrollDetails(@RequestParam(name = "id", defaultValue = "") Long id,
 			@RequestParam(name="type", defaultValue = "") BetType type,
@@ -136,7 +138,65 @@ public class BankrollController {
 //		        + ", gains = " + sum 
 //		        + ", Benefice = " + benef);
 		
-//		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
+//		model.addAttribute("betListInfos", bets);
+//		model.addAttribute("betListInfos", bankrollService.betListInfos(bets, bankrollAmount));
+//		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
+
+
+//		return "bet-list-simulation";
+		return "bet-list";
+
+
+	}	
+	
+	@GetMapping("/new-bankroll-details-simulation")
+	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
+			@RequestParam(name="type", defaultValue = "") BetType type,
+			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
+			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
+			Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+//		List<Object> finalList = new ArrayList<>();
+
+        Bankroll bankroll = bankrollRepository.findById(id).get();
+    	
+//		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
+		
+		List<Bet> bets = new ArrayList<>();
+		
+		
+		
+		if(type != null ) {
+			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
+			model.addAttribute("betList", bets);
+
+		}else {
+			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
+			model.addAttribute("betList", bets);
+		}
+
+		model.addAttribute("id",id);
+		model.addAttribute("types", BetType.values());
+		model.addAttribute("bankrollName", bankroll.getName());
+		
+//		Double sum = 0d;
+//		for(Bet b : bets) {
+//			sum = sum + b.getOdd();
+//		}
+//		Double benef = sum-bets.size();
+//		model.addAttribute("betListInfos", 
+//				"Nombre de paris = " + bets.size() 
+//				+ ", Paris gagnants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.WON)).collect(Collectors.toList()).size() 
+//		        + ", Paris perdants = " + bets.stream().filter(b-> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()
+//		        + ", gains = " + sum 
+//		        + ", Benefice = " + benef);
+		
+//		model.addAttribute("betListInfos", bets);
+//		model.addAttribute("betListInfos", bankrollService.betListInfos(bets, bankrollAmount));
 		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
 
 

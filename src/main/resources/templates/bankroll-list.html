@@ -67,9 +67,9 @@
                       <th style="font-weight: bold;">Nom</th>
                       <th style="font-weight: bold;">Date de création</th>
                       <th style="font-weight: bold;">Capital de départ</th>
-                      <th style="font-weight: bold;">Capital actuel</th>
+<!--                       <th style="font-weight: bold;">Capital actuel</th> -->
                       <th style="font-weight: bold;">Nombre de paris </th>
-                      <th style="font-weight: bold;">Bénéfice</th>
+<!--                       <th style="font-weight: bold;">Bénéfice</th> -->
                        <th></th>
                        <th></th>
                        <th></th>
@@ -96,11 +96,11 @@
                                             
                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.startAmount}"></td>
                                             
-                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.calculateCurrentAmount}"></td>
+<!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.calculateCurrentAmount}"></td> -->
                                             
                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
                                             
-                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.benefit}"></td>
+<!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.benefit}"></td> -->
                                        
                                             <td> <a class="text-primary" th:href="@{'/new-bankroll-details?id='+${bankroll.id}}">Détails</a></td>
                                             <td> <a class="text-success" th:href="@{'/edit-bankroll/'+${bankroll.id}}">Modifier</a></td>
