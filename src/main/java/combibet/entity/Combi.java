@@ -33,12 +33,12 @@ public class Combi {
 		super();
 	}
 
-	public Combi(Long id, LocalDateTime startDate, String formattedStartDate, LocalDateTime endDate, double ante,
+	public Combi(Long id, LocalDateTime date, String formattedStartDate, LocalDateTime endDate, double ante,
 			Gambler gambler, BetStatus status, BetType type, String beforeComment, String afterComment,
 			boolean isCurrent, Bankroll bankroll, List<Bet> bets) {
 		super();
 		this.id = id;
-		this.startDate = startDate;
+		this.date = date;
 		this.formattedStartDate = formattedStartDate;
 		this.endDate = endDate;
 		this.ante = ante;
@@ -58,7 +58,7 @@ public class Combi {
 	private Long id;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	private LocalDateTime startDate;
+	private LocalDateTime date;
 
 	private String formattedStartDate;
 
@@ -128,7 +128,7 @@ public class Combi {
 
 	public String formatStartDate() {
         
-		LocalDateTime date = this.startDate;
+		LocalDateTime date = this.date;
 
 //		LocalDateTime date = this.bets.get(0).getDate();
 		
@@ -206,12 +206,12 @@ public class Combi {
 		this.id = id;
 	}
 
-	public LocalDateTime getStartDate() {
-		return startDate;
+	public LocalDateTime getDate() {
+		return date;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
-		this.startDate = startDate;
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 	public String getFormattedStartDate() {

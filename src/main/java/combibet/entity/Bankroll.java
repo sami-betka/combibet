@@ -29,7 +29,7 @@ public class Bankroll {
 	}
 
 	public Bankroll(Long id, String name, LocalDateTime startDate, String formattedStartDate, LocalDateTime endDate,
-			double startAmount, Gambler gambler, List<Combi> combis, boolean isActive) {
+			double startAmount, Gambler gambler, List<Combi> combis, List<Bet> bets, boolean isActive) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -39,6 +39,7 @@ public class Bankroll {
 		this.startAmount = startAmount;
 		this.gambler = gambler;
 		this.combis = combis;
+		this.bets = bets;
 		this.isActive = isActive;
 	}
 
@@ -79,16 +80,16 @@ public class Bankroll {
 	
 	public int betNumber() {
 		
-		return this.combis.size();
+		return this.bets.size();
 	}
 	
 	public double benefit () {
 		
 		double benefitAmount = 0;
 		
-		for(Combi combi : this.combis){
+		for(Bet bet : this.bets){
 			
-			benefitAmount += combi.benefit();
+//			benefitAmount += combi.benefit();
 		
 		}
 	
@@ -100,8 +101,8 @@ public class Bankroll {
 
 		LocalDateTime date = this.startDate;
 		
-		if(!this.combis.isEmpty() && !this.combis.get(0).getBets().isEmpty()) {
-		date = this.combis.get(0).betsAsc().get(0).getDate();
+		if(!this.bets.isEmpty()) {
+		date = this.bets.get(0).getDate();
 		}
 		String day = "";
 		String month = "";
@@ -238,6 +239,14 @@ public class Bankroll {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public List<Bet> getBets() {
+		return bets;
+	}
+
+	public void setBets(List<Bet> bets) {
+		this.bets = bets;
 	}
 	
 	

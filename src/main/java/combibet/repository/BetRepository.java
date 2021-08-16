@@ -20,7 +20,9 @@ public interface BetRepository extends JpaRepository<Bet, Long>{
 	
 	List <Bet> findAllByGamblerAndTypeOrderByDateAsc(Gambler gambler, BetType type);
 	
-	List <Bet> findAllByGamblerAndBankrollAndTypeOrderByDateAsc(Gambler gambler,Bankroll bankroll, BetType type);
-
+	List <Bet> findAllByBankrollAndTypeOrderByDateAsc(Bankroll bankroll, BetType type);
+	
+	List <Bet> findAllByBankrollOrderByDateAsc(Bankroll bankroll);
+	
 
 }

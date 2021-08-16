@@ -11,7 +11,7 @@ import combibet.entity.Combi;
 @Repository
 public interface CombiRepository extends JpaRepository<Combi, Long> {
 	
-	List <Combi> findAllByBankrollOrderByStartDateAsc(Bankroll bankroll);
+	List <Combi> findAllByBankrollOrderByDateAsc(Bankroll bankroll);
 
 
 }

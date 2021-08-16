@@ -46,9 +46,9 @@ public class BankrollService {
 			
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
 			
-			    System.out.println(i+1 + " 1) " + actualBankrollAmount);
-				System.out.println(i+1 + " 2) bank actuelle " + actualBankrollAmount);
-				System.out.println(i+1 + " 3) bank precedente " + topAmount);
+			    System.out.println(i+1 + " 1) " + String.format("%.2f", actualBankrollAmount));
+				System.out.println(i+1 + " 2) bank actuelle " + String.format("%.2f", actualBankrollAmount));
+				System.out.println(i+1 + " 3) bank max precedente " + String.format("%.2f", topAmount));
 
 				bankrollAmounts.add(actualBankrollAmount);
 				betsDates.add(String.valueOf(bet.getDate()));
@@ -58,8 +58,6 @@ public class BankrollService {
 				ante = actualBankrollAmount / anteDivider;
 				
 				topAmount = actualBankrollAmount;
-//				System.out.print(newBankrollAmount);
-				
 			}
 			
 				System.out.println("");

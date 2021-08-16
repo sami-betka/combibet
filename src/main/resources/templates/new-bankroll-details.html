@@ -60,9 +60,9 @@
 <!-- ">Ajouter combi</button></a>     -->
 
 <a th:href="@{/add-horse-racing-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Ajouter pari hippique</button></a>               
-
-             </div>
+">Ajouter pari hippique</button></a>   
+            
+            </div>
               <br>
 
               <div class="card-body">
@@ -77,7 +77,7 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
    <div th:each="t : ${types}" >
-    <a class="dropdown-item" th:text="${t.name}" th:href="@{'/new-bankroll-details?type='+${t}+'&id='+${id}}"></a>
+    <a class="dropdown-item" th:text="${t.name}" th:href="@{'/filtered-bet-list?type='+${t}}"></a>
 <!--     <a class="dropdown-item" href="#">Another action</a> -->
 <!--     <a class="dropdown-item" href="#">Something else here</a> -->
    </div>
@@ -85,10 +85,10 @@
                            </div>
                            
                            
-                           <h1 th:text="${'Bankroll: ' + bankrollName}"></h1>
                            <div th:each="entry : ${betListInfos}" >
                            
                               <p th:text="${entry.key + ' : ' + entry.value}"></p>
+                           
                            
                            </div>
                            
