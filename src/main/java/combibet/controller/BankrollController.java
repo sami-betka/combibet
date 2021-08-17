@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import combibet.entity.Bankroll;
+import combibet.entity.BankrollField;
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
@@ -125,6 +126,7 @@ public class BankrollController {
 		model.addAttribute("id",id);
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("bankrollName", bankroll.getName());
+		model.addAttribute("field", bankroll.getBankrollField().getName());
 		
 //		Double sum = 0d;
 //		for(Bet b : bets) {
@@ -214,6 +216,7 @@ public class BankrollController {
 		}
 
 		model.addAttribute("emptyBankroll", new Bankroll());
+		model.addAttribute("fields", BankrollField.values());
 
 		return "add-bankroll";
 	}
@@ -443,7 +446,7 @@ public class BankrollController {
 		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));		
 		bet.setCombi(combi);
 		bet.setField("Sport");
-		bet.setType(BetType.PARI_SPORTIF);
+//		bet.setType(BetType.PARI_SPORTIF);
 		
 		List <Bet> betList = combi.getBets();
 		SportBet savedSb = betRepository.save(bet);

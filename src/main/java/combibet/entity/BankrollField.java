@@ -2,8 +2,8 @@ package combibet.entity;
 
 public enum BankrollField {
 
-	PARI_HIPPIQUE("Pari-hippique"),
-	PARI_SPORTIF("Pari-sportif");
+	HIPPIQUE("hippique"),
+	SPORTIF("sport");
 	
 	private String name; 
 	

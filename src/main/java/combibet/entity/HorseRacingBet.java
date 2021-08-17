@@ -24,11 +24,13 @@ public HorseRacingBet() {
 		super();
 	}
 
-public HorseRacingBet(int meeting, int race, Combi combi) {
+public HorseRacingBet(int meeting, int race, Combi combi, BetType type) {
 		super();
 		this.meeting = meeting;
 		this.race = race;
 		this.combi = combi;
+		this.type = type;
+
 	}
 
 //	@Id
@@ -43,6 +45,8 @@ public HorseRacingBet(int meeting, int race, Combi combi) {
 	private int meeting;
 
 	private int race;
+	
+	private BetType type;
 
 //	private String selection;
 //
@@ -79,6 +83,14 @@ public HorseRacingBet(int meeting, int race, Combi combi) {
 
 	public void setCombi(Combi combi) {
 		this.combi = combi;
+	}
+
+	public BetType getType() {
+		return type;
+	}
+
+	public void setType(BetType type) {
+		this.type = type;
 	}
 
 //	private BetStatus status;

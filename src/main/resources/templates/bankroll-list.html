@@ -55,7 +55,7 @@
           <div class="col-md-12">
             <div class="card op" style="">
               <div class="card-header">
-                <h4 class="card-title"  style="font-weight: bold; color: blue;">Bankrolls</h4>
+                <h4 class="card-title"  style="font-weight: bold; color: blue; text-shadow: 1px 1px 2px #000000;">Bankrolls</h4>
                 
               </div>
               
@@ -64,6 +64,7 @@
                   <table class="table table-sm table-bordered table-hover">
                     <thead>
                     <tr>
+                      <th style="font-weight: bold;">type</th>
                       <th style="font-weight: bold;">Nom</th>
                       <th style="font-weight: bold;">Date de création</th>
                       <th style="font-weight: bold;">Capital de départ</th>
@@ -90,6 +91,9 @@
 <!-- 						</tfoot> -->
                     <tbody>
                                       <tr th:each="bankroll:${bankrollList}">
+                                      
+                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.bankrollField}"></td>
+                                      
                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.name + '-' + bankroll.id}"></td>
 
                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.formatStartDate}"></td>

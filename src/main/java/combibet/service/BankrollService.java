@@ -133,7 +133,7 @@ public class BankrollService {
 		betListInfos.put("Paris perdants", String.valueOf(
 				betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
 
-		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
+//		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
 		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 
 		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()
@@ -186,7 +186,7 @@ public class BankrollService {
 		betListInfos.put("Paris perdants", String.valueOf(
 				betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
 
-		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
+//		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
 		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 
 		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()

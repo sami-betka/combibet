@@ -81,6 +81,16 @@
 									class="form-control form-control-user" id="" placeholder="Capital de départ">
 							</div>
 							
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Type de bankroll (Sport ou hippique):</label><br> 
+								<select class="form-control form-control-user" th:field="*{bankrollField}" required="required">
+									<option value="">--Choisir--</option>
+
+									<option th:each="f : ${fields}" th:value="${f}"
+										th:text="${f.name}"></option>
+								</select>
+							</div>
+							
 							<button type="submit" class="btn btn-primary btn-user btn-block"> 
  								Envoyer</button> 
 						</form>
