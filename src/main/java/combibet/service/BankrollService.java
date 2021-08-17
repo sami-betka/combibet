@@ -74,6 +74,8 @@ public class BankrollService {
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
 		finalMap.put("initialAnte", initialBankrollAmount/anteDivider );
+		finalMap.put("divider",anteDivider );
+
 		
 		///////////////////Dashboard Infos
 		
@@ -108,6 +110,7 @@ public class BankrollService {
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
 		Double initialAnte = (Double) map.get("initialAnte");
+		Integer divider = (Integer) map.get("divider");
 		
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
@@ -119,6 +122,7 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
+		betListInfos.put("Diviseur", String.valueOf(divider));
 
 		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
 
@@ -159,6 +163,7 @@ public class BankrollService {
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
 		Double initialAnte = (Double) map.get("initialAnte");
+		Integer divider = (Integer) map.get("divider");
 		
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
@@ -170,6 +175,7 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
+		betListInfos.put("Diviseur", String.valueOf(divider));
 
 		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
 

@@ -29,7 +29,7 @@ public class Bankroll {
 	}
 
 	public Bankroll(Long id, String name, LocalDateTime startDate, String formattedStartDate, LocalDateTime endDate,
-			double startAmount, Gambler gambler, List<Combi> combis, List<Bet> bets, boolean isActive) {
+			double startAmount, Gambler gambler, List<Combi> combis, List<Bet> bets, boolean isActive, BankrollField bankrollField) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -41,6 +41,8 @@ public class Bankroll {
 		this.combis = combis;
 		this.bets = bets;
 		this.isActive = isActive;
+		this.bankrollField = bankrollField;
+
 	}
 
 	@Id
@@ -69,6 +71,8 @@ public class Bankroll {
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "bankroll")
 	private List<Bet> bets;
+	
+	private BankrollField bankrollField;
 	
 	private boolean isActive;
 	
@@ -247,6 +251,14 @@ public class Bankroll {
 
 	public void setBets(List<Bet> bets) {
 		this.bets = bets;
+	}
+
+	public BankrollField getBankrollField() {
+		return bankrollField;
+	}
+
+	public void setBankrollField(BankrollField bankrollField) {
+		this.bankrollField = bankrollField;
 	}
 	
 	

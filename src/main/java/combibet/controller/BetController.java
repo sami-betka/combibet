@@ -100,9 +100,9 @@ public class BetController {
 
 //		System.out.println(hrb.getCombi().getBets().size());
 
-		redirect.addFlashAttribute("show", hrb.getCombi().getId());
+//		redirect.addFlashAttribute("show", hrb.getCombi().getId());
 
-		return "redirect:/bankroll-details?id=" + hrb.getCombi().getBankroll().getId();
+		return "redirect:/new-bankroll-details?id=" + hrb.getBankroll().getId();
 
 	}
 
