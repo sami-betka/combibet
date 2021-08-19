@@ -128,7 +128,7 @@ public class BankrollController {
 		model.addAttribute("bankrollName", bankroll.getName());
 		model.addAttribute("field", bankroll.getBankrollField().getName());
 		
-		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
+//		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
 
 //		return "bet-list-simulation";
 		return "bet-list";
