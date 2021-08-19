@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import combibet.entity.Bankroll;
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.Combi;
 import combibet.entity.HorseRacingBet;
 import combibet.entity.SportBet;
+import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
 import combibet.repository.CombiRepository;
 
@@ -28,6 +30,9 @@ public class BetController {
 
 	@Autowired
 	CombiRepository combiRepository;
+	
+	@Autowired
+	BankrollRepository bankrollRepository;
 
 	@RequestMapping(value = "/edit-bet")
 	public String editHorseRacingBet(@RequestParam("id") Long id, Model model, Principal principal) {
@@ -68,11 +73,15 @@ public class BetController {
 			return "redirect:/login";
 		}
 
-		Bet hrb = betRepository.findById(bet.getId()).get();
+		HorseRacingBet hrb = (HorseRacingBet) betRepository.findById(bet.getId()).get();
 		
 		hrb.setDate(bet.getDate());
 		hrb.setType(bet.getType());
 		hrb.setSelection(bet.getSelection());
+		if(bet.getWinOdd()>0) {
+			hrb.setHasWon(true);
+		}
+		hrb.setWinOdd(bet.getWinOdd());
 		hrb.setOdd(bet.getOdd());
 		hrb.setStatus(bet.getStatus());
 		if(bet.getStatus().equals(BetStatus.LOSE)) {
@@ -133,22 +142,22 @@ public class BetController {
 
 		betRepository.save(sb);
 
-		if (!sb.getStatus().equals(BetStatus.LOSE)) {
-			Combi combi = sb.getCombi();
-			combi.setCurrent(true);
-			combiRepository.save(combi);
-		}
-		if (sb.getStatus().equals(BetStatus.LOSE)) {
-			Combi combi = sb.getCombi();
-			combi.setCurrent(false);
-			combiRepository.save(combi);
-		}
+//		if (!sb.getStatus().equals(BetStatus.LOSE)) {
+//			Combi combi = sb.getCombi();
+//			combi.setCurrent(true);
+//			combiRepository.save(combi);
+//		}
+//		if (sb.getStatus().equals(BetStatus.LOSE)) {
+//			Combi combi = sb.getCombi();
+//			combi.setCurrent(false);
+//			combiRepository.save(combi);
+//		}
 
-		System.out.println(sb.getCombi().getBets().size());
+//		System.out.println(sb.getCombi().getBets().size());
 
-		redirect.addFlashAttribute("show", sb.getCombi().getId());
+//		redirect.addFlashAttribute("show", sb.getCombi().getId());
 
-		return "redirect:/bankroll-details?id=" + sb.getCombi().getBankroll().getId();
+		return "redirect:/new-bankroll-details?id=" + sb.getBankroll().getId();
 
 	}
 
@@ -159,24 +168,29 @@ public class BetController {
 
 		betRepository.deleteById(bet.getId());
 
-		Combi combi = combiRepository.findById(bet.getCombi().getId()).get();
-		combi.setDate(combi.betsAsc().get(0).getDate());
-		combi.getBankroll().setStartDate(combi.betsAsc().get(0).getDate());	
-		combiRepository.save(combi);
+//		Combi combi = combiRepository.findById(bet.getCombi().getId()).get();
+//		combi.setDate(combi.betsAsc().get(0).getDate());
+		
+		Bankroll bankroll = bankrollRepository.findById(bet.getBankroll().getId()).get();
+		if(bankroll.getBets().size() > 0) {
+
+		bankroll.setStartDate(bankroll.getBets().get(0).getDate());	
+		bankrollRepository.save(bankroll);
+		}
 //		for (Bet b : combi.getBets()) {
 //			if (b.getStatus().equals(BetStatus.LOSE)) {
 //				combi.setCurrent(false);
 //				combiRepository.save(combi);
 //			}
 //		}
-		if(bet.getStatus().equals(BetStatus.LOSE)) {
-			combi.setCurrent(true);
-			combiRepository.save(combi);
-		}
+//		if(bet.getStatus().equals(BetStatus.LOSE)) {
+//			combi.setCurrent(true);
+//			combiRepository.save(combi);
+//		}
 		
-		redirectAttributes.addFlashAttribute("show", bet.getCombi().getId());
+//		redirectAttributes.addFlashAttribute("show", bet.getCombi().getId());
 
-		return "redirect:/bankroll-details?id=" + bet.getCombi().getBankroll().getId();
+		return "redirect:/new-bankroll-details?id=" + bet.getBankroll().getId();
 	}
 
 }

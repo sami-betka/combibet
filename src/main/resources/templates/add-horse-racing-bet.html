@@ -23,7 +23,7 @@
 	href="../assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="../assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>Now UI Dashboard by Creative Tim</title>
+<title>Ajouter pari hippique</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -96,6 +96,12 @@
 							    <label class="text-dark" style="font-weight: bold;">Cote</label>
 								<input th:field="*{odd}" type="number" step="0.01"
 									class="form-control form-control-user" id="" placeholder="Cote">
+							</div>
+							
+							<div class="form-group">
+							    <label class="text-dark" style="font-weight: bold;">Cote à la gagne</label>
+								<input th:field="*{winOdd}" type="number" step="0.01"
+									class="form-control form-control-user" id="" placeholder="Cote à la gagne">
 							</div>
 								
 							<div class="form-group">
