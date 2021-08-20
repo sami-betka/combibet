@@ -82,23 +82,8 @@ public class MainController {
 			
 		}
 		
-//		surveyMap.put("1", 1d);
-//		surveyMap.put("2", 3d);
-//		surveyMap.put("3", 5d);
-//		surveyMap.put("4", 2d);
-//		surveyMap.put("5", 4d);
-//		surveyMap.put("6", 8d);
-//		surveyMap.put("7", 2d);
-//		surveyMap.put("8", 3d);
-//		surveyMap.put("9", 7d);
 		model.addAttribute("surveyMap", surveyMap);
 		
-//		model.addAttribute("surveyMap",
-//				bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount)));
-
-//	model.addAttribute("keys", surveyMap.keySet());
-//	model.addAttribute("values", surveyMap.values());
-
 		model.addAttribute("active", true);
 
 //		return "dashboard";

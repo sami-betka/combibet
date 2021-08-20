@@ -14,3 +14,7 @@
 .ta {
 	width: 300px;
 }
+
+.degrade{
+	background:-webkit-linear-gradient(30deg, green, red);
+}

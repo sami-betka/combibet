@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import combibet.entity.AppRole;
-import combibet.entity.Bankroll;
-import combibet.entity.BankrollField;
+import combibet.entity.Bet;
+import combibet.entity.BetStatus;
 import combibet.entity.Gambler;
 import combibet.repository.AppRoleRepository;
-import combibet.repository.BankrollRepository;
+import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
 import combibet.utils.EncrytedPasswordUtils;
 
@@ -42,6 +42,16 @@ public class CombibetApplication {
 			appRoleRepository.save(new AppRole(1l, "ROLE_ADMIN"));
 			appRoleRepository.save(new AppRole(2l, "ROLE_USER"));
 		}
+		
+//		BetRepository betRepository = ctx.getBean(BetRepository.class);
+//		List<Bet> list = betRepository.findAll();
+//		for(Bet bet : list) {
+//		if(bet.getOdd()>0 && bet.getOdd()<=1) {
+//			bet.setStatus(BetStatus.SEMI);
+//			betRepository.save(bet);
+//			System.out.println(bet.getStatus().getName());
+//		}
+//	}
 		
 	}
 		

@@ -113,6 +113,7 @@ public class BankrollService {
 		for (int i = 0; i < bets.size(); i++) {
 
 			Bet bet = bets.get(i);
+			bet.setType(BetType.SIMPLE_GAGNANT);
 			HorseRacingBet hrb = (HorseRacingBet) bet;
 			
 			if (!bet.getStatus().equals(BetStatus.WON)) {
@@ -123,7 +124,6 @@ public class BankrollService {
 				bet.setStatus(BetStatus.LOSE);
 			}else {
 				hrb.setOdd(hrb.getWinOdd());
-				hrb.setType(BetType.SIMPLE_GAGNANT);
 			}
 			bet.setAnte(ante);
 			System.out.println(i+1 + " 0) mise " + ante);

@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -131,6 +134,21 @@ public class BankrollController {
 //		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
 
 //		return "bet-list-simulation";
+		
+		
+Map<String, Double> surveyMap = new LinkedHashMap<>();
+		
+		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
+		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
+		
+		for(int i = 0; i<bankrollAmounts.size();i++) {
+			
+			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
+
+			
+		}
+		
+		model.addAttribute("surveyMap", surveyMap);
 		return "bet-list";
 	}	
 	
@@ -176,6 +194,20 @@ public class BankrollController {
 
 
 //		return "bet-list-simulation";
+		
+Map<String, Double> surveyMap = new LinkedHashMap<>();
+		
+		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
+		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
+		
+		for(int i = 0; i<bankrollAmounts.size();i++) {
+			
+			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
+
+			
+		}
+		
+		model.addAttribute("surveyMap", surveyMap);
 		return "bet-list";
 	}	
 	
@@ -235,6 +267,21 @@ public class BankrollController {
 		model.addAttribute("field", bankroll.getBankrollField().getName());
 
 //		return "bet-list-simulation";
+		
+		
+Map<String, Double> surveyMap = new LinkedHashMap<>();
+		
+		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
+		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
+		
+		for(int i = 0; i<bankrollAmounts.size();i++) {
+			
+			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
+
+			
+		}
+		
+		model.addAttribute("surveyMap", surveyMap);
 		return "bet-list";
 	}	
 	
@@ -280,6 +327,21 @@ public class BankrollController {
 
 
 //		return "bet-list-simulation";
+		
+		
+Map<String, Double> surveyMap = new LinkedHashMap<>();
+		
+		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
+		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
+		
+		for(int i = 0; i<bankrollAmounts.size();i++) {
+			
+			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
+
+			
+		}
+		
+		model.addAttribute("surveyMap", surveyMap);
 		return "bet-list";
 
 
