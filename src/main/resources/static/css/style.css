@@ -16,5 +16,5 @@
 }
 
 .degrade{
-	background:-webkit-linear-gradient(30deg, green, red);
+	background:-webkit-linear-gradient(30deg, red, green);
 }

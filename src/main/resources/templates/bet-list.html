@@ -50,7 +50,7 @@
                  <div th:replace="_components :: navbar"></div>
 
 
-    	<div class="panel-header panel-header-lg" style="padding-bottom: 100px;">
+    	<div class="panel-header panel-header-lg" style="">
 				<canvas id="myChart"></canvas>
 				<!-- <div class="highcharts-figure"> -->
 				<!--   <div id="container"></div> -->
@@ -182,42 +182,42 @@
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-gagnant'}" class="text-white degrade" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
                                             
 
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.date}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.date}"></td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.date}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-gagnant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.date}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.date}"></td>
                                             
                                             
                                             <td th:if="${bet.status.name == 'Gagnant' and field eq 'hippique'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.type.name}"></td>
                                             <td th:if="${bet.status.name == 'Perdant' and field eq 'hippique'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.type.name}"></td>
                                             <td th:if="${bet.status.name == 'En attente' and field eq 'hippique'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.type.name}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-gagnant' and field eq 'hippique'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant' and field eq 'hippique'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.type.name}"></td>
                                             
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.selection}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.selection}"></td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.selection}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-gagnant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.selection}"></td>
                                             
                                             
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.ante}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.ante}"></td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.ante}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-gagnant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.ante}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.ante}"></td>
                                             
                                             
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.odd}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-gagnant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.odd}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             
                                                                                         
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.status.name}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.status.name}">Perdant</td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.status.name}">En attente...</td>
-                                            <td th:if="${bet.status.name == 'Semi-gagnant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.status.name}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.status.name}"></td>
                                             
                                        
                                             <td> <a class="text-primary" th:href="@{'/edit-bet?id='+${bet.id}}">Modifier</a></td>
