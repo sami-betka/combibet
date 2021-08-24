@@ -18,7 +18,7 @@ import combibet.entity.HorseRacingBet;
 @Service
 public class BankrollService {
 
-	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, int anteDivider, Double initialBankrollAmount) {
+	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, Integer anteDivider, Double initialBankrollAmount) {
 
 		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
@@ -60,9 +60,9 @@ public class BankrollService {
 			
 //				System.out.println("");
 			
-				if(actualBankrollAmount<0) {
-                   return null;
-                  }
+//				if(actualBankrollAmount<0) {
+//                   return null;
+//                  }
 
 			arrangedBets.add(bet);
 		}
@@ -81,15 +81,10 @@ public class BankrollService {
 		finalMap.put("betsDates", betsDates);
 
 		
-
-
-
-//		return arrangedBets;
 		return finalMap;
-
 	}
 	
-	public Map<String, Object> winManagedBankrollSimulation(List<Bet> betList, int anteDivider, Double initialBankrollAmount) {
+	public Map<String, Object> winManagedBankrollSimulation(List<Bet> betList, Integer anteDivider, Double initialBankrollAmount) {
 
 		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
@@ -144,9 +139,9 @@ public class BankrollService {
 			
 				System.out.println("");
 			
-				if(actualBankrollAmount<0) {
-                   return null;
-                  }
+//				if(actualBankrollAmount<0) {
+//                   return null;
+//                  }
 
 			arrangedBets.add(bet);
 		}
@@ -186,6 +181,8 @@ public class BankrollService {
 //			}
 //		}
 //		Double benefit = earnings - bankrollAmount;
+		
+		System.out.println(map.size() + " !!!");
 		
 		List<Bet> betList = (List<Bet>) map.get("betList");
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
@@ -240,6 +237,9 @@ public class BankrollService {
 //		}
 //		Double benefit = earnings - bankrollAmount;
 		
+		System.out.println(map.size() + " !!!");
+
+		
 		List<Bet> betList = (List<Bet>) map.get("betList");
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
@@ -279,10 +279,10 @@ public class BankrollService {
 		return betListInfos;
 	}
 	
-	public LinkedHashMap<String, String> betsInfos (List<Bet> betList){
+	public LinkedHashMap<String, String> betsInfos (List<Bet> betList, Double initialBankAmount){
 		
 		LinkedHashMap<String, String> infos = new LinkedHashMap<>();
-		Double initialBankrollAmount =  betList.get(0).getBankroll().getStartAmount();
+		Double initialBankrollAmount = initialBankAmount;
 		Double actualBankrollAmount = initialBankrollAmount;
 
 		infos.put("Montant bankroll initial", String.valueOf(actualBankrollAmount));

@@ -40,7 +40,7 @@ public abstract class Bet {
 	}
 
 	public Bet(Long id, LocalDateTime date, Bankroll bankroll, String formattedDate, String field, String selection, double odd,
-			double currentOddInCombi, double ante, Gambler gambler, Combi combi, BetType type, BetStatus status,
+			double currentOddInCombi, double ante, Gambler gambler, Combi combi, BetType type, BetStatus status, ConfidenceIndex confidenceIndex,
 			String beforeComment, String afterComment) {
 		super();
 		this.id = id;
@@ -56,6 +56,7 @@ public abstract class Bet {
 		this.type = type;
 		this.bankroll = bankroll;
 		this.status = status;
+		this.confidenceIndex = confidenceIndex;
 		this.beforeComment = beforeComment;
 		this.afterComment = afterComment;
 	}
@@ -94,6 +95,8 @@ public abstract class Bet {
 	private BetType type;
 
 	private BetStatus status;
+	
+	private ConfidenceIndex confidenceIndex;
 
 	private String beforeComment;
 
@@ -286,6 +289,14 @@ public abstract class Bet {
 
 	public void setBankroll(Bankroll bankroll) {
 		this.bankroll = bankroll;
+	}
+
+	public ConfidenceIndex getConfidenceIndex() {
+		return confidenceIndex;
+	}
+
+	public void setConfidenceIndex(ConfidenceIndex confidenceIndex) {
+		this.confidenceIndex = confidenceIndex;
 	}
 
 }

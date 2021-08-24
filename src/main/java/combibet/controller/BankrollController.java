@@ -122,7 +122,7 @@ public class BankrollController {
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("bankrollName", bankroll.getName());
 		model.addAttribute("field", bankroll.getBankrollField().getName());
-		model.addAttribute("betListInfos", bankrollService.betsInfos(bets));
+		model.addAttribute("betListInfos", bankrollService.betsInfos(bets, bankroll.getStartAmount()));
 
 		//////Map pour le graph/////////
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
@@ -271,7 +271,7 @@ public class BankrollController {
 //		}
 //
 		model.addAttribute("surveyMap", surveyMap);
-		model.addAttribute("betListInfos", bankrollService.betsInfos(bets));
+		model.addAttribute("betListInfos", bankrollService.betsInfos(bets, bankroll.getStartAmount()));
 
 		return "bet-list";
 	}
