@@ -1,6 +1,8 @@
 package combibet.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -15,11 +17,7 @@ import javax.persistence.SequenceGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 //@AllArgsConstructor
@@ -102,7 +100,7 @@ public abstract class Bet {
 
 	private String afterComment;
 
-	public String formatDate() {
+	public Map<String, String> formatDate() {
 
 		LocalDateTime date = this.date;
 
@@ -167,8 +165,26 @@ public abstract class Bet {
 		if (date.getMonth().toString() == "DECEMBER") {
 			month = "Décembre";
 		}
+		
+		Map<String, String> map = new HashMap<>();
+		
+		String completeDay = day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
+		String testDay = day + " " + date.getDayOfMonth() + "-" + date.getMonthValue() + "-" + date.getYear();
+		if(date.getMonthValue()<10) {
+			testDay = day + " " + date.getDayOfMonth() + "-0" + date.getMonthValue() + "-" + date.getYear();
+		}
 
-		return day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
+		int minute = date.getMinute();
+		String completeHour = date.getHour() + "h" + minute;
+
+		if (date.getMinute() == 0) {
+			completeHour = date.getHour() + "h" + minute + "0";
+		}
+		
+		map.put("day", testDay);
+		map.put("hour", completeHour);
+
+		return map;
 	}
 
 	public Long getId() {

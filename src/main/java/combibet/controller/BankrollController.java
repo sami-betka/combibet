@@ -111,18 +111,20 @@ public class BankrollController {
 
 		if (type != null) {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
-			model.addAttribute("betList", bets);
+//			model.addAttribute("betList", bets);
 
 		} else {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
-			model.addAttribute("betList", bets);
+//			model.addAttribute("betList", bets);
 		}
+		
+		model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		
 		model.addAttribute("id", id);
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("bankrollName", bankroll.getName());
 		model.addAttribute("field", bankroll.getBankrollField().getName());
-		model.addAttribute("betListInfos", bankrollService.betsInfos(bets, bankroll.getStartAmount()));
+		model.addAttribute("betListInfos", bankrollService.betsInfos(bankrollService.suppressNotPlayed(bets), bankroll.getStartAmount()));
 
 		//////Map pour le graph/////////
 		Map<String, Double> surveyMap = new LinkedHashMap<>();

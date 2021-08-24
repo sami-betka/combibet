@@ -323,4 +323,11 @@ public class BankrollService {
 		
 		return infos;
 	}
+	
+	public List<Bet> suppressNotPlayed (List<Bet> list){
+		
+		List<Bet> newList = list.stream().filter(b-> !b.getStatus().equals(BetStatus.NOT_PLAYED_LOSE) && !b.getStatus().equals(BetStatus.NOT_PLAYED_WON)).collect(Collectors.toList());
+		
+		return newList;
+	}
 }

@@ -5,7 +5,9 @@ public enum BetStatus {
 	WON("Gagnant"),
 	LOSE("Perdant"),
 	PENDING("En attente"),
-	SEMI("Semi-perdant");
+	SEMI("Semi-perdant"),
+	NOT_PLAYED_WON("Gagnant-non-joué"),
+	NOT_PLAYED_LOSE("Perdant-non-joué");	
 
 	
 	private String name;
