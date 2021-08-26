@@ -314,6 +314,8 @@ public class BankrollService {
 		infos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
 		infos.put("Paris perdants", String.valueOf(
 				betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
+		infos.put("Paris en attente", String.valueOf(
+				betList.stream().filter(b -> b.getStatus().equals(BetStatus.PENDING)).collect(Collectors.toList()).size()));
 		infos.put("Paris semi-perdants", String.valueOf(
 				betList.stream().filter(b -> b.getStatus().equals(BetStatus.SEMI)).collect(Collectors.toList()).size()));
 		infos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()

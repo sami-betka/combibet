@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import combibet.entity.AppRole;
-import combibet.entity.Bet;
-import combibet.entity.BetStatus;
+import combibet.entity.Bankroll;
+import combibet.entity.BankrollField;
 import combibet.entity.Gambler;
 import combibet.repository.AppRoleRepository;
-import combibet.repository.BetRepository;
+import combibet.repository.BankrollRepository;
 import combibet.repository.GamblerRepository;
 import combibet.utils.EncrytedPasswordUtils;
 
@@ -24,24 +24,24 @@ public class CombibetApplication {
 //		BankrollRepository br = ctx.getBean(BankrollRepository.class);
 //		List<Bankroll> list = br.findAll();
 //		for(Bankroll bank : list) {
-//			bank.setBankrollField(BankrollField.HIPPIQUE);
+//			bank.setActive(true);;
 //			br.save(bank);
-//			System.out.println(bank.getBankrollField().getName());
+//			System.out.println(bank.isActive());
 //		}
 		
-		GamblerRepository gamblerRepository = ctx.getBean(GamblerRepository.class);
-		if (gamblerRepository.findByUserName("tetedestup") == null) {
-			Gambler gambler = new Gambler();
-			gambler.setUserName("tetedestup");
-			gambler.setPassword(EncrytedPasswordUtils.encrytePassword("123"));
-			gamblerRepository.save(gambler);
-		}
-		
-		AppRoleRepository appRoleRepository = ctx.getBean(AppRoleRepository.class);
-		if (appRoleRepository.findAll().isEmpty() || appRoleRepository.findAll().equals(null)) {
-			appRoleRepository.save(new AppRole(1l, "ROLE_ADMIN"));
-			appRoleRepository.save(new AppRole(2l, "ROLE_USER"));
-		}
+//		GamblerRepository gamblerRepository = ctx.getBean(GamblerRepository.class);
+//		if (gamblerRepository.findByUserName("tetedestup") == null) {
+//			Gambler gambler = new Gambler();
+//			gambler.setUserName("tetedestup");
+//			gambler.setPassword(EncrytedPasswordUtils.encrytePassword("123"));
+//			gamblerRepository.save(gambler);
+//		}
+//		
+//		AppRoleRepository appRoleRepository = ctx.getBean(AppRoleRepository.class);
+//		if (appRoleRepository.findAll().isEmpty() || appRoleRepository.findAll().equals(null)) {
+//			appRoleRepository.save(new AppRole(1l, "ROLE_ADMIN"));
+//			appRoleRepository.save(new AppRole(2l, "ROLE_USER"));
+//		}
 		
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
 //		List<Bet> list = betRepository.findAll();

@@ -361,6 +361,7 @@ public class BankrollController {
 
 		bankroll.setGambler(gamblerRepository.findByUserName(principal.getName()));
 		bankroll.setStartDate(LocalDateTime.now());
+		bankroll.setActive(true);
 //		bankroll.setStartDate(combiRepository.findAllByBankrollOrderByStartDateAsc(bankroll).get(0).getStartDate());
 		bankroll.setCombis(new ArrayList<>());
 		bankrollRepository.save(bankroll);
