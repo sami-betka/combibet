@@ -16,6 +16,8 @@ import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.Combi;
+import combibet.entity.ConfidenceIndex;
+import combibet.entity.Discipline;
 import combibet.entity.HorseRacingBet;
 import combibet.entity.SportBet;
 import combibet.repository.BankrollRepository;
@@ -44,9 +46,8 @@ public class BetController {
 		Bet bet = betRepository.findById(id).get();
 
 //		model.addAttribute("bet", bet);
-		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
-//		navbarAttributes(model, principal);
+		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 
 		if (bet.getClass().equals(SportBet.class)) {
 			bet = (SportBet) bet;
@@ -56,6 +57,9 @@ public class BetController {
 		if (bet.getClass().equals(HorseRacingBet.class))
 			bet = (HorseRacingBet) bet;
 		    model.addAttribute("bet", bet);
+			model.addAttribute("types", BetType.values());
+			model.addAttribute("disciplines", Discipline.values());
+			
 		    return "update-horse-racing-bet";
 
 	}
@@ -92,6 +96,8 @@ public class BetController {
 //		hrb.setBeforeComment(bet.getBeforeComment());
 //		hrb.setField(bet.getField());
 		hrb.setDiscipline(bet.getDiscipline());
+		hrb.setConfidenceIndex(bet.getConfidenceIndex());
+
 		
 		Bet savedHrb = betRepository.save(hrb);
 //		savedHrb.getCombi().setStartDate(savedHrb.getCombi().betsAsc().get(0).getDate());
@@ -137,6 +143,8 @@ public class BetController {
 		sb.setOdd(bet.getOdd());
 		sb.setStatus(bet.getStatus());
 		sb.setAnte(bet.getAnte());
+		sb.setConfidenceIndex(bet.getConfidenceIndex());
+
 //		sb.setAfterComment(bet.getAfterComment());
 //		sb.setBeforeComment(bet.getBeforeComment());
 //		sb.setField(bet.getField());

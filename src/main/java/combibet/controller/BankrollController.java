@@ -25,6 +25,7 @@ import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.Combi;
+import combibet.entity.ConfidenceIndex;
 import combibet.entity.Discipline;
 import combibet.entity.Gambler;
 import combibet.entity.HorseRacingBet;
@@ -88,6 +89,15 @@ public class BankrollController {
 		
 		bankrollService.transferToAnOtherGambler(bankrollId, gamblerId);
 		
+		return "redirect:/bankroll-list";
+	}
+	
+
+	@GetMapping("/delete-bankroll/{id}")
+	public String deleteBankroll(@PathVariable("id") Long id) {
+
+		bankrollRepository.deleteById(id);
+
 		return "redirect:/bankroll-list";
 	}
 
@@ -445,14 +455,6 @@ public class BankrollController {
 		return "redirect:/bankroll-list";
 	}
 
-	@GetMapping("/delete-bankroll/{id}")
-	public String deleteBankroll(@PathVariable("id") Long id) {
-
-		bankrollRepository.deleteById(id);
-
-		return "redirect:/bankroll-list";
-	}
-
 	@GetMapping("/add-combi-to-bankroll")
 	public String addCombiToBankroll(@RequestParam(name = "id") Long id, Model model, Principal principal,
 			RedirectAttributes redirectAttributes) {
@@ -558,6 +560,7 @@ public class BankrollController {
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
 		model.addAttribute("disciplines", Discipline.values());
+		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		model.addAttribute("emptyBet", new HorseRacingBet());
 
 		return "add-horse-racing-bet";
@@ -691,6 +694,7 @@ public class BankrollController {
 		model.addAttribute("id", id);
 //		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
+		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		model.addAttribute("emptyBet", new SportBet());
 
 		return "add-sport-bet";
