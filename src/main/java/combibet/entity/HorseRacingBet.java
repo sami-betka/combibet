@@ -24,7 +24,7 @@ public HorseRacingBet() {
 		super();
 	}
 
-public HorseRacingBet(int meeting, int race, Combi combi, BetType type, boolean hasWon, double winOdd) {
+public HorseRacingBet(int meeting, int race, Combi combi, BetType type, boolean hasWon, double winOdd, Discipline discipline) {
 		super();
 		this.meeting = meeting;
 		this.race = race;
@@ -32,6 +32,7 @@ public HorseRacingBet(int meeting, int race, Combi combi, BetType type, boolean 
 		this.type = type;
 		this.hasWon = hasWon;
 		this.winOdd = winOdd;
+		this.discipline = discipline;
 	}
 
 //	@Id
@@ -54,6 +55,8 @@ public HorseRacingBet(int meeting, int race, Combi combi, BetType type, boolean 
 //	private String selection;
 //
 	private double winOdd;
+	
+	private Discipline discipline;
 //
 //	private double ante;
 
@@ -110,6 +113,14 @@ public HorseRacingBet(int meeting, int race, Combi combi, BetType type, boolean 
 
 	public void setWinOdd(double winOdd) {
 		this.winOdd = winOdd;
+	}
+
+	public Discipline getDiscipline() {
+		return discipline;
+	}
+
+	public void setDiscipline(Discipline discipline) {
+		this.discipline = discipline;
 	}
 
 //	private BetStatus status;

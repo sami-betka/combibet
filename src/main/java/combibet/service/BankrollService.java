@@ -8,15 +8,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import combibet.entity.Bankroll;
+import combibet.entity.BankrollField;
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
+import combibet.entity.Gambler;
 import combibet.entity.HorseRacingBet;
+import combibet.repository.BankrollRepository;
+import combibet.repository.BetRepository;
+import combibet.repository.GamblerRepository;
 
 @Service
 public class BankrollService {
+	
+	@Autowired
+	BankrollRepository bankrollRepository;
+	
+	@Autowired
+	GamblerRepository gamblerRepository;
+	
+	@Autowired
+	BetRepository betRepository;
 
 	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, Integer anteDivider, Double initialBankrollAmount) {
 
@@ -331,5 +347,65 @@ public class BankrollService {
 		List<Bet> newList = list.stream().filter(b-> !b.getStatus().equals(BetStatus.NOT_PLAYED_LOSE) && !b.getStatus().equals(BetStatus.NOT_PLAYED_WON)).collect(Collectors.toList());
 		
 		return newList;
+	}
+	
+public void transferToAnOtherGambler (Long bankrollId, Long gamblerId){
+		
+	Bankroll bankroll = bankrollRepository.findById(bankrollId).get();
+	Bankroll newbankroll = new Bankroll();
+	Gambler gambler = gamblerRepository.findById(gamblerId).get();
+
+	//Modifier Bankroll////////////
+	
+//	newbankroll.setId(null);
+	newbankroll.setActive(bankroll.isActive());
+	newbankroll.setBankrollField(bankroll.getBankrollField());
+	newbankroll.setBets(new ArrayList<>());
+	newbankroll.setCombis(new ArrayList<>());
+	newbankroll.setEndDate(bankroll.getEndDate());
+	newbankroll.setFormattedStartDate(bankroll.getFormattedStartDate());
+	newbankroll.setGambler(gambler);
+	newbankroll.setName(bankroll.getName());
+	newbankroll.setStartAmount(bankroll.getStartAmount());
+	newbankroll.setStartDate(bankroll.getStartDate());
+	
+	Bankroll savedBankroll = bankrollRepository.save(newbankroll);
+	
+	
+	///////////Modifier les paris///////////////
+	for(Bet b: bankroll.getBets()) {
+		
+		HorseRacingBet bet = (HorseRacingBet) b;
+		
+		if(bankroll.getBankrollField().equals(BankrollField.HIPPIQUE)) {
+			HorseRacingBet newBet = new HorseRacingBet();
+			
+			newBet.setAfterComment(bet.getAfterComment());
+			newBet.setAnte(bet.getAnte());
+			newBet.setBankroll(savedBankroll);
+			newBet.setBeforeComment(bet.getBeforeComment());
+			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+			newBet.setCurrentOddInCombi(bet.getCurrentOddInCombi());
+			newBet.setDate(bet.getDate());
+			newBet.setField(bet.getField());
+			newBet.setFormattedDate(bet.getFormattedDate());
+			newBet.setGambler(gambler);
+			newBet.setOdd(bet.getOdd());
+			newBet.setSelection(bet.getSelection());
+			newBet.setStatus(bet.getStatus());
+			newBet.setType(bet.getType());
+			newBet.setDiscipline(bet.getDiscipline());
+			newBet.setHasWon(bet.isHasWon());
+			newBet.setMeeting(bet.getMeeting());
+			newBet.setRace(bet.getRace());
+			newBet.setWinOdd(bet.getWinOdd());
+			
+			HorseRacingBet savedBet = betRepository.save(newBet);
+			savedBankroll.getBets().add(savedBet);
+		}
+	}
+	
+	bankrollRepository.save(savedBankroll);
+	
 	}
 }

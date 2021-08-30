@@ -61,15 +61,33 @@ public class BankrollController {
 
 		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
-//		List<Bet> betList = betRepository.findAll();
+		List<Bankroll> bankrollList = bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler);
+//		if(gambler.getId().equals(8l)) {
+//			Bankroll otherBankroll = bankrollRepository.findById(39l).get();
+//			bankrollList.add(otherBankroll);
+//		}
 
-		model.addAttribute("bankrollList", bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler));
+		model.addAttribute("bankrollList", bankrollList);
 //		model.addAttribute("betList", betRepository.findAllBetsByOrderByIdAsc());
 
 		model.addAttribute("active", true);
 
 		return "bankroll-list";
-
+	}
+	
+	@GetMapping("/transfer-bankroll")
+	public String transferToAnOtherGambler(
+			@RequestParam(name = "bankrollId") Long bankrollId, 
+			@RequestParam(name = "gamblerId") Long gamblerId,
+			Model model, Principal principal) {
+				
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		bankrollService.transferToAnOtherGambler(bankrollId, gamblerId);
+		
+		return "redirect:/bankroll-list";
 	}
 
 	@GetMapping("/bankroll-details")
