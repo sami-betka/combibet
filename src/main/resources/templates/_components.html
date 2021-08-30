@@ -61,13 +61,13 @@
             <li th:classappend="${#request.getServletPath() == '/bankroll-list' ? 'active' : ''}">
                 <a th:href="@{/bankroll-list}">
                   <i class="now-ui-icons design_app"></i>
-                  <p style="text-shadow: 2px 2px 4px #000000;">Mes bankrolls</p>
+                  <p th:classappend="${#request.getServletPath() == '/bankroll-list' ? '' : 'text-shadow'}">Mes bankrolls</p>
                 </a>
             </li>
              <li th:classappend="${#request.getServletPath() == '/add-bankroll' ? 'active' : ''}">
                 <a th:href="@{/add-bankroll}">
                   <i class="now-ui-icons design_app"></i>
-                  <p style="text-shadow: 2px 2px 4px #000000;">Cr&eacute;er bankroll</p>
+                  <p th:classappend="${#request.getServletPath() == '/add-bankroll' ? '' : 'text-shadow'}">Cr&eacute;er bankroll</p>
                 </a>
             </li>
            </ul>
@@ -80,19 +80,19 @@
             <li th:classappend="${#request.getServletPath() == '/dashboard' ? 'active' : ''}">
             <a th:href="@{/dashboard}">
               <i class="now-ui-icons design_app"></i>
-              <p style="text-shadow: 2px 2px 4px #000000;">Tableau de bord</p>
+              <p th:classappend="${#request.getServletPath() == '/dashboard' ? '' : 'text-shadow'}">Tableau de bord</p>
             </a>
           </li>
            <li th:classappend="${#request.getServletPath() == '/bet-list' ? 'active' : ''}">
             <a th:href="@{/bet-list}">
               <i class="now-ui-icons users_single-02"></i>
-              <p style="text-shadow: 2px 2px 4px #000000;">Mes paris</p>
+              <p th:classappend="${#request.getServletPath() == '/bet-list' ? '' : 'text-shadow'}">Mes paris</p>
             </a>
           </li>
             <li th:classappend="${#request.getServletPath() == '/bet-list-simulation' ? 'active' : ''}">
             <a th:href="@{/bet-list-simulation}">
               <i class="now-ui-icons users_single-02"></i>
-              <p style="text-shadow: 2px 2px 4px #000000;">Gestion Bankroll (Simulation)</p>
+              <p th:classappend="${#request.getServletPath() == '/bet-list-simulation' ? '' : 'text-shadow'}">Gestion Bankroll (Simulation)</p>
             </a>
           </li>
 <!--           <li th:classappend="${#request.getServletPath() == '/add-horse-racing-bet-to-bankroll' ? 'active' : ''}"> -->
@@ -111,7 +111,7 @@
           <li th:classappend="${#request.getServletPath() == '/my-infos' ? 'active' : ''}">
             <a th:href="@{/my-infos}">
               <i class="now-ui-icons users_single-02"></i>
-              <p style="text-shadow: 2px 2px 4px #000000;">Mon profil</p>
+              <p th:classappend="${#request.getServletPath() == '/my-infos' ? '' : 'text-shadow'}">Mon profil</p>
             </a>
           </li>
            <li sec:authorize="isAuthenticated()">
