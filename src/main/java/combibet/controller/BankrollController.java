@@ -25,6 +25,7 @@ import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.Combi;
+import combibet.entity.Discipline;
 import combibet.entity.Gambler;
 import combibet.entity.HorseRacingBet;
 import combibet.entity.SportBet;
@@ -186,11 +187,11 @@ public class BankrollController {
 
 		if (type != null) {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
-			model.addAttribute("betList", bets);
+			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 
 		} else {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
-			model.addAttribute("betList", bets);
+			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		}
 
 		model.addAttribute("id", id);
@@ -201,16 +202,16 @@ public class BankrollController {
 //		model.addAttribute("betListInfos", bets);
 //		model.addAttribute("betListInfos", bankrollService.betListInfos(bets, bankrollAmount));
 		model.addAttribute("betListInfos", bankrollService
-				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount)));
+				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount)));
 
 //		return "bet-list-simulation";
 
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
 
 		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
-				.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
+				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount).get("bankrollAmounts");
 		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
-				.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
+				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount).get("betsDates");
 
 		for (int i = 0; i < bankrollAmounts.size(); i++) {
 
@@ -242,7 +243,7 @@ public class BankrollController {
 		List<Bet> bets = new ArrayList<>();
 
 		if (type != null) {
-			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
+			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type));
 			for (Bet bet : bets) {
 				HorseRacingBet hrb = (HorseRacingBet) bet;
 				if (hrb.isHasWon() == false) {
@@ -256,7 +257,7 @@ public class BankrollController {
 			model.addAttribute("betList", bets);
 
 		} else {
-			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
+			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollOrderByDateAsc(bankroll));
 			for (Bet bet : bets) {
 				HorseRacingBet hrb = (HorseRacingBet) bet;
 				if (hrb.isHasWon() == false) {
@@ -291,7 +292,7 @@ public class BankrollController {
 //		}
 //
 		model.addAttribute("surveyMap", surveyMap);
-		model.addAttribute("betListInfos", bankrollService.betsInfos(bets, bankroll.getStartAmount()));
+		model.addAttribute("betListInfos", bankrollService.betsInfos(bankrollService.suppressNotPlayed(bets), bankroll.getStartAmount()));
 
 		return "bet-list";
 	}
@@ -316,11 +317,11 @@ public class BankrollController {
 		List<Bet> bets = new ArrayList<>();
 
 		if (type != null) {
-			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
+			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type));
 			model.addAttribute("betList", bets);
 
 		} else {
-			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
+			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollOrderByDateAsc(bankroll));
 			model.addAttribute("betList", bets);
 		}
 
@@ -499,6 +500,7 @@ public class BankrollController {
 		model.addAttribute("id", id);
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("status", BetStatus.values());
+		model.addAttribute("disciplines", Discipline.values());
 		model.addAttribute("emptyBet", new HorseRacingBet());
 
 		return "add-horse-racing-bet";

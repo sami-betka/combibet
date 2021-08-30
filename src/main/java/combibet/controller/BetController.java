@@ -91,6 +91,7 @@ public class BetController {
 //		hrb.setAfterComment(bet.getAfterComment());
 //		hrb.setBeforeComment(bet.getBeforeComment());
 //		hrb.setField(bet.getField());
+		hrb.setDiscipline(bet.getDiscipline());
 		
 		Bet savedHrb = betRepository.save(hrb);
 //		savedHrb.getCombi().setStartDate(savedHrb.getCombi().betsAsc().get(0).getDate());

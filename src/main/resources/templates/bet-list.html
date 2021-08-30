@@ -74,23 +74,27 @@
 
 <!--                            <h1 th:text="${'Bankroll: ' + bankrollName}"></h1> -->
 
-
+            <div style="margin: 10px; padding: 10px; background-color: gray; width: 200px">
 <a th:if="${field} eq 'hippique'" th:href="@{/add-horse-racing-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 ">Ajouter pari hippique</button></a>  
+            </div>
+            
 
-<a th:if="${field} eq 'sport'" th:href="@{/add-sport-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            <div th:if="${field} eq 'sport'" style="margin: 10px; padding: 10px; background-color: gray; width: 200px">
+<a th:href="@{/add-sport-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 ">Ajouter pari sportif</button></a> 
+            </div>
+            
 
-
-            <div style="">
-<a th:href="@{/new-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            <div style="margin: 10px; padding: 10px; background-color: gray; width: 410px">
+<a th:href="@{/new-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 ">Liste des paris classique</button></a> 
 
 <a th:if="${field} eq 'hippique'" th:href="@{/win-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 ">Liste des paris à la gagne</button></a> 
             </div>
 
-            <div style="">
+            <div style="margin: 10px; padding: 10px; background-color: gray; width: 420px">
                <a th:href="@{/new-bankroll-details-simulation?id={id}(id=${id})}"><button class="btn btn-danger" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 ">Simulation gestion bankroll</button></a> 
 
@@ -99,18 +103,17 @@
             </div>
 
              </div>
-              <br>
 
               <div class="card-body">
               
                             
-                            <div class="dropdown">
+                            <div class="dropdown" style="margin: 10px; padding: 10px; background-color: gray; width: 400px">
                              <a class="btn btn-primary" type="button" th:href="@{/bet-list}">
                           Tous types de paris
                </a>
-  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <a><button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Filtrer par type de pari
-  </button>
+  </button></a>
   
   
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
