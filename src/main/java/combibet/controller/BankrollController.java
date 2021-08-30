@@ -165,6 +165,63 @@ public class BankrollController {
 		
 		return "bet-list";
 	}
+	
+	@GetMapping("/new-bankroll-details-with-not-played")
+	public String newBankrollDetailsWithNotPlayed(@RequestParam(name = "id", defaultValue = "") Long id,
+			@RequestParam(name = "type", defaultValue = "") BetType type,
+			@RequestParam(name = "bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
+			@RequestParam(name = "divider", defaultValue = "20", required = false) Integer divider, Model model,
+			Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+
+//		List<Object> finalList = new ArrayList<>();
+
+		Bankroll bankroll = bankrollRepository.findById(id).get();
+
+//		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
+
+		List<Bet> bets = new ArrayList<>();
+
+		if (type != null) {
+			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
+//			model.addAttribute("betList", bets);
+
+		} else {
+			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
+//			model.addAttribute("betList", bets);
+		}
+		
+		model.addAttribute("betList", bets);
+		
+		model.addAttribute("id", id);
+		model.addAttribute("types", BetType.values());
+		model.addAttribute("bankrollName", bankroll.getName());
+		model.addAttribute("field", bankroll.getBankrollField().getName());
+		model.addAttribute("betListInfos", bankrollService.betsInfos(bets, bankroll.getStartAmount()));
+
+		//////Map pour le graph/////////
+		Map<String, Double> surveyMap = new LinkedHashMap<>();
+//
+//		@SuppressWarnings("unchecked")
+//		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
+//				.managedBankrollSimulation(graphBets, divider, bankrollAmount).get("bankrollAmounts");
+//		@SuppressWarnings("unchecked")
+//		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
+//				.managedBankrollSimulation(graphBets, divider, bankrollAmount).get("betsDates");
+//		
+//
+//		for (int i = 0; i < bankrollAmounts.size(); i++) {
+//
+//			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
+//
+//		}
+		model.addAttribute("surveyMap", surveyMap);
+		
+		return "bet-list";
+	}
 
 	@GetMapping("/new-bankroll-details-simulation")
 	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,

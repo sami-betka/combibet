@@ -50,7 +50,7 @@ public class BankrollService {
 		for (int i = 0; i < bets.size(); i++) {
 
 			Bet bet = bets.get(i);
-			if (!bet.getStatus().equals(BetStatus.WON) && !bet.getStatus().equals(BetStatus.SEMI)) {
+			if (!bet.getStatus().equals(BetStatus.WON) && !bet.getStatus().equals(BetStatus.SEMI) && !bet.getStatus().equals(BetStatus.NOT_PLAYED_WON)) {
 				bet.setOdd(0d);
 			}
 			bet.setAnte(ante);

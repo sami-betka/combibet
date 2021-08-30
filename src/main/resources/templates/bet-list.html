@@ -90,6 +90,9 @@
 <a th:href="@{/new-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 ">Liste des paris classique</button></a> 
 
+<a th:href="@{/new-bankroll-details-with-not-played?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+">Liste des paris avec non-joués</button></a> 
+
 <a th:if="${field} eq 'hippique'" th:href="@{/win-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 ">Liste des paris à la gagne</button></a> 
             </div>
