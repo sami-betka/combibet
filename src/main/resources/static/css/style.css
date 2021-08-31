@@ -18,6 +18,12 @@
 .degrade{
 	background:-webkit-linear-gradient(30deg, red, green);
 }
+.degradeLose{
+	background:-webkit-linear-gradient(30deg, red, orange);
+}
+.degradeWon{
+	background:-webkit-linear-gradient(30deg, green, orange);
+}
 .text-shadow{
 	text-shadow: 2px 2px 4px #000000;
 }

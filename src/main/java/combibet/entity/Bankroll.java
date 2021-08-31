@@ -2,6 +2,7 @@ package combibet.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -84,7 +85,8 @@ public class Bankroll {
 	
 	public int betNumber() {
 		
-		return this.bets.size();
+		return this.bets.stream().filter(b -> !b.getStatus().equals(BetStatus.NOT_PLAYED_LOSE) && !b.getStatus().equals(BetStatus.NOT_PLAYED_WON)).collect(Collectors.toList()).size();
+											
 	}
 	
 	public double benefit () {

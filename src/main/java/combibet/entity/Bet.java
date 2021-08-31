@@ -173,6 +173,12 @@ public abstract class Bet {
 		if(date.getMonthValue()<10) {
 			testDay = day + " " + date.getDayOfMonth() + "-0" + date.getMonthValue() + "-" + date.getYear();
 		}
+		if(date.getDayOfMonth()<10) {
+			testDay = day + " 0" + date.getDayOfMonth() + "-" + date.getMonthValue() + "-" + date.getYear();
+		}
+		if(date.getDayOfMonth()<10 && date.getMonthValue()<10) {
+			testDay = day + " 0" + date.getDayOfMonth() + "-0" + date.getMonthValue() + "-" + date.getYear();
+		}
 
 		int minute = date.getMinute();
 		String completeHour = date.getHour() + "h" + minute;

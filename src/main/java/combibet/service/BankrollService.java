@@ -69,7 +69,9 @@ public class BankrollService {
 
 			if (actualBankrollAmount > topAmount) {
 
-				ante = actualBankrollAmount / anteDivider;
+//				if(!bet.getDate().equals(bets.get(i-1).getDate())) {
+					ante = actualBankrollAmount / anteDivider;
+//				}
 				
 				topAmount = actualBankrollAmount;
 			}
@@ -216,6 +218,8 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
+		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount/20)));
+
 		betListInfos.put("Diviseur", String.valueOf(divider));
 
 		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
@@ -272,6 +276,8 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
+		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount/20)));
+
 		betListInfos.put("Diviseur", String.valueOf(divider));
 
 		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
@@ -300,6 +306,10 @@ public class BankrollService {
 		LinkedHashMap<String, String> infos = new LinkedHashMap<>();
 		Double initialBankrollAmount = initialBankAmount;
 		Double actualBankrollAmount = initialBankrollAmount;
+		Double initialAnte = initialBankrollAmount/20;
+		Double nextAnte = initialAnte;
+
+
 
 		infos.put("Montant bankroll initial", String.valueOf(actualBankrollAmount));
 
@@ -318,10 +328,21 @@ public class BankrollService {
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
 			
 			bankrollAmounts.add(actualBankrollAmount);
-
+			
+		}
+		
+		///Calculer prochaine mise
+		Double baseBankrollAmount = initialBankAmount;
+		for(Double amount : bankrollAmounts) {
+			if(amount > baseBankrollAmount) {
+				nextAnte = amount/20;
+			}
 		}
 		
 		infos.put("Dernier montant bankroll",  String.valueOf(String.format("%.2f", actualBankrollAmount)));
+		infos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
+		infos.put("Prochaine mise", String.valueOf(String.format("%.2f", nextAnte)));
+
 		infos.put("Nombre de paris", String.valueOf(betList.size()));
 
 		List<Double> wonBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
