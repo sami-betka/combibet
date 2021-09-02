@@ -2,6 +2,7 @@ package combibet.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.DiscriminatorColumn;
@@ -192,6 +193,7 @@ public abstract class Bet {
 
 		return map;
 	}
+
 
 	public Long getId() {
 		return id;

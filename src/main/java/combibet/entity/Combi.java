@@ -98,7 +98,6 @@ public class Combi {
 		bets.sort((o1,o2) -> o1.getDate().compareTo(o2.getDate())); 
 		
 		double currentOdd = 1d;
-//		bets.get(0).setCurrentOddInCombi(bets.get(0).getOdd());
 		
 		for(int i = 0; i< bets.size(); i++) {
 			

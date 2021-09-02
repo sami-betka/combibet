@@ -74,6 +74,8 @@
 
 <!--                            <h1 th:text="${'Bankroll: ' + bankrollName}"></h1> -->
 
+
+
             <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; background-color: gray; width: 200px">
 <a th:href="@{/add-horse-racing-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 ">Ajouter pari hippique</button></a>  
@@ -109,7 +111,8 @@
 
               <div class="card-body">
               
-                            
+                            <div class="row">
+                            <div class="col-md-6">
                             <div th:if="${field} eq 'hippique'"  class="dropdown" style="margin: 10px; padding: 10px; background-color: gray; width: 400px">
                              <a class="btn btn-primary" type="button" th:href="@{/bet-list}">
                           Tous types de paris
@@ -126,7 +129,95 @@
 <!--     <a class="dropdown-item" href="#">Something else here</a> -->
    </div>
   </div>
-                           </div>
+                     </div>
+                     </div>
+                     
+                     <div class="col-md-6">
+                     
+                     						<form class="user" th:action="@{multi-filter-bet-list?id={id}(id=${id})}">
+<!--                      						<form class="user" th:action="@{'multi-filter-bet-list/'+${id}}" method="GET"> -->
+
+
+							<h1 class="text-dark" th:text="${id}"></h1>
+
+<!-- 							    <label class="text-dark" style="font-weight: bold;">Id bankroll</label> -->
+								<input name="id" th:value="${id}" type="hidden"
+									class="form-control form-control-user" id="" placeholder="">
+									
+
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Type de pari:</label><br> 
+								<select class="form-control form-control-user" name="type">
+									<option value="">--Choisir--</option>
+
+									<option th:each="t : ${types}" th:value="${t}"
+										th:text="${t.name}"></option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Discipline:</label><br> 
+								<select class="form-control form-control-user" name="discipline">
+									<option value="">--Choisir--</option>
+
+									<option th:each="d : ${disciplines}" th:value="${d}"
+										th:text="${d.name}"></option>
+								</select>
+							</div>
+
+<!-- 							<div class="form-group"> -->
+<!-- 							    <label class="text-dark" style="font-weight: bold;">Sélection</label> -->
+<!-- 								<input th:field="*{selection}" type="text" -->
+<!-- 									class="form-control form-control-user" id="" -->
+<!-- 									placeholder="Sélection"> -->
+<!-- 							</div> -->
+
+<!-- 							<div class="form-group"> -->
+<!-- 							    <label class="text-dark" style="font-weight: bold;">Cote</label> -->
+<!-- 								<input th:field="*{odd}" type="number" step="0.01" -->
+<!-- 									class="form-control form-control-user" id="" placeholder="Cote"> -->
+<!-- 							</div> -->
+							
+<!-- 							<div class="form-group"> -->
+<!-- 							    <label class="text-dark" style="font-weight: bold;">Cote à la gagne</label> -->
+<!-- 								<input th:field="*{winOdd}" type="number" step="0.01" -->
+<!-- 									class="form-control form-control-user" id="" placeholder="Cote à la gagne"> -->
+<!-- 							</div> -->
+								
+<!-- 							<div class="form-group"> -->
+<!-- 							    <label class="text-dark" style="font-weight: bold;">Mise</label> -->
+<!-- 								<input th:field="*{ante}" type="number" step="0.01" -->
+<!-- 									class="form-control form-control-user" id="" placeholder="Mise"> -->
+<!-- 							</div> -->
+							
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Indice de confiance:</label><br> 
+								<select class="form-control form-control-user" name="confidenceIndex">
+									<option value="">--Choisir--</option>
+
+									<option th:each="i : ${confidenceIndexs}" th:value="${i}"
+										th:text="${i.name}"></option>
+								</select>
+							</div>
+						
+							<div class="form-group">
+								<label class="text-dark" style="font-weight: bold;">Statut:</label><br> 
+								<select class="form-control form-control-user" name="status">
+									<option value="">--Choisir--</option>
+
+									<option th:each="s : ${status}" th:value="${s}"
+										th:text="${s.name}"></option>
+								</select>
+							</div>
+							
+							
+							<button type="submit" class="btn btn-primary btn-user btn-block"> 
+ 								Envoyer</button> 
+						</form>
+                     
+                     </div>
+                     
+                     </div>
               
 
                                                       
@@ -172,11 +263,14 @@
                       <th>
                         Cote
                       </th>
-<!--                       <th> -->
-<!--                       Cote en report -->
-<!--                       </th> -->
+                      <th>
+                      Cote en report
+                      </th>
                       <th>
                         Statut
+                      </th>
+                        <th>
+                        confiance
                       </th>
                        <th>
                         
@@ -191,8 +285,9 @@
 												<th>Sélection</th>
 												<th>Mise</th>
 												<th>Cote</th>
-<!-- 							     				<th>Cote en report</th> -->
+							     				<th>Cote en report</th>
 												<th>Statut</th>
+												<th>confiance</th>
 												<th></th>
 												<th></th>
 												
@@ -202,40 +297,40 @@
                     <tbody th:with="totalOdd = 1">
                     
                                       <tr th:each="bet:${betList}" th:with="totalOdd = ${totalOdd} * ${bet.odd}">
-                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
-                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
                                             
-                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.formatDate.get('hour')}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.formatDate.get('hour')}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.formatDate.get('hour')}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.formatDate.get('hour')}"></td>
-                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.formatDate.get('hour')}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.formatDate.get('hour')}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('hour')}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('hour')}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('hour')}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('hour')}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('hour')}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('hour')}"></td>
 
-                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.formatDate.get('day')}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.formatDate.get('day')}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.formatDate.get('day')}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.formatDate.get('day')}"></td>
-                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.formatDate.get('day')}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.formatDate.get('day')}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('day')}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('day')}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('day')}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('day')}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('day')}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold; text-align: center;" th:text="${bet.formatDate.get('day')}"></td>
                                             
-                                            <td th:if="${bet.status.name == 'Gagnant' and field eq 'hippique'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.type.name}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant' and field eq 'hippique'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.type.name}"></td>
-                                            <td th:if="${bet.status.name == 'En attente' and field eq 'hippique'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.type.name}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-perdant' and field eq 'hippique'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.type.name}"></td>
-                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.type.name}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant' and field eq 'hippique'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant' and field eq 'hippique'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'En attente' and field eq 'hippique'}" class="text-dark btn-warning" style="font-weight: bold; text-align: center;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant' and field eq 'hippique'}" class="text-white degrade" style="font-weight: bold; text-align: center;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold; text-align: center;" th:text="${bet.type.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold; text-align: center;" th:text="${bet.type.name}"></td>
                                             
-                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.selection}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.selection}"></td>
-                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.selection}"></td>
-                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.selection}"></td>
-                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.selection}"></td>
-                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold; text-align: center;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold; text-align: center;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold; text-align: center;" th:text="${bet.selection}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold; text-align: center;" th:text="${bet.selection}"></td>
                                             
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.ante}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.ante}"></td>
@@ -251,12 +346,12 @@
                                             <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.odd}"></td>
                                             
-<!--                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${totalOdd}"></td> -->
-<!--                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${totalOdd}"></td> -->
-<!--                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${totalOdd}"></td> -->
-<!--                                             <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${totalOdd}"></td> -->
-<!--                                             <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${totalOdd}"></td> -->
-<!--                                             <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${totalOdd}"></td> -->
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.currentOddInCombi}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.currentOddInCombi}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.currentOddInCombi}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.currentOddInCombi}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.currentOddInCombi}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.currentOddInCombi}"></td>
                                                                                         
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.status.name}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.status.name}"></td>
@@ -264,6 +359,13 @@
                                             <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.status.name}"></td>
                                             <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.status.name}"></td>
                                             <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.status.name}"></td>
+                                       
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold;" th:text="${bet.confidenceIndex.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bet.confidenceIndex.name}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold;" th:text="${bet.confidenceIndex.name}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold;" th:text="${bet.confidenceIndex.name}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold;" th:text="${bet.confidenceIndex.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold;" th:text="${bet.confidenceIndex.name}"></td>
                                        
                                             <td> <a class="text-primary" th:href="@{'/edit-bet?id='+${bet.id}}">Modifier</a></td>
                                             <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet?id='+${bet.id}}">Supprimer</a></td>                                       

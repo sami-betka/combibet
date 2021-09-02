@@ -24,91 +24,90 @@ import combibet.repository.GamblerRepository;
 
 @Service
 public class BankrollService {
-	
+
 	@Autowired
 	BankrollRepository bankrollRepository;
-	
+
 	@Autowired
 	GamblerRepository gamblerRepository;
-	
+
 	@Autowired
 	BetRepository betRepository;
 
-	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, Integer anteDivider, Double initialBankrollAmount) {
+	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, Integer anteDivider,
+			Double initialBankrollAmount) {
 
 		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
 		LinkedList<String> betsDates = new LinkedList<>();
-		
 
 		Double actualBankrollAmount = initialBankrollAmount;
 		Double topAmount = actualBankrollAmount;
 		Double ante = topAmount / anteDivider;
 
-
 		for (int i = 0; i < bets.size(); i++) {
 
 			Bet bet = bets.get(i);
-			if (!bet.getStatus().equals(BetStatus.WON) && !bet.getStatus().equals(BetStatus.SEMI) && !bet.getStatus().equals(BetStatus.NOT_PLAYED_WON)) {
+			if (!bet.getStatus().equals(BetStatus.WON) && !bet.getStatus().equals(BetStatus.SEMI)
+					&& !bet.getStatus().equals(BetStatus.NOT_PLAYED_WON)) {
 				bet.setOdd(0d);
 			}
 			bet.setAnte(ante);
 //			System.out.println(i+1 + " 0) mise " + ante);
 
-			actualBankrollAmount = actualBankrollAmount - bet.getAnte();			
-			
+			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
+
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
-			
+
 //			    System.out.println(i+1 + " 1) " + String.format("%.2f", actualBankrollAmount));
 //				System.out.println(i+1 + " 2) bank actuelle " + String.format("%.2f", actualBankrollAmount));
 //				System.out.println(i+1 + " 3) bank max precedente " + String.format("%.2f", topAmount));
 
-				bankrollAmounts.add(actualBankrollAmount);
-				betsDates.add(String.valueOf(bet.getDate()));
+			bankrollAmounts.add(actualBankrollAmount);
+			betsDates.add(String.valueOf(bet.getDate()));
 
 			if (actualBankrollAmount > topAmount) {
 
 //				if(!bet.getDate().equals(bets.get(i-1).getDate())) {
-					ante = actualBankrollAmount / anteDivider;
+				ante = actualBankrollAmount / anteDivider;
 //				}
-				
+
 				topAmount = actualBankrollAmount;
 			}
-			
+
 //				System.out.println("");
-			
+
 //				if(actualBankrollAmount<0) {
 //                   return null;
 //                  }
 
 			arrangedBets.add(bet);
 		}
-		
+
 		Map<String, Object> finalMap = new HashMap<>();
 		finalMap.put("betList", arrangedBets);
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
-		finalMap.put("initialAnte", initialBankrollAmount/anteDivider );
-		finalMap.put("divider",anteDivider );
+		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
+		finalMap.put("divider", anteDivider);
 
-		
-		///////////////////Dashboard Infos
-		
+		/////////////////// Dashboard Infos
+
 		finalMap.put("bankrollAmounts", bankrollAmounts);
 		finalMap.put("betsDates", betsDates);
 
-		
 		return finalMap;
 	}
-	
-	public Map<String, Object> winManagedBankrollSimulation(List<Bet> betList, Integer anteDivider, Double initialBankrollAmount) {
+
+	public Map<String, Object> winManagedBankrollSimulation(List<Bet> betList, Integer anteDivider,
+			Double initialBankrollAmount) {
 
 		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
 		LinkedList<String> betsDates = new LinkedList<>();
-		
+
 //		Map<String, Object> finalMap = new HashMap<>();
 //		finalMap.put("InitialBankrollAmount", initialBankrollAmount);
 
@@ -124,73 +123,66 @@ public class BankrollService {
 			Bet bet = bets.get(i);
 			bet.setType(BetType.SIMPLE_GAGNANT);
 			HorseRacingBet hrb = (HorseRacingBet) bet;
-			
+
 			if (!bet.getStatus().equals(BetStatus.WON)) {
 				bet.setOdd(0d);
 			}
-			if(hrb.isHasWon()==false) {
+			if (hrb.isHasWon() == false) {
 				bet.setOdd(0d);
 				bet.setStatus(BetStatus.LOSE);
-			}else {
+			} else {
 				hrb.setOdd(hrb.getWinOdd());
 			}
 			bet.setAnte(ante);
-			System.out.println(i+1 + " 0) mise " + ante);
+			System.out.println(i + 1 + " 0) mise " + ante);
 
-			actualBankrollAmount = actualBankrollAmount - bet.getAnte();			
-			
+			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
+
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
-			
-			    System.out.println(i+1 + " 1) " + String.format("%.2f", actualBankrollAmount));
-				System.out.println(i+1 + " 2) bank actuelle " + String.format("%.2f", actualBankrollAmount));
-				System.out.println(i+1 + " 3) bank max precedente " + String.format("%.2f", topAmount));
 
-				bankrollAmounts.add(actualBankrollAmount);
-				betsDates.add(String.valueOf(bet.getDate()));
+			System.out.println(i + 1 + " 1) " + String.format("%.2f", actualBankrollAmount));
+			System.out.println(i + 1 + " 2) bank actuelle " + String.format("%.2f", actualBankrollAmount));
+			System.out.println(i + 1 + " 3) bank max precedente " + String.format("%.2f", topAmount));
+
+			bankrollAmounts.add(actualBankrollAmount);
+			betsDates.add(String.valueOf(bet.getDate()));
 
 			if (actualBankrollAmount > topAmount) {
 
 				ante = actualBankrollAmount / anteDivider;
-				
+
 				topAmount = actualBankrollAmount;
 			}
-			
-				System.out.println("");
-			
+
+			System.out.println("");
+
 //				if(actualBankrollAmount<0) {
 //                   return null;
 //                  }
 
 			arrangedBets.add(bet);
 		}
-		
+
 		Map<String, Object> finalMap = new HashMap<>();
 		finalMap.put("betList", arrangedBets);
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
-		finalMap.put("initialAnte", initialBankrollAmount/anteDivider );
-		finalMap.put("divider",anteDivider );
+		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
+		finalMap.put("divider", anteDivider);
 
-		
-		///////////////////Dashboard Infos
-		
+		/////////////////// Dashboard Infos
+
 		finalMap.put("bankrollAmounts", bankrollAmounts);
 		finalMap.put("betsDates", betsDates);
-
-		
-
-
 
 //		return arrangedBets;
 		return finalMap;
 	}
 
-	
 	public LinkedHashMap<String, String> betListInfos(Map<String, Object> map) {
 
 		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
 
-
 //		Double earnings = 0d;
 //		for (Bet b : bets) {
 //			earnings = earnings + (b.getOdd() * b.getAnte());
@@ -199,26 +191,22 @@ public class BankrollService {
 //			}
 //		}
 //		Double benefit = earnings - bankrollAmount;
-		
+
 		System.out.println(map.size() + " !!!");
-		
+
 		List<Bet> betList = (List<Bet>) map.get("betList");
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
 		Double initialAnte = (Double) map.get("initialAnte");
 		Integer divider = (Integer) map.get("divider");
-		
+
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
-
-
-		
-
 
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
-		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount/20)));
+		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / 20)));
 
 		betListInfos.put("Diviseur", String.valueOf(divider));
 
@@ -228,26 +216,25 @@ public class BankrollService {
 				.collect(Collectors.toList());
 
 		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
-		betListInfos.put("Paris perdants", String.valueOf(
-				betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
+		betListInfos.put("Paris perdants", String.valueOf(betList.stream()
+				.filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
 
 //		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
 		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 
-		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()
-				.collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
+		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f",
+				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
 
 		betListInfos.put("Multiplication du capital : X",
 				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
 
 		return betListInfos;
 	}
-	
+
 	public LinkedHashMap<String, String> betListInfosSimulation(Map<String, Object> map) {
 
 		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
 
-
 //		Double earnings = 0d;
 //		for (Bet b : bets) {
 //			earnings = earnings + (b.getOdd() * b.getAnte());
@@ -256,27 +243,22 @@ public class BankrollService {
 //			}
 //		}
 //		Double benefit = earnings - bankrollAmount;
-		
+
 		System.out.println(map.size() + " !!!");
 
-		
 		List<Bet> betList = (List<Bet>) map.get("betList");
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
 		Double initialAnte = (Double) map.get("initialAnte");
 		Integer divider = (Integer) map.get("divider");
-		
+
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
-
-
-		
-
 
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
-		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount/20)));
+		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / 20)));
 
 		betListInfos.put("Diviseur", String.valueOf(divider));
 
@@ -286,60 +268,56 @@ public class BankrollService {
 				.collect(Collectors.toList());
 
 		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
-		betListInfos.put("Paris perdants", String.valueOf(
-				betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
+		betListInfos.put("Paris perdants", String.valueOf(betList.stream()
+				.filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
 
 //		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
 		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 
-		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()
-				.collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
+		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f",
+				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
 
 		betListInfos.put("Multiplication du capital : X",
 				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
 
 		return betListInfos;
 	}
-	
-	public LinkedHashMap<String, String> betsInfos (List<Bet> betList, Double initialBankAmount){
-		
+
+	public LinkedHashMap<String, String> betsInfos(List<Bet> betList, Double initialBankAmount) {
+
 		LinkedHashMap<String, String> infos = new LinkedHashMap<>();
 		Double initialBankrollAmount = initialBankAmount;
 		Double actualBankrollAmount = initialBankrollAmount;
-		Double initialAnte = initialBankrollAmount/20;
+		Double initialAnte = initialBankrollAmount / 20;
 		Double nextAnte = initialAnte;
-
-
 
 		infos.put("Montant bankroll initial", String.valueOf(actualBankrollAmount));
 
-		
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
-		
+
 		bankrollAmounts.add(actualBankrollAmount);
 
-		
-		for(int i = 0; i < betList.size(); i++) {
-			
+		for (int i = 0; i < betList.size(); i++) {
+
 			Bet bet = betList.get(i);
-			
-            actualBankrollAmount = actualBankrollAmount - bet.getAnte();			
-			
+
+			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
+
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
-			
+
 			bankrollAmounts.add(actualBankrollAmount);
-			
+
 		}
-		
-		///Calculer prochaine mise
+
+		/// Calculer prochaine mise
 		Double baseBankrollAmount = initialBankAmount;
-		for(Double amount : bankrollAmounts) {
-			if(amount > baseBankrollAmount) {
-				nextAnte = amount/20;
+		for (Double amount : bankrollAmounts) {
+			if (amount > baseBankrollAmount) {
+				nextAnte = amount / 20;
 			}
 		}
-		
-		infos.put("Dernier montant bankroll",  String.valueOf(String.format("%.2f", actualBankrollAmount)));
+
+		infos.put("Dernier montant bankroll", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		infos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
 		infos.put("Prochaine mise", String.valueOf(String.format("%.2f", nextAnte)));
 
@@ -349,84 +327,102 @@ public class BankrollService {
 				.collect(Collectors.toList());
 
 		infos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
-		infos.put("Paris perdants", String.valueOf(
-				betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
-		infos.put("Paris en attente", String.valueOf(
-				betList.stream().filter(b -> b.getStatus().equals(BetStatus.PENDING)).collect(Collectors.toList()).size()));
-		infos.put("Paris semi-perdants", String.valueOf(
-				betList.stream().filter(b -> b.getStatus().equals(BetStatus.SEMI)).collect(Collectors.toList()).size()));
-		infos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f", wonBetsOdds.stream()
-				.collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
+		infos.put("Paris perdants", String.valueOf(betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE))
+				.collect(Collectors.toList()).size()));
+		infos.put("Paris en attente", String.valueOf(betList.stream()
+				.filter(b -> b.getStatus().equals(BetStatus.PENDING)).collect(Collectors.toList()).size()));
+		infos.put("Paris semi-perdants", String.valueOf(betList.stream()
+				.filter(b -> b.getStatus().equals(BetStatus.SEMI)).collect(Collectors.toList()).size()));
+		infos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f",
+				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
 		infos.put("Multiplication du capital : X",
 				String.valueOf(String.format("%.2f", actualBankrollAmount / initialBankrollAmount)));
-		
+
 		return infos;
 	}
-	
-	public List<Bet> suppressNotPlayed (List<Bet> list){
+
+	public List<Bet> suppressNotPlayed(List<Bet> list) {
+
+		List<Bet> newList = list.stream().filter(b -> !b.getStatus().equals(BetStatus.NOT_PLAYED_LOSE)
+				&& !b.getStatus().equals(BetStatus.NOT_PLAYED_WON)).collect(Collectors.toList());
 		
-		List<Bet> newList = list.stream().filter(b-> !b.getStatus().equals(BetStatus.NOT_PLAYED_LOSE) && !b.getStatus().equals(BetStatus.NOT_PLAYED_WON)).collect(Collectors.toList());
-		
+		currentOddsInCombis(newList);
+
 		return newList;
 	}
-	
-public void transferToAnOtherGambler (Long bankrollId, Long gamblerId){
-		
-	Bankroll bankroll = bankrollRepository.findById(bankrollId).get();
-	Bankroll newbankroll = new Bankroll();
-	Gambler gambler = gamblerRepository.findById(gamblerId).get();
 
-	//Modifier Bankroll////////////
-	
+	public void transferToAnOtherGambler(Long bankrollId, Long gamblerId) {
+
+		Bankroll bankroll = bankrollRepository.findById(bankrollId).get();
+		Bankroll newbankroll = new Bankroll();
+		Gambler gambler = gamblerRepository.findById(gamblerId).get();
+
+		// Modifier Bankroll////////////
+
 //	newbankroll.setId(null);
-	newbankroll.setActive(bankroll.isActive());
-	newbankroll.setBankrollField(bankroll.getBankrollField());
-	newbankroll.setBets(new ArrayList<>());
-	newbankroll.setCombis(new ArrayList<>());
-	newbankroll.setEndDate(bankroll.getEndDate());
-	newbankroll.setFormattedStartDate(bankroll.getFormattedStartDate());
-	newbankroll.setGambler(gambler);
-	newbankroll.setName(bankroll.getName());
-	newbankroll.setStartAmount(bankroll.getStartAmount());
-	newbankroll.setStartDate(bankroll.getStartDate());
-	
-	Bankroll savedBankroll = bankrollRepository.save(newbankroll);
-	
-	
-	///////////Modifier les paris///////////////
-	for(Bet b: bankroll.getBets()) {
-		
-		HorseRacingBet bet = (HorseRacingBet) b;
-		
-		if(bankroll.getBankrollField().equals(BankrollField.HIPPIQUE)) {
-			HorseRacingBet newBet = new HorseRacingBet();
-			
-			newBet.setAfterComment(bet.getAfterComment());
-			newBet.setAnte(bet.getAnte());
-			newBet.setBankroll(savedBankroll);
-			newBet.setBeforeComment(bet.getBeforeComment());
-			newBet.setConfidenceIndex(bet.getConfidenceIndex());
-			newBet.setCurrentOddInCombi(bet.getCurrentOddInCombi());
-			newBet.setDate(bet.getDate());
-			newBet.setField(bet.getField());
-			newBet.setFormattedDate(bet.getFormattedDate());
-			newBet.setGambler(gambler);
-			newBet.setOdd(bet.getOdd());
-			newBet.setSelection(bet.getSelection());
-			newBet.setStatus(bet.getStatus());
-			newBet.setType(bet.getType());
-			newBet.setDiscipline(bet.getDiscipline());
-			newBet.setHasWon(bet.isHasWon());
-			newBet.setMeeting(bet.getMeeting());
-			newBet.setRace(bet.getRace());
-			newBet.setWinOdd(bet.getWinOdd());
-			
-			HorseRacingBet savedBet = betRepository.save(newBet);
-			savedBankroll.getBets().add(savedBet);
+		newbankroll.setActive(bankroll.isActive());
+		newbankroll.setBankrollField(bankroll.getBankrollField());
+		newbankroll.setBets(new ArrayList<>());
+		newbankroll.setCombis(new ArrayList<>());
+		newbankroll.setEndDate(bankroll.getEndDate());
+		newbankroll.setFormattedStartDate(bankroll.getFormattedStartDate());
+		newbankroll.setGambler(gambler);
+		newbankroll.setName(bankroll.getName());
+		newbankroll.setStartAmount(bankroll.getStartAmount());
+		newbankroll.setStartDate(bankroll.getStartDate());
+
+		Bankroll savedBankroll = bankrollRepository.save(newbankroll);
+
+		/////////// Modifier les paris///////////////
+		for (Bet b : bankroll.getBets()) {
+
+			HorseRacingBet bet = (HorseRacingBet) b;
+
+			if (bankroll.getBankrollField().equals(BankrollField.HIPPIQUE)) {
+				HorseRacingBet newBet = new HorseRacingBet();
+
+				newBet.setAfterComment(bet.getAfterComment());
+				newBet.setAnte(bet.getAnte());
+				newBet.setBankroll(savedBankroll);
+				newBet.setBeforeComment(bet.getBeforeComment());
+				newBet.setConfidenceIndex(bet.getConfidenceIndex());
+				newBet.setCurrentOddInCombi(bet.getCurrentOddInCombi());
+				newBet.setDate(bet.getDate());
+				newBet.setField(bet.getField());
+				newBet.setFormattedDate(bet.getFormattedDate());
+				newBet.setGambler(gambler);
+				newBet.setOdd(bet.getOdd());
+				newBet.setSelection(bet.getSelection());
+				newBet.setStatus(bet.getStatus());
+				newBet.setType(bet.getType());
+				newBet.setDiscipline(bet.getDiscipline());
+				newBet.setHasWon(bet.isHasWon());
+				newBet.setMeeting(bet.getMeeting());
+				newBet.setRace(bet.getRace());
+				newBet.setWinOdd(bet.getWinOdd());
+
+				HorseRacingBet savedBet = betRepository.save(newBet);
+				savedBankroll.getBets().add(savedBet);
+			}
 		}
+
+		bankrollRepository.save(savedBankroll);
+
 	}
-	
-	bankrollRepository.save(savedBankroll);
-	
+
+	public void currentOddsInCombis(List<Bet> bets) {
+
+		double currentOdd = 1d;
+
+		for (int i = 0; i < bets.size(); i++) {
+
+			bets.get(i).setCurrentOddInCombi(currentOdd * bets.get(i).getOdd());
+			currentOdd = bets.get(i).getCurrentOddInCombi();
+			if(currentOdd == 0) {
+				currentOdd = 1;
+			}
+			
+//			System.out.println(bets.get(i).getCurrentOddInCombi());
+		}
 	}
 }

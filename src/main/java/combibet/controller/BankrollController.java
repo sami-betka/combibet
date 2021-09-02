@@ -149,8 +149,14 @@ public class BankrollController {
 		
 		model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		
+//		bankrollId, type, discipline, status, confidenceIndex
+		
 		model.addAttribute("id", id);
 		model.addAttribute("types", BetType.values());
+		model.addAttribute("disciplines", Discipline.values());
+		model.addAttribute("status", BetStatus.values());
+		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
+
 		model.addAttribute("bankrollName", bankroll.getName());
 		model.addAttribute("field", bankroll.getBankrollField().getName());
 		model.addAttribute("betListInfos", bankrollService.betsInfos(bankrollService.suppressNotPlayed(bets), bankroll.getStartAmount()));
@@ -203,6 +209,8 @@ public class BankrollController {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
 //			model.addAttribute("betList", bets);
 		}
+		
+		bankrollService.currentOddsInCombis(bets);
 		
 		model.addAttribute("betList", bets);
 		
