@@ -164,6 +164,8 @@ public class GamblerController {
 			@RequestParam(name="status", defaultValue = "", required = false) BetStatus status,
 			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
 			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
+			@RequestParam(name="notPlayed", defaultValue = "", required = false) String notPlayed,
+
 			Model model, Principal principal) {
 		
 
@@ -178,8 +180,12 @@ public class GamblerController {
 		List<Bet> bets = horseRacingBetRepository.filterSearch(id, type, discipline, status, confidenceIndex);
 
 		System.out.println(bets.size());
-		
-		model.addAttribute("betList", bets);
+		if(notPlayed.equals("true")) {
+			model.addAttribute("betList", bets);
+		}
+		if(notPlayed.equals("false") || notPlayed.equals(null) ) {
+			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
+		}
 		
 		model.addAttribute("id", id);
 		System.out.println(id);
@@ -195,6 +201,8 @@ public class GamblerController {
 
 		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		System.out.println(confidenceIndex);
+		
+		model.addAttribute("field", bankrollRepository.findById(id).get().getBankrollField().getName());
 
 		//////Map pour le graph/////////
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
@@ -212,6 +220,7 @@ public class GamblerController {
 //			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
 //
 //		}
+	
 		model.addAttribute("surveyMap", surveyMap);
 		
 		model.addAttribute("betListInfos", bankrollService.betsInfos(bankrollService.suppressNotPlayed(bets), bankrollRepository.findById(id).get().getStartAmount()));
@@ -247,7 +256,6 @@ public class GamblerController {
 //		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
 		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
 
-
 		return "bet-list-simulation";
 	}
 	
@@ -258,7 +266,6 @@ public class GamblerController {
 
 		model.addAttribute("emptyUser", new Gambler());
 
-//		navbarAttributes(model, principal);
 		return "register";
 	}
 
