@@ -1,0 +1,260 @@
+create sequence app_role_seq start 1 increment 1
+create sequence bankroll_seq start 1 increment 1
+create sequence bet_seq start 1 increment 1
+create sequence combi_seq start 1 increment 1
+create sequence gambler_seq start 1 increment 1
+create sequence user_role_seq start 1 increment 1
+
+    create table app_role (
+       role_id int8 not null,
+        role_name varchar(30) not null,
+        primary key (role_id)
+    )
+
+    create table bankroll (
+       id int8 not null,
+        bankroll_field int4,
+        end_date timestamp,
+        formatted_start_date varchar(255),
+        is_active boolean not null,
+        name varchar(255),
+        start_amount float8 not null,
+        start_date timestamp,
+        gambler_id int8,
+        primary key (id)
+    )
+
+    create table bet (
+       bet_type varchar(31) not null,
+        id int8 not null,
+        after_comment varchar(255),
+        ante float8 not null,
+        before_comment varchar(255),
+        confidence_index int4,
+        current_odd_in_combi float8 not null,
+        date timestamp,
+        field varchar(255),
+        formatted_date varchar(255),
+        odd float8 not null,
+        selection varchar(255),
+        status int4,
+        type int4,
+        discipline int4,
+        has_won boolean,
+        meeting int4,
+        race int4,
+        win_odd float8,
+        bankroll_id int8,
+        combi_id int8,
+        gambler_id int8,
+        primary key (id)
+    )
+
+    create table combi (
+       id int8 not null,
+        after_comment varchar(255),
+        ante float8 not null,
+        before_comment varchar(255),
+        date timestamp,
+        end_date timestamp,
+        formatted_start_date varchar(255),
+        is_current boolean not null,
+        status int4,
+        type int4,
+        bankroll_id int8,
+        gambler_id int8,
+        primary key (id)
+    )
+
+    create table gambler (
+       id int8 not null,
+        email varchar(255),
+        first_name varchar(255),
+        last_name varchar(255),
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
+    )
+
+    create table user_role (
+       id int8 not null,
+        role_id int8 not null,
+        user_id int8 not null,
+        primary key (id)
+    )
+
+    alter table app_role 
+       add constraint APP_ROLE_UK unique (role_name)
+
+    alter table user_role 
+       add constraint USER_ROLE_UK unique (user_id, role_id)
+
+    alter table bankroll 
+       add constraint FK4c2qb8x0w7tt4xe7do14pgowd 
+       foreign key (gambler_id) 
+       references gambler
+
+    alter table bet 
+       add constraint FKe2kilk8mypwts9nv2t5yoneom 
+       foreign key (bankroll_id) 
+       references bankroll
+
+    alter table bet 
+       add constraint FKrtudrt6px0d7y814viq1snhu5 
+       foreign key (combi_id) 
+       references combi
+
+    alter table bet 
+       add constraint FKj6emf8rkdop9e2c27cdxod87e 
+       foreign key (gambler_id) 
+       references gambler
+
+    alter table combi 
+       add constraint FK6u6ns2paa7vegv2jeivnyixx2 
+       foreign key (bankroll_id) 
+       references bankroll
+
+    alter table combi 
+       add constraint FKcntscc6twy60ds0jwlt38xwfl 
+       foreign key (gambler_id) 
+       references gambler
+
+    alter table user_role 
+       add constraint FKp6m37g6n6c288s096400uw8fw 
+       foreign key (role_id) 
+       references app_role
+
+    alter table user_role 
+       add constraint FKfomo5ytbw2lk0fb1ji578d3a2 
+       foreign key (user_id) 
+       references gambler
+create sequence app_role_seq start 1 increment 1
+create sequence bankroll_seq start 1 increment 1
+create sequence bet_seq start 1 increment 1
+create sequence combi_seq start 1 increment 1
+create sequence gambler_seq start 1 increment 1
+create sequence user_role_seq start 1 increment 1
+
+    create table app_role (
+       role_id int8 not null,
+        role_name varchar(30) not null,
+        primary key (role_id)
+    )
+
+    create table bankroll (
+       id int8 not null,
+        bankroll_field int4,
+        end_date timestamp,
+        formatted_start_date varchar(255),
+        is_active boolean not null,
+        name varchar(255),
+        start_amount float8 not null,
+        start_date timestamp,
+        gambler_id int8,
+        primary key (id)
+    )
+
+    create table bet (
+       bet_type varchar(31) not null,
+        id int8 not null,
+        after_comment varchar(255),
+        ante float8 not null,
+        before_comment varchar(255),
+        confidence_index int4,
+        current_odd_in_combi float8 not null,
+        date timestamp,
+        field varchar(255),
+        formatted_date varchar(255),
+        odd float8 not null,
+        selection varchar(255),
+        status int4,
+        type int4,
+        discipline int4,
+        has_won boolean,
+        meeting int4,
+        race int4,
+        win_odd float8,
+        bankroll_id int8,
+        combi_id int8,
+        gambler_id int8,
+        primary key (id)
+    )
+
+    create table combi (
+       id int8 not null,
+        after_comment varchar(255),
+        ante float8 not null,
+        before_comment varchar(255),
+        date timestamp,
+        end_date timestamp,
+        formatted_start_date varchar(255),
+        is_current boolean not null,
+        status int4,
+        type int4,
+        bankroll_id int8,
+        gambler_id int8,
+        primary key (id)
+    )
+
+    create table gambler (
+       id int8 not null,
+        email varchar(255),
+        first_name varchar(255),
+        last_name varchar(255),
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
+    )
+
+    create table user_role (
+       id int8 not null,
+        role_id int8 not null,
+        user_id int8 not null,
+        primary key (id)
+    )
+
+    alter table app_role 
+       add constraint APP_ROLE_UK unique (role_name)
+
+    alter table user_role 
+       add constraint USER_ROLE_UK unique (user_id, role_id)
+
+    alter table bankroll 
+       add constraint FK4c2qb8x0w7tt4xe7do14pgowd 
+       foreign key (gambler_id) 
+       references gambler
+
+    alter table bet 
+       add constraint FKe2kilk8mypwts9nv2t5yoneom 
+       foreign key (bankroll_id) 
+       references bankroll
+
+    alter table bet 
+       add constraint FKrtudrt6px0d7y814viq1snhu5 
+       foreign key (combi_id) 
+       references combi
+
+    alter table bet 
+       add constraint FKj6emf8rkdop9e2c27cdxod87e 
+       foreign key (gambler_id) 
+       references gambler
+
+    alter table combi 
+       add constraint FK6u6ns2paa7vegv2jeivnyixx2 
+       foreign key (bankroll_id) 
+       references bankroll
+
+    alter table combi 
+       add constraint FKcntscc6twy60ds0jwlt38xwfl 
+       foreign key (gambler_id) 
+       references gambler
+
+    alter table user_role 
+       add constraint FKp6m37g6n6c288s096400uw8fw 
+       foreign key (role_id) 
+       references app_role
+
+    alter table user_role 
+       add constraint FKfomo5ytbw2lk0fb1ji578d3a2 
+       foreign key (user_id) 
+       references gambler

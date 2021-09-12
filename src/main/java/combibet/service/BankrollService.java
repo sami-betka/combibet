@@ -49,11 +49,17 @@ public class BankrollService {
 		for (int i = 0; i < bets.size(); i++) {
 
 			Bet bet = bets.get(i);
+			
+			bet.setAnte(ante);
+						
+			if(bet.getStatus().equals(BetStatus.PENDING)) {
+				bet.setAnte(0d);
+			}
 			if (!bet.getStatus().equals(BetStatus.WON) && !bet.getStatus().equals(BetStatus.SEMI)
 					&& !bet.getStatus().equals(BetStatus.NOT_PLAYED_WON)) {
 				bet.setOdd(0d);
 			}
-			bet.setAnte(ante);
+			
 //			System.out.println(i+1 + " 0) mise " + ante);
 
 			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
@@ -424,5 +430,15 @@ public class BankrollService {
 			
 //			System.out.println(bets.get(i).getCurrentOddInCombi());
 		}
+	}
+	
+	public List<Bankroll> getBankrollList (Gambler gambler) {
+	
+		return bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler);
+	}
+	
+	public void deleteBankroll (Long bankrollId) {
+		
+		bankrollRepository.deleteById(bankrollId);
 	}
 }

@@ -23,6 +23,8 @@ import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
 import combibet.repository.UserRoleRepository;
 import combibet.service.BankrollService;
+import combibet.service.TwilioService;
+import combibet.twilio.SmsRequest;
 
 @Controller
 public class MainController {
@@ -38,6 +40,9 @@ public class MainController {
 
 	@Autowired
 	BankrollService bankrollService;
+	
+	@Autowired
+	TwilioService service;
 
 	@GetMapping
 	public String home() {
@@ -119,9 +124,10 @@ public class MainController {
 				return "redirect:/admingate";
 			}
 		}
+//		SmsRequest smsRequest = new SmsRequest("+33652463080", "Youhou !");
+//		service.sendSms(smsRequest);
 		return "redirect:/bankroll-list";
 	}
-//	}
 
 	@GetMapping("/login.html")
 	public String getLoginPage() {

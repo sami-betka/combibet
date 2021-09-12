@@ -15,7 +15,6 @@ import combibet.entity.Bankroll;
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.BetType;
-import combibet.entity.Combi;
 import combibet.entity.ConfidenceIndex;
 import combibet.entity.Discipline;
 import combibet.entity.HorseRacingBet;
@@ -23,6 +22,8 @@ import combibet.entity.SportBet;
 import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
 import combibet.repository.CombiRepository;
+import combibet.service.TwilioService;
+import combibet.twilio.SmsRequest;
 
 @Controller
 public class BetController {
@@ -35,6 +36,9 @@ public class BetController {
 	
 	@Autowired
 	BankrollRepository bankrollRepository;
+	
+	@Autowired
+    TwilioService service;
 
 	@RequestMapping(value = "/edit-bet")
 	public String editHorseRacingBet(@RequestParam("id") Long id, Model model, Principal principal) {
@@ -117,6 +121,9 @@ public class BetController {
 //		System.out.println(hrb.getCombi().getBets().size());
 
 //		redirect.addFlashAttribute("show", hrb.getCombi().getId());
+		
+//		SmsRequest smsRequest = new SmsRequest("+33652463080", "Youhou !");
+//		service.sendSms(smsRequest);
 
 		return "redirect:/new-bankroll-details?id=" + hrb.getBankroll().getId();
 

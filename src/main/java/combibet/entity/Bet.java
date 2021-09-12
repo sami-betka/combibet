@@ -187,6 +187,9 @@ public abstract class Bet {
 		if (date.getMinute() == 0) {
 			completeHour = date.getHour() + "h" + minute + "0";
 		}
+		if (date.getMinute() > 0 && date.getMinute() < 10) {
+			completeHour = date.getHour() + "h0" + minute;
+		}
 		
 		map.put("day", testDay);
 		map.put("hour", completeHour);

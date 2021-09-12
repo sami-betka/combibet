@@ -63,15 +63,7 @@ public class BankrollController {
 
 		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
-		List<Bankroll> bankrollList = bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler);
-//		if(gambler.getId().equals(8l)) {
-//			Bankroll otherBankroll = bankrollRepository.findById(39l).get();
-//			bankrollList.add(otherBankroll);
-//		}
-
-		model.addAttribute("bankrollList", bankrollList);
-//		model.addAttribute("betList", betRepository.findAllBetsByOrderByIdAsc());
-
+		model.addAttribute("bankrollList", bankrollService.getBankrollList(gambler));
 		model.addAttribute("active", true);
 
 		return "bankroll-list";
@@ -96,8 +88,8 @@ public class BankrollController {
 	@GetMapping("/delete-bankroll/{id}")
 	public String deleteBankroll(@PathVariable("id") Long id) {
 
-		bankrollRepository.deleteById(id);
-
+		bankrollService.deleteBankroll(id);
+        
 		return "redirect:/bankroll-list";
 	}
 
@@ -130,27 +122,19 @@ public class BankrollController {
 			return "redirect:/login";
 		}
 
-//		List<Object> finalList = new ArrayList<>();
-
 		Bankroll bankroll = bankrollRepository.findById(id).get();
-
-//		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
 		List<Bet> bets = new ArrayList<>();
 
 		if (type != null) {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
-//			model.addAttribute("betList", bets);
 
 		} else {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
-//			model.addAttribute("betList", bets);
 		}
 		
 		model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
-		
-//		bankrollId, type, discipline, status, confidenceIndex
-		
+				
 		model.addAttribute("id", id);
 		model.addAttribute("types", BetType.values());
 		model.addAttribute("disciplines", Discipline.values());
@@ -321,7 +305,7 @@ public class BankrollController {
 			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type));
 			for (Bet bet : bets) {
 				HorseRacingBet hrb = (HorseRacingBet) bet;
-				if (hrb.isHasWon() == false) {
+				if (hrb.isHasWon() == false && !hrb.getStatus().equals(BetStatus.PENDING)) {
 					hrb.setOdd(0d);
 					hrb.setStatus(BetStatus.LOSE);
 				} else {
@@ -335,7 +319,7 @@ public class BankrollController {
 			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollOrderByDateAsc(bankroll));
 			for (Bet bet : bets) {
 				HorseRacingBet hrb = (HorseRacingBet) bet;
-				if (hrb.isHasWon() == false) {
+				if (hrb.isHasWon() == false && !hrb.getStatus().equals(BetStatus.PENDING)) {
 					hrb.setOdd(0d);
 					hrb.setStatus(BetStatus.LOSE);
 				} else {
