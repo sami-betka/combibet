@@ -3,7 +3,10 @@ package combibet.entity;
 public enum Discipline {
 
 	TROT("Trot"),
-	GALOP("Galop");	
+	GALOP("Plat"),
+	OBSTACLE("Obstacle"),
+	NON_RENSEIGNE("Non-renseigné");
+
 
 	
 	private String name;

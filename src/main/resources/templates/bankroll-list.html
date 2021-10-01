@@ -60,6 +60,68 @@
               </div>
               
               <div class="card-body">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+            <div class="row">
+          <div class="card-group" th:each="bankroll:${bankrollList}">  
+              
+              
+ <div class="card border-primary col-md-2" style="max-width: 18rem; margin: 10px;">
+  <div class="card-header" th:text="${bankroll.bankrollField}"></div>
+  <div class="card-body">
+    <h3 class="card-title" th:text="${bankroll.name}"></h3>
+    <h5 class="card-title" th:text="${'Capital de départ: ' + bankroll.startAmount}"></h5>
+    <h5 class="card-title" th:text="${'Nombre de paris: ' + bankroll.betNumber}"></h5>
+  </div>
+    <div class="card-footer">
+      <small class="text-muted">Last updated 3 mins ago</small>
+    </div>
+</div>
+
+
+<!--  <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.bankrollField}"></td> -->
+                                      
+
+<!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.formatStartDate}"></td> -->
+                                            
+<!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.startAmount}"></td> -->
+                                            
+<!-- <!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.calculateCurrentAmount}"></td> --> 
+                                            
+<!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td> -->
+
+</div>
+</div>
+
+
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
                 <div class="table-responsive">
                   <table class="table table-sm table-bordered table-hover">
                     <thead>

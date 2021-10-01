@@ -252,7 +252,7 @@
               
                 <div class="table-responsive">
                   <table class="table-sm table-bordered table-hover">
-                    <thead class="">
+                    <thead style="text-align: center;">
                       <th>
                         N°
                       </th>
@@ -284,11 +284,14 @@
                         confiance
                       </th>
                        <th>
+                        Discipline
+                      </th>
+                       <th>
                         
                       </th>
                     </thead>
                      <tfoot>
-											<tr>
+											<tr style="text-align: center;">
 												<th>N°</th>
 												<th>Heure</th>
 												<th>Jour</th>
@@ -299,6 +302,7 @@
 							     				<th>Cote en report</th>
 												<th>Statut</th>
 												<th>confiance</th>
+												<th>Discipline</th>
 												<th></th>
 												<th></th>
 												
@@ -378,7 +382,13 @@
                                             <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold; text-align: center;" th:text="${bet.confidenceIndex.name}"></td>
                                             <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold; text-align: center;" th:text="${bet.confidenceIndex.name}"></td>
                                        
-                                            <td> <button type="button" data-toggle="tooltip" data-placement="left" class="text-primary btn-sm" th:title="${bet.beforeComment}">Commentaire d'avant course</button></td>
+                                            <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${bet.discipline.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${bet.discipline.name}"></td>
+                                            <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold; text-align: center;" th:text="${bet.discipline.name}"></td>
+                                            <td th:if="${bet.status.name == 'Semi-perdant'}" class="text-white degrade" style="font-weight: bold; text-align: center;" th:text="${bet.discipline.name}"></td>
+                                            <td th:if="${bet.status.name == 'Gagnant-non-joué'}" class="text-white degradeWon" style="font-weight: bold; text-align: center;" th:text="${bet.discipline.name}"></td>
+                                            <td th:if="${bet.status.name == 'Perdant-non-joué'}" class="text-white degradeLose" style="font-weight: bold; text-align: center;" th:text="${bet.discipline.name}"></td>
+<!--                                             <td> <button type="button" data-toggle="tooltip" data-placement="left" class="text-primary btn-sm" th:title="${bet.beforeComment}">Commentaire d'avant course</button></td> -->
                                             
                                             <td> <a class="text-primary" th:href="@{'/edit-bet?id='+${bet.id}}">Modifier</a></td>
                                             <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet?id='+${bet.id}}">Supprimer</a></td>                                       

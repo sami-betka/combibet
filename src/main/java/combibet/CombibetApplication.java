@@ -9,7 +9,10 @@ import org.springframework.context.ApplicationContext;
 import combibet.entity.Bet;
 import combibet.entity.BetStatus;
 import combibet.entity.ConfidenceIndex;
+import combibet.entity.Discipline;
+import combibet.entity.HorseRacingBet;
 import combibet.repository.BetRepository;
+import combibet.repository.HorseRacingBetRepository;
 
 @SpringBootApplication
 public class CombibetApplication {
@@ -43,17 +46,16 @@ public class CombibetApplication {
 //			appRoleRepository.save(new AppRole(2l, "ROLE_USER"));
 //		}
 		
-		BetRepository betRepository = ctx.getBean(BetRepository.class);
-		List<Bet> list = betRepository.findAll();
-		ConfidenceIndex ci = ConfidenceIndex.FIVE;
-		for(Bet bet : list) {
-		if(bet.getConfidenceIndex().equals(ci)) {
-			bet.setConfidenceIndex(ConfidenceIndex.NON_RENSEIGNE);;
-			betRepository.save(bet);
-			System.out.println(bet.getConfidenceIndex().getName());
-		}
+//		HorseRacingBetRepository betRepository = ctx.getBean(HorseRacingBetRepository.class);
+//		List<HorseRacingBet> list = betRepository.findAll();
+//		
+//    	ConfidenceIndex ci = ConfidenceIndex.FIVE;
+//		for(HorseRacingBet bet : list) {
+//		if(bet.getDiscipline() == null) {
+//			
+//			
+//			bet.setDiscipline(Discipline.NON_RENSEIGNE);;
+//			betRepository.save(bet);
+		}		
 	}
 		
-	}
-		
-}
