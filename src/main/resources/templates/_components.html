@@ -95,6 +95,7 @@
               <p th:classappend="${#request.getServletPath() == '/bet-list-simulation' ? '' : 'text-shadow'}">Gestion Bankroll (Simulation)</p>
             </a>
           </li>
+           
 <!--           <li th:classappend="${#request.getServletPath() == '/add-horse-racing-bet-to-bankroll' ? 'active' : ''}"> -->
 <!--             <a th:href="@{/add-horse-racing-bet-to-bankroll}"> -->
 <!--               <i class="now-ui-icons design_app"></i> -->
@@ -112,6 +113,12 @@
             <a th:href="@{/my-infos}">
               <i class="now-ui-icons users_single-02"></i>
               <p th:classappend="${#request.getServletPath() == '/my-infos' ? '' : 'text-shadow'}">Mon profil</p>
+            </a>
+          </li>
+            <li th:if="${#request.userPrincipal.principal.Username == 'tetedestup'}" th:classappend="${#request.getServletPath() == '/algos/algos' ? 'active' : ''}">
+            <a th:href="@{/algos}">
+              <i class="now-ui-icons users_single-02"></i>
+              <p th:classappend="${#request.getServletPath() == '/algos' ? '' : 'text-shadow'}">Algorithmes</p>
             </a>
           </li>
            <li sec:authorize="isAuthenticated()">
@@ -132,6 +139,7 @@
 <!--               <p>Upgrade to PRO</p> -->
 <!--             </a> -->
 <!--           </li> -->
+
         </ul>
       </div>
     </div>
