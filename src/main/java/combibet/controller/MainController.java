@@ -44,6 +44,13 @@ public class MainController {
 	@Autowired
 	TwilioService service;
 
+	
+	@GetMapping("/test")
+	public String test() {
+		
+		return "datatables";
+	}
+	
 	@GetMapping
 	public String home() {
 		return "redirect:/dashboard";

@@ -300,6 +300,7 @@ public class BankrollService {
 		infos.put("Montant bankroll initial", String.valueOf(actualBankrollAmount));
 
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
+		Double higherAmount = actualBankrollAmount;
 
 		bankrollAmounts.add(actualBankrollAmount);
 
@@ -310,22 +311,26 @@ public class BankrollService {
 			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
 
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
+			
+			if(actualBankrollAmount > higherAmount) {
+				higherAmount = actualBankrollAmount;
+			}
 
 			bankrollAmounts.add(actualBankrollAmount);
 
 		}
 
 		/// Calculer prochaine mise
-		Double baseBankrollAmount = initialBankAmount;
-		for (Double amount : bankrollAmounts) {
-			if (amount > baseBankrollAmount) {
-				nextAnte = amount / 20;
-			}
-		}
+//		Double baseBankrollAmount = initialBankAmount;
+//		for (Double amount : bankrollAmounts) {
+//			if (amount > baseBankrollAmount) {
+//				nextAnte = amount / 20;
+//			}
+//		}
 
 		infos.put("Dernier montant bankroll", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		infos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
-		infos.put("Prochaine mise", String.valueOf(String.format("%.2f", nextAnte)));
+		infos.put("Prochaine mise", String.valueOf(String.format("%.2f", higherAmount/20)));
 
 		infos.put("Nombre de paris", String.valueOf(betList.size()));
 

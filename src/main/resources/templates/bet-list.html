@@ -257,6 +257,9 @@
                         N°
                       </th>
                        <th>
+                        N°
+                      </th>
+                       <th>
                         Heure
                       </th>
                       <th>
@@ -293,6 +296,7 @@
                      <tfoot>
 											<tr style="text-align: center;">
 												<th>N°</th>
+						         				<th>N°</th>
 												<th>Heure</th>
 												<th>Jour</th>
 												<th>Type</th>
@@ -301,7 +305,7 @@
 												<th>Cote</th>
 							     				<th>Cote en report</th>
 												<th>Statut</th>
-												<th>confiance</th>
+												<th>Confiance</th>
 												<th>Discipline</th>
 												<th></th>
 												<th></th>
@@ -309,9 +313,11 @@
 											</tr>
 										</tfoot>
 										
-                    <tbody th:with="totalOdd = 1">
+                    <tbody th:each="bet:${betList}">
                     
-                                      <tr th:each="bet:${betList}" th:with="totalOdd = ${totalOdd} * ${bet.odd}">
+                                      <tr>
+                                            <td><img th:src="@{img/football2.png}"></td>
+                                      
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
                                             <td th:if="${bet.status.name == 'En attente'}" class="text-dark btn-warning" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
@@ -392,7 +398,9 @@
                                             
                                             <td> <a class="text-primary" th:href="@{'/edit-bet?id='+${bet.id}}">Modifier</a></td>
                                             <td> <a onclick="confirm('Etes vous sur de vouloir supprimer ce pari ?')" th:href="@{'/delete-bet?id='+${bet.id}}">Supprimer</a></td>                                       
+                                 
                                        </tr>
+         
                     </tbody>
                   </table>
                 </div>
