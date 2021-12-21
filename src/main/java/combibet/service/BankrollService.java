@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -297,6 +298,18 @@ public class BankrollService {
 		Double initialAnte = initialBankrollAmount / 20;
 		Double nextAnte = initialAnte;
 
+        infos.put("Nombre de paris", String.valueOf( betList.size()));
+		
+		List<Double> wonBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
+				.collect(Collectors.toList());
+		
+		Double gains = 0d;
+		for(Double cote : wonBetsOdds) {
+			gains += cote;
+		}
+		infos.put("Gains", String.valueOf(Precision.round(gains, 2)));
+		infos.put("Bénef", String.valueOf(Precision.round(gains - betList.size(), 2)));
+
 		infos.put("Montant bankroll initial", String.valueOf(actualBankrollAmount));
 
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
@@ -344,12 +357,12 @@ public class BankrollService {
 
 		infos.put("Nombre de paris", String.valueOf(betList.size()));
 
-		List<Double> wonBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
-				.collect(Collectors.toList());
+	
 
 		infos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
 		infos.put("Paris perdants", String.valueOf(betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE))
 				.collect(Collectors.toList()).size()));
+		infos.put("Pourcentage de paris gagnants", String.valueOf(Precision.round((Double) (1.0*(100 * wonBetsOdds.size()) / betList.size()), 2)));
 		infos.put("Paris gagnants non-joués", String.valueOf(betList.stream().filter(b -> b.getStatus().equals(BetStatus.NOT_PLAYED_WON))
 				.collect(Collectors.toList()).size()));
 		infos.put("Paris perdants non-joués", String.valueOf(betList.stream().filter(b -> b.getStatus().equals(BetStatus.NOT_PLAYED_LOSE))
