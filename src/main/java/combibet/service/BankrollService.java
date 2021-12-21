@@ -301,6 +301,7 @@ public class BankrollService {
 
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
 		Double higherAmount = actualBankrollAmount;
+		Double smallerAmount = actualBankrollAmount;
 
 		bankrollAmounts.add(actualBankrollAmount);
 
@@ -314,6 +315,9 @@ public class BankrollService {
 			
 			if(actualBankrollAmount > higherAmount) {
 				higherAmount = actualBankrollAmount;
+			}
+			if(actualBankrollAmount < smallerAmount) {
+				smallerAmount = actualBankrollAmount;
 			}
 
 			bankrollAmounts.add(actualBankrollAmount);
@@ -329,6 +333,12 @@ public class BankrollService {
 //		}
 
 		infos.put("Dernier montant bankroll", String.valueOf(String.format("%.2f", actualBankrollAmount)));
+		infos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", higherAmount)));
+		infos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", smallerAmount)));
+		
+		Double initialAnteLossNumber = (initialBankAmount - smallerAmount) / initialAnte;
+		infos.put("Nombre de mises de base perdues au maximum", String.valueOf(String.format("%.2f", initialAnteLossNumber)));
+
 		infos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
 		infos.put("Prochaine mise", String.valueOf(String.format("%.2f", higherAmount/20)));
 

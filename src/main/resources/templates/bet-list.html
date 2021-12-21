@@ -254,7 +254,7 @@
                   <table class="table-sm table-bordered table-hover">
                     <thead style="text-align: center;">
                       <th>
-                        N°
+                        Sport
                       </th>
                        <th>
                         N°
@@ -295,7 +295,7 @@
                     </thead>
                      <tfoot>
 											<tr style="text-align: center;">
-												<th>N°</th>
+												<th>Sport</th>
 						         				<th>N°</th>
 												<th>Heure</th>
 												<th>Jour</th>
@@ -316,7 +316,7 @@
                     <tbody th:each="bet:${betList}">
                     
                                       <tr>
-                                            <td><img th:src="@{img/football2.png}"></td>
+                                            <td><img th:src="@{img/horse.png}" style="height: 20px; width: 20px;"></td>
                                       
                                             <td th:if="${bet.status.name == 'Gagnant'}" class="text-white btn-success" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>
                                             <td th:if="${bet.status.name == 'Perdant'}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${betStat.index + 1}"></td>

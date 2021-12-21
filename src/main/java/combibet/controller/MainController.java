@@ -23,8 +23,6 @@ import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
 import combibet.repository.UserRoleRepository;
 import combibet.service.BankrollService;
-import combibet.service.TwilioService;
-import combibet.twilio.SmsRequest;
 
 @Controller
 public class MainController {
@@ -41,8 +39,8 @@ public class MainController {
 	@Autowired
 	BankrollService bankrollService;
 	
-	@Autowired
-	TwilioService service;
+//	@Autowired
+//	TwilioService service;
 
 	
 	@GetMapping("/test")

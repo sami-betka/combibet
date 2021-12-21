@@ -22,8 +22,6 @@ import combibet.entity.SportBet;
 import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
 import combibet.repository.CombiRepository;
-import combibet.service.TwilioService;
-import combibet.twilio.SmsRequest;
 
 @Controller
 public class BetController {
@@ -37,8 +35,8 @@ public class BetController {
 	@Autowired
 	BankrollRepository bankrollRepository;
 	
-	@Autowired
-    TwilioService service;
+//	@Autowired
+//    TwilioService service;
 
 	@RequestMapping(value = "/edit-bet")
 	public String editHorseRacingBet(@RequestParam("id") Long id, Model model, Principal principal) {
