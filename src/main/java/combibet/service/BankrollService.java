@@ -45,6 +45,7 @@ public class BankrollService {
 
 		Double actualBankrollAmount = initialBankrollAmount;
 		Double topAmount = actualBankrollAmount;
+		Double minimumBankrollAmount = initialBankrollAmount;
 		Double ante = topAmount / anteDivider;
 
 		for (int i = 0; i < bets.size(); i++) {
@@ -74,13 +75,22 @@ public class BankrollService {
 			bankrollAmounts.add(actualBankrollAmount);
 			betsDates.add(String.valueOf(bet.getDate()));
 
+			
+//			if(newBankrollAmount > maximalBankrollAmount) {
+//				maximalBankrollAmount = newBankrollAmount;
+//				ante = maximalBankrollAmount/divider;
+//			}
 			if (actualBankrollAmount > topAmount) {
+				topAmount = actualBankrollAmount;
 
 //				if(!bet.getDate().equals(bets.get(i-1).getDate())) {
 				ante = actualBankrollAmount / anteDivider;
 //				}
-
-				topAmount = actualBankrollAmount;
+//				topAmount = actualBankrollAmount;
+			}
+			
+			if(actualBankrollAmount < minimumBankrollAmount) {
+				minimumBankrollAmount = actualBankrollAmount;
 			}
 
 //				System.out.println("");
@@ -96,6 +106,8 @@ public class BankrollService {
 		finalMap.put("betList", arrangedBets);
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
+		finalMap.put("topBankrollAmount", topAmount);
+		finalMap.put("minimumBankrollAmount", minimumBankrollAmount);
 		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
 		finalMap.put("divider", anteDivider);
 
@@ -256,27 +268,46 @@ public class BankrollService {
 		List<Bet> betList = (List<Bet>) map.get("betList");
 		Double initialBankrollAmount = (Double) map.get("initialBankrollAmount");
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
+		Double topBankrollAmount = (Double) map.get("topBankrollAmount");
+		Double minimumBankrollAmount = (Double) map.get("minimumBankrollAmount");
+
 		Double initialAnte = (Double) map.get("initialAnte");
 		Integer divider = (Integer) map.get("divider");
 
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
 
-		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
-		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
-		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
-		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / 20)));
-
-		betListInfos.put("Diviseur", String.valueOf(divider));
-
 		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
 
 		List<Double> wonBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
 				.collect(Collectors.toList());
+		
+		Double total = 0d;
+		for(Double odd : wonBetsOdds) {
+			total += odd;
+		}
+		
+	
+
+		betListInfos.put("Gains", String.valueOf(total));
+
 
 		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
 		betListInfos.put("Paris perdants", String.valueOf(betList.stream()
 				.filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
+		
+		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
+		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
+		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
+		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
+		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
+//		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / 20)));
+		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", topBankrollAmount / divider)));
+
+
+		betListInfos.put("Diviseur", String.valueOf(divider));
+
+		
 
 //		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
 		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));

@@ -123,7 +123,7 @@ public class BetController {
 //		SmsRequest smsRequest = new SmsRequest("+33652463080", "Youhou !");
 //		service.sendSms(smsRequest);
 
-		return "redirect:/new-bankroll-details?id=" + hrb.getBankroll().getId();
+		return "redirect:/new-bankroll-details-simulation?id=" + hrb.getBankroll().getId();
 
 	}
 
@@ -204,7 +204,7 @@ public class BetController {
 		
 //		redirectAttributes.addFlashAttribute("show", bet.getCombi().getId());
 
-		return "redirect:/new-bankroll-details?id=" + bet.getBankroll().getId();
+		return "redirect:/new-bankroll-details-simulation?id=" + bet.getBankroll().getId();
 	}
 
 }

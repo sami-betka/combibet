@@ -299,7 +299,7 @@
                                             
 <!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.benefit}"></td> -->
                                        
-                                            <td th:if="${bankroll.isActive() == true}"> <a class="text-primary" th:href="@{'/new-bankroll-details?id='+${bankroll.id}}">Détails</a></td>
+                                            <td th:if="${bankroll.isActive() == true}"> <a class="text-primary" th:href="@{'/new-bankroll-details-simulation?id='+${bankroll.id}}">Détails</a></td>
                                             <td th:if="${bankroll.isActive() == true}"> <a class="text-success" th:href="@{'/edit-bankroll/'+${bankroll.id}}">Modifier</a></td>
                                             <td> <a class="text-danger" onclick="confirm('Etes vous sur de vouloir supprimer bankroll ?')" th:href="@{'/delete-bankroll/'+${bankroll.id}}">Supprimer</a></td>
 <!--                                             <td> <a class="text-success" th:href="@{'/edit-bankroll-start-date/'+${bankroll.id}}">Modifier date de création</a></td> -->

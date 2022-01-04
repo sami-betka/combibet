@@ -228,8 +228,8 @@ public class BankrollController {
 	@GetMapping("/new-bankroll-details-simulation")
 	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
 			@RequestParam(name = "type", defaultValue = "") BetType type,
-			@RequestParam(name = "bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name = "divider", defaultValue = "20", required = false) Integer divider, Model model,
+			@RequestParam(name = "bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
+			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
 
 		if (principal == null) {
@@ -612,7 +612,7 @@ public class BankrollController {
 
 		redirectAttributes.addFlashAttribute("show", id);
 
-		return "redirect:/new-bankroll-details?id=" + bankroll.getId();
+		return "redirect:/new-bankroll-details-simulation?id=" + bankroll.getId();
 	}
 
 	@GetMapping("/add-sport-bet-to-combi")
