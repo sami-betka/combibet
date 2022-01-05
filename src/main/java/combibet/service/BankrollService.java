@@ -277,7 +277,9 @@ public class BankrollService {
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
 		
-		betListInfos.put("Pèriode", String.valueOf("Date de début: " + betList.get(0).formatDate().get("day") + ", Date de fin: " + betList.get(betList.size() - 1).formatDate().get("day")));
+		if(betList.size() > 0) {
+			betListInfos.put("Pèriode", String.valueOf("Date de début: " + betList.get(0).formatDate().get("day") + ", Date de fin: " + betList.get(betList.size() - 1).formatDate().get("day")));
+		}
 
 		betListInfos.put("Nombre de paris", String.valueOf(betList.size()));
 
