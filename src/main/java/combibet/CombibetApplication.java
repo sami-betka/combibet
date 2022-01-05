@@ -21,7 +21,7 @@ public class CombibetApplication {
 //		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
 //
-//		Bankroll bank = bankrollRepository.findById(59l).get();
+//		Bankroll bank = bankrollRepository.findById(60l).get();
 //		List<Bet> betList = bank.getBets();
 //		Bankroll bank2 = bankrollRepository.findById(54l).get();
 //		List<Bet> betList2 = bank2.getBets();

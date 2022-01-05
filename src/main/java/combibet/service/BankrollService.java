@@ -294,6 +294,10 @@ public class BankrollService {
 	
 
 		betListInfos.put("Gains", String.valueOf(total));
+		betListInfos.put("Pourcentage d'évolution", " X " + String.valueOf((float) (1.0*(100 * total) / betList.size())/100));
+
+		
+		 
 
 
 		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
