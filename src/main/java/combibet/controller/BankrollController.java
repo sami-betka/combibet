@@ -99,6 +99,7 @@ public class BankrollController {
 	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
 			@RequestParam(name = "type", defaultValue = "") BetType type,
 			@RequestParam(name = "bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
+			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
 
@@ -118,7 +119,7 @@ public class BankrollController {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
-				bet.setOdd(odd - 0.1);
+				bet.setOdd(odd - minus);
 			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 
@@ -126,7 +127,7 @@ public class BankrollController {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
-				bet.setOdd(odd - 0.1);
+				bet.setOdd(odd - minus);
 			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		}

@@ -83,10 +83,9 @@ public class BankrollService {
 			if (actualBankrollAmount > topAmount) {
 				topAmount = actualBankrollAmount;
 
-//				if(!bet.getDate().equals(bets.get(i-1).getDate())) {
 				ante = actualBankrollAmount / anteDivider;
-//				}
-//				topAmount = actualBankrollAmount;
+				
+				
 			}
 			
 			if(actualBankrollAmount < minimumBankrollAmount) {
@@ -99,6 +98,9 @@ public class BankrollService {
 //                   return null;
 //                  }
 
+			if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))) {
+				bet.setAnte(bets.get(i-1).getAnte());
+			}
 			arrangedBets.add(bet);
 		}
 

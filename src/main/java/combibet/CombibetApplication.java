@@ -24,12 +24,19 @@ public class CombibetApplication {
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
 //
 //		Bankroll bank = bankrollRepository.findById(63l).get();
-//		bank.getBets().clear();
+//		List<Bet> toDelete = new ArrayList<>();
+//		for(Bet bet : bank.getBets()) {
+//			toDelete.add(bet);
+//		}
+//		betRepository.deleteAll(toDelete);
+//		
 //		List<Bet> betList = new ArrayList<>();;
 //		Bankroll bank2 = bankrollRepository.findById(54l).get();
 //		List<Bet> betList2 = bank2.getBets();
 //		Bankroll bank3 = bankrollRepository.findById(55l).get();
 //		List<Bet> betList3 = bank3.getBets();
+//		Bankroll bank4 = bankrollRepository.findById(61l).get();
+//		List<Bet> betList4 = bank4.getBets();
 //
 //		for (Bet b : betList2) {
 //			HorseRacingBet bet = (HorseRacingBet) b;
@@ -54,6 +61,28 @@ public class CombibetApplication {
 //			betList.add(savedBet);
 //		}
 //		for (Bet b : betList3) {
+//			HorseRacingBet bet = (HorseRacingBet) b;
+//
+//			HorseRacingBet newBet = new HorseRacingBet();
+//			newBet.setAnte(bet.getAnte());
+//			newBet.setBankroll(bank);
+//			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+//			newBet.setDate(bet.getDate());
+//			newBet.setGambler(bet.getGambler());
+//			newBet.setOdd(bet.getOdd());
+//			newBet.setSelection(bet.getSelection());
+//			newBet.setStatus(bet.getStatus());
+//			newBet.setType(bet.getType());
+//			newBet.setField(bet.getField());
+//			newBet.setDiscipline(bet.getDiscipline());
+//			newBet.setFormattedDate(bet.getFormattedDate());
+//			newBet.setId(null);
+//			
+//			Bet savedBet = betRepository.save(newBet);
+//			
+//			betList.add(savedBet);
+//		}
+//		for (Bet b : betList4) {
 //			HorseRacingBet bet = (HorseRacingBet) b;
 //
 //			HorseRacingBet newBet = new HorseRacingBet();
