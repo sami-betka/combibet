@@ -162,8 +162,8 @@ public class GamblerController {
 			@RequestParam(name="confidenceIndex", defaultValue = "", required = false) ConfidenceIndex confidenceIndex,
 			@RequestParam(name="discipline", defaultValue = "", required = false) Discipline discipline,
 			@RequestParam(name="status", defaultValue = "", required = false) BetStatus status,
-			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
+			@RequestParam(name="bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
+			@RequestParam(name="divider", defaultValue = "10", required = false) Integer divider,
 			@RequestParam(name="notPlayed", defaultValue = "false", required = false) String notPlayed,
 
 			Model model, Principal principal) {
@@ -183,12 +183,14 @@ public class GamblerController {
 		System.out.println(bets.size());
 		if(notPlayed.equals("true")) {
 			model.addAttribute("betList", bets);
-			model.addAttribute("betListInfos", bankrollService.betsInfos(bets, bankrollRepository.findById(id).get().getStartAmount()));
+			model.addAttribute("betListInfos", bankrollService
+					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount)));
 
 		}
 		if(notPlayed.equals("false") || notPlayed.equals(null) ) {
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
-			model.addAttribute("betListInfos", bankrollService.betsInfos(bankrollService.suppressNotPlayed(bets), bankrollRepository.findById(id).get().getStartAmount()));
+			model.addAttribute("betListInfos", bankrollService
+					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount)));
 
 		}
 		

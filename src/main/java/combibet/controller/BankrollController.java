@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,138 +93,7 @@ public class BankrollController {
         
 		return "redirect:/bankroll-list";
 	}
-
-	@GetMapping("/bankroll-details")
-	public String bankrollDetails(@RequestParam(name = "id") Long id, Model model, Principal principal) {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-
-		Bankroll bankroll = bankrollRepository.findById(id).get();
-
-		model.addAttribute("id", id);
-
-		model.addAttribute("combiListAsc", combiRepository.findAllByBankrollOrderByDateAsc(bankroll));
-
-		return "bankroll-details";
-//		return "bankroll-list";
-
-	}
-
-	@GetMapping("/new-bankroll-details")
-	public String newBankrollDetails(@RequestParam(name = "id", defaultValue = "") Long id,
-			@RequestParam(name = "type", defaultValue = "") BetType type,
-			@RequestParam(name = "bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name = "divider", defaultValue = "20", required = false) Integer divider, Model model,
-			Principal principal) {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-
-		Bankroll bankroll = bankrollRepository.findById(id).get();
-
-		List<Bet> bets = new ArrayList<>();
-
-		if (type != null) {
-			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
-
-		} else {
-			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
-		}
-		
-		model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
-				
-		model.addAttribute("id", id);
-		model.addAttribute("types", BetType.values());
-		model.addAttribute("disciplines", Discipline.values());
-		model.addAttribute("status", BetStatus.values());
-		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
-
-		model.addAttribute("bankrollName", bankroll.getName());
-		model.addAttribute("field", bankroll.getBankrollField().getName());
-		model.addAttribute("betListInfos", bankrollService.betsInfos(bankrollService.suppressNotPlayed(bets), bankroll.getStartAmount()));
-
-		//////Map pour le graph/////////
-		Map<String, Double> surveyMap = new LinkedHashMap<>();
-//
-//		@SuppressWarnings("unchecked")
-//		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
-//				.managedBankrollSimulation(graphBets, divider, bankrollAmount).get("bankrollAmounts");
-//		@SuppressWarnings("unchecked")
-//		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
-//				.managedBankrollSimulation(graphBets, divider, bankrollAmount).get("betsDates");
-//		
-//
-//		for (int i = 0; i < bankrollAmounts.size(); i++) {
-//
-//			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
-//
-//		}
-		model.addAttribute("surveyMap", surveyMap);
-		
-		return "bet-list";
-	}
 	
-	@GetMapping("/new-bankroll-details-with-not-played")
-	public String newBankrollDetailsWithNotPlayed(@RequestParam(name = "id", defaultValue = "") Long id,
-			@RequestParam(name = "type", defaultValue = "") BetType type,
-			@RequestParam(name = "bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name = "divider", defaultValue = "20", required = false) Integer divider, Model model,
-			Principal principal) {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-
-//		List<Object> finalList = new ArrayList<>();
-
-		Bankroll bankroll = bankrollRepository.findById(id).get();
-
-//		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
-
-		List<Bet> bets = new ArrayList<>();
-
-		if (type != null) {
-			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
-//			model.addAttribute("betList", bets);
-
-		} else {
-			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
-//			model.addAttribute("betList", bets);
-		}
-		
-		bankrollService.currentOddsInCombis(bets);
-		
-		model.addAttribute("betList", bets);
-		
-		model.addAttribute("id", id);
-		model.addAttribute("types", BetType.values());
-		model.addAttribute("bankrollName", bankroll.getName());
-		model.addAttribute("field", bankroll.getBankrollField().getName());
-		model.addAttribute("betListInfos", bankrollService.betsInfos(bets, bankroll.getStartAmount()));
-
-		//////Map pour le graph/////////
-		Map<String, Double> surveyMap = new LinkedHashMap<>();
-//
-//		@SuppressWarnings("unchecked")
-//		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
-//				.managedBankrollSimulation(graphBets, divider, bankrollAmount).get("bankrollAmounts");
-//		@SuppressWarnings("unchecked")
-//		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
-//				.managedBankrollSimulation(graphBets, divider, bankrollAmount).get("betsDates");
-//		
-//
-//		for (int i = 0; i < bankrollAmounts.size(); i++) {
-//
-//			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
-//
-//		}
-		model.addAttribute("surveyMap", surveyMap);
-		
-		return "bet-list";
-	}
 
 	@GetMapping("/new-bankroll-details-simulation")
 	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
@@ -246,10 +116,18 @@ public class BankrollController {
 
 		if (type != null) {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
+			bets.forEach(bet->{
+				Double odd = bet.getOdd();
+				bet.setOdd(odd - 0.1);
+			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 
 		} else {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
+			bets.forEach(bet->{
+				Double odd = bet.getOdd();
+				bet.setOdd(odd - 0.1);
+			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		}
 
@@ -260,6 +138,11 @@ public class BankrollController {
 
 //		model.addAttribute("betListInfos", bets);
 //		model.addAttribute("betListInfos", bankrollService.betListInfos(bets, bankrollAmount));
+		model.addAttribute("types", BetType.values());
+		model.addAttribute("status", BetStatus.values());
+		model.addAttribute("disciplines", Discipline.values());
+		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
+		
 		model.addAttribute("betListInfos", bankrollService
 				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount)));
 
@@ -280,138 +163,6 @@ public class BankrollController {
 
 		model.addAttribute("surveyMap", surveyMap);
 		return "bet-list";
-	}
-
-	@GetMapping("/win-bankroll-details")
-	public String winBankrollDetails(@RequestParam(name = "id", defaultValue = "") Long id,
-			@RequestParam(name = "type", defaultValue = "") BetType type,
-			@RequestParam(name = "bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name = "divider", defaultValue = "20", required = false) Integer divider, Model model,
-			Principal principal) {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-
-//		List<Object> finalList = new ArrayList<>();
-
-		Bankroll bankroll = bankrollRepository.findById(id).get();
-
-//		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
-
-		List<Bet> bets = new ArrayList<>();
-
-		if (type != null) {
-			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type));
-			for (Bet bet : bets) {
-				HorseRacingBet hrb = (HorseRacingBet) bet;
-				if (hrb.isHasWon() == false && !hrb.getStatus().equals(BetStatus.PENDING)) {
-					hrb.setOdd(0d);
-					hrb.setStatus(BetStatus.LOSE);
-				} else {
-					hrb.setOdd(hrb.getWinOdd());
-					hrb.setType(BetType.SIMPLE_GAGNANT);
-				}
-			}
-			model.addAttribute("betList", bets);
-
-		} else {
-			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollOrderByDateAsc(bankroll));
-			for (Bet bet : bets) {
-				HorseRacingBet hrb = (HorseRacingBet) bet;
-				if (hrb.isHasWon() == false && !hrb.getStatus().equals(BetStatus.PENDING)) {
-					hrb.setOdd(0d);
-					hrb.setStatus(BetStatus.LOSE);
-				} else {
-					hrb.setOdd(hrb.getWinOdd());
-					hrb.setType(BetType.SIMPLE_GAGNANT);
-				}
-			}
-			model.addAttribute("betList", bets);
-		}
-
-		model.addAttribute("id", id);
-		model.addAttribute("types", BetType.values());
-		model.addAttribute("bankrollName", bankroll.getName());
-		model.addAttribute("field", bankroll.getBankrollField().getName());
-
-//		return "bet-list-simulation";
-
-		Map<String, Double> surveyMap = new LinkedHashMap<>();
-//
-//		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
-//				.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
-//		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
-//				.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
-//
-//		for (int i = 0; i < bankrollAmounts.size(); i++) {
-//
-//			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
-//
-//		}
-//
-		model.addAttribute("surveyMap", surveyMap);
-		model.addAttribute("betListInfos", bankrollService.betsInfos(bankrollService.suppressNotPlayed(bets), bankroll.getStartAmount()));
-
-		return "bet-list";
-	}
-
-	@GetMapping("/win-bankroll-simulation")
-	public String winBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
-			@RequestParam(name = "type", defaultValue = "") BetType type,
-			@RequestParam(name = "bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name = "divider", defaultValue = "20", required = false) Integer divider, Model model,
-			Principal principal) {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-
-//		List<Object> finalList = new ArrayList<>();
-
-		Bankroll bankroll = bankrollRepository.findById(id).get();
-
-//		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
-
-		List<Bet> bets = new ArrayList<>();
-
-		if (type != null) {
-			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type));
-			model.addAttribute("betList", bets);
-
-		} else {
-			bets = bankrollService.suppressNotPlayed(betRepository.findAllByBankrollOrderByDateAsc(bankroll));
-			model.addAttribute("betList", bets);
-		}
-
-		model.addAttribute("id", id);
-		model.addAttribute("types", BetType.values());
-		model.addAttribute("bankrollName", bankroll.getName());
-		model.addAttribute("field", bankroll.getBankrollField().getName());
-
-//		model.addAttribute("betListInfos", bets);
-//		model.addAttribute("betListInfos", bankrollService.betListInfos(bets, bankrollAmount));
-		model.addAttribute("betListInfos", bankrollService
-				.betListInfosSimulation(bankrollService.winManagedBankrollSimulation(bets, divider, bankrollAmount)));
-
-//		return "bet-list-simulation";
-
-		Map<String, Double> surveyMap = new LinkedHashMap<>();
-
-		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
-				.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
-		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
-				.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
-
-		for (int i = 0; i < bankrollAmounts.size(); i++) {
-
-			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
-
-		}
-
-		model.addAttribute("surveyMap", surveyMap);
-		return "bet-list";
-
 	}
 
 	@GetMapping("/add-bankroll")
@@ -447,99 +198,6 @@ public class BankrollController {
 		return "redirect:/bankroll-list";
 	}
 
-	@GetMapping("/add-combi-to-bankroll")
-	public String addCombiToBankroll(@RequestParam(name = "id") Long id, Model model, Principal principal,
-			RedirectAttributes redirectAttributes) {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-
-		Bankroll bankroll = bankrollRepository.findById(id).get();
-		Combi combi = new Combi();
-		combi.setBets(new ArrayList<>());
-
-		combi.setBankroll(bankroll);
-		combi.setDate(LocalDateTime.now());
-		combi.setCurrent(true);
-		Combi savedCombi = combiRepository.save(combi);
-		bankroll.getCombis().add(savedCombi);
-		bankrollRepository.save(bankroll);
-
-		System.out.println(savedCombi.getId());
-
-		redirectAttributes.addFlashAttribute("show", savedCombi.getId());
-		return "redirect:/bankroll-details?id=" + id;
-//		return "redirect:/add-horse-racing-bet-to-combi?id=" + savedCombi.getId();
-	}
-
-	@GetMapping("/add-horse-racing-bet-to-combi")
-	public String addHorseRacingBetToCombi(@RequestParam(name = "id") Long id, Model model, Principal principal) {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-
-		model.addAttribute("id", id);
-		model.addAttribute("types", BetType.values());
-		model.addAttribute("status", BetStatus.values());
-		model.addAttribute("emptyBet", new HorseRacingBet());
-
-		return "add-horse-racing-bet";
-	}
-
-	@PostMapping(value = "/save-horse-racing-bet-to-combi")
-	public String saveHorseRacingBetToCombi(@RequestParam(name = "id") Long id, HorseRacingBet bet,
-			BindingResult bindingresult, Principal principal, RedirectAttributes redirectAttributes)
-			throws IllegalStateException, IOException {
-
-		if (principal == null) {
-			return "redirect:/login";
-		}
-		if (bindingresult.hasErrors()) {
-//			System.out.println(bet.getDate().toString());
-			System.out.println(bindingresult.getAllErrors().toString());
-			return "redirect:/add-horse-racing-bet-to-combi?id=" + id;
-		}
-
-		bet.setId(null);
-		Combi combi = combiRepository.findById(id).get();
-
-		bet.setGambler(gamblerRepository.findByUserName(principal.getName()));
-		bet.setCombi(combi);
-		bet.setField("Hippique");
-		if (bet.getStatus().equals(BetStatus.LOSE)) {
-			bet.setOdd(0d);
-		}
-
-		List<Bet> betList = combi.getBets();
-		HorseRacingBet savedHrb = betRepository.save(bet);
-		System.out.println(bet.getId());
-		System.out.println(savedHrb.getId());
-		betList.add(savedHrb);
-//		combi.getBets().clear();
-		combi.setBets(betList);
-
-		if (bet.getStatus().equals(BetStatus.LOSE)) {
-			combi.setCurrent(false);
-		}
-		combi.setDate(combi.betsAsc().get(0).getDate());
-		Combi savedCombi = combiRepository.save(combi);
-		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get();
-		bankroll.getCombis().add(savedCombi);
-
-		if (bankroll.getCombis().size() == 1) {
-			bankroll.setStartDate(bankroll.getCombis().get(0).getBets().get(0).getDate());
-		}
-
-		bankrollRepository.save(bankroll);
-
-		//////////////////
-
-		redirectAttributes.addFlashAttribute("show", id);
-
-		return "redirect:/bankroll-details?id=" + bankroll.getId();
-	}
 
 	@GetMapping("/add-horse-racing-bet-to-bankroll")
 	public String addHorseRacingBetToBankroll(@RequestParam(name = "id") Long id, Model model, Principal principal) {
@@ -593,18 +251,11 @@ public class BankrollController {
 		betList.add(savedHrb);
 //		combi.getBets().clear();
 		bankroll.setBets(betList);
+		bankroll.setStartDate(betList
+				.stream()
+				.sorted(Comparator.comparing(Bet::getDate))
+				.findFirst().get().getDate());
 
-//		if(bet.getStatus().equals(BetStatus.LOSE)) {
-//			combi.setCurrent(false);
-//		}
-//		combi.setStartDate(combi.betsAsc().get(0).getDate());
-//		Combi savedCombi = combiRepository.save(combi);
-//		Bankroll bankroll = bankrollRepository.findById(combi.getBankroll().getId()).get(); 
-//		bankroll.getCombis().add(savedCombi);
-
-//		 if(bankroll.getCombis().size() == 1) {
-//				bankroll.setStartDate(bankroll.getCombis().get(0).getBets().get(0).getDate());
-//			}
 
 		bankrollRepository.save(bankroll);
 

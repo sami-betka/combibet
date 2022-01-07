@@ -1,5 +1,6 @@
 package combibet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -18,11 +19,13 @@ public class CombibetApplication {
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(CombibetApplication.class, args);
 		
+		
 //		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
 //
-//		Bankroll bank = bankrollRepository.findById(60l).get();
-//		List<Bet> betList = bank.getBets();
+//		Bankroll bank = bankrollRepository.findById(63l).get();
+//		bank.getBets().clear();
+//		List<Bet> betList = new ArrayList<>();;
 //		Bankroll bank2 = bankrollRepository.findById(54l).get();
 //		List<Bet> betList2 = bank2.getBets();
 //		Bankroll bank3 = bankrollRepository.findById(55l).get();
@@ -72,9 +75,7 @@ public class CombibetApplication {
 //			
 //			betList.add(savedBet);
 //		}
-//		
-//		
-//		
+//	
 //		bank.setBets(betList);
 //		bankrollRepository.save(bank);
 //		

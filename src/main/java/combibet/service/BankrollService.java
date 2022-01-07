@@ -285,24 +285,22 @@ public class BankrollService {
 
 		List<Double> wonBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
 				.collect(Collectors.toList());
+		List<Double> lostBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).map(Bet::getOdd)
+				.collect(Collectors.toList());
 		
 		Double total = 0d;
 		for(Double odd : wonBetsOdds) {
 			total += odd;
 		}
 		
-	
-
-		betListInfos.put("Gains", String.valueOf(total));
-		betListInfos.put("Pourcentage d'évolution", " X " + String.valueOf((float) (1.0*(100 * total) / betList.size())/100));
-
-		
-		 
-
 
 		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
 		betListInfos.put("Paris perdants", String.valueOf(betList.stream()
 				.filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
+
+		betListInfos.put("Gains", String.valueOf(total));
+		betListInfos.put("Pourcentage d'évolution", " X " + String.valueOf((float) (1.0*(100 * total) / betList.size())/100));
+
 		
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
@@ -322,6 +320,8 @@ public class BankrollService {
 
 		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f",
 				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
+		betListInfos.put("Cote moyenne des paris perdants", String.valueOf(String.format("%.2f",
+				lostBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / lostBetsOdds.size())));
 
 		betListInfos.put("Multiplication du capital : X",
 				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
