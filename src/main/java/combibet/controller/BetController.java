@@ -90,9 +90,9 @@ public class BetController {
 		hrb.setWinOdd(bet.getWinOdd());
 		hrb.setOdd(bet.getOdd());
 		hrb.setStatus(bet.getStatus());
-		if(bet.getStatus().equals(BetStatus.LOSE)) {
-			hrb.setOdd(0d);
-		}
+//		if(bet.getStatus().equals(BetStatus.LOSE)) {
+//			hrb.setOdd(0d);
+//		}
 		hrb.setAnte(bet.getAnte());
 //		hrb.setAfterComment(bet.getAfterComment());
 //		hrb.setBeforeComment(bet.getBeforeComment());

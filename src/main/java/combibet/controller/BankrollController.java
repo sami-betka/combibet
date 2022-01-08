@@ -98,7 +98,7 @@ public class BankrollController {
 	@GetMapping("/new-bankroll-details-simulation")
 	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
 			@RequestParam(name = "type", defaultValue = "") BetType type,
-			@RequestParam(name = "bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
+			@RequestParam(name = "bankrollAmount", defaultValue = "", required = false) Double bankrollAmount,
 			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
@@ -110,9 +110,16 @@ public class BankrollController {
 //		List<Object> finalList = new ArrayList<>();
 
 		Bankroll bankroll = bankrollRepository.findById(id).get();
+		if(bankrollAmount == null) {
+			bankrollAmount = bankroll.getStartAmount();
+		}
         if(id == 63) {
         	bankroll = setMixMax(bankroll);
         }
+        if(bankroll.getId().equals(65l)) {
+        	minus = 0d;
+        }
+    	final Double minus2 = minus;
 		
 //		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
@@ -122,7 +129,7 @@ public class BankrollController {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
-				bet.setOdd(odd - minus);
+				bet.setOdd(odd - minus2);
 			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 
@@ -130,7 +137,7 @@ public class BankrollController {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
-				bet.setOdd(odd - minus);
+				bet.setOdd(odd - minus2);
 			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		}
