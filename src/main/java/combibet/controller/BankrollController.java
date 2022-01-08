@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -110,6 +111,9 @@ public class BankrollController {
 //		List<Object> finalList = new ArrayList<>();
 
 		Bankroll bankroll = bankrollRepository.findById(id).get();
+		
+		
+		
 		if(bankrollAmount == null) {
 			bankrollAmount = bankroll.getStartAmount();
 		}
@@ -126,7 +130,10 @@ public class BankrollController {
 		List<Bet> bets = new ArrayList<>();
 
 		if (type != null) {
-			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type);
+			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type)
+					.stream()
+					.filter(b -> b.getOdd() < 2)
+					.collect(Collectors.toList());
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
 				bet.setOdd(odd - minus2);
@@ -134,7 +141,10 @@ public class BankrollController {
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 
 		} else {
-			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll);
+			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll)
+					.stream()
+					.filter(b -> b.getOdd() < 2)
+					.collect(Collectors.toList());
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
 				bet.setOdd(odd - minus2);
@@ -251,9 +261,9 @@ public class BankrollController {
 		if (bet.getWinOdd() > 0) {
 			bet.setHasWon(true);
 		}
-		if (bet.getStatus().equals(BetStatus.LOSE)) {
-			bet.setOdd(0d);
-		}
+//		if (bet.getStatus().equals(BetStatus.LOSE)) {
+//			bet.setOdd(0d);
+//		}
 
 		List<Bet> betList = bankroll.getBets();
 		HorseRacingBet savedHrb = betRepository.save(bet);
