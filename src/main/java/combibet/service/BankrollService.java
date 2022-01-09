@@ -36,7 +36,7 @@ public class BankrollService {
 	BetRepository betRepository;
 
 	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, Integer anteDivider,
-			Double initialBankrollAmount) {
+			Double initialBankrollAmount, Double invest) {
 
 		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
@@ -46,29 +46,31 @@ public class BankrollService {
 		Double actualBankrollAmount = initialBankrollAmount;
 		Double topAmount = actualBankrollAmount;
 		Double minimumBankrollAmount = initialBankrollAmount;
-		Double ante = topAmount / anteDivider;
+		Double realBankrollAmount = initialBankrollAmount - (initialBankrollAmount - invest);
+		double ante = topAmount / anteDivider;
 		Double refAnte = 0d;
-		int playedAntes = 1;
-		int maxAntePlayed = 1;
+		int lostAntes = 0;
+		int maxAnteLost = 0;
 
 
 		for (int i = 0; i < bets.size(); i++) {
 
 			Bet bet = bets.get(i);
 			if(bet.getStatus().equals(BetStatus.LOSE)) {
-				playedAntes += 1;
-				if(playedAntes > maxAntePlayed) {
-					maxAntePlayed = playedAntes;
+				lostAntes += 1;
+				if(lostAntes > maxAnteLost) {
+					maxAnteLost = lostAntes;
 				}
 			}
 			if(bet.getStatus().equals(BetStatus.WON)) {
-				playedAntes = 1;
+				lostAntes = 0;
 			}
 			
 			Double realOdd = bet.getOdd();
-//			Double realAnte = bet.getAnte();
+			Double realAnte = ante;
 
-			
+//			int anteInt = ((int) ante) + 1;
+//			ante = anteInt;
 			bet.setAnte(ante);
 			
 			if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))) {
@@ -116,7 +118,7 @@ public class BankrollService {
 
 
 			bet.setOdd(realOdd);
-//			bet.setAnte(realAnte);
+			bet.setAnte(realAnte);
 			arrangedBets.add(bet);
 		}
 
@@ -127,9 +129,11 @@ public class BankrollService {
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
 		finalMap.put("topBankrollAmount", topAmount);
 		finalMap.put("minimumBankrollAmount", minimumBankrollAmount);
+		finalMap.put("realBankrollAmount", realBankrollAmount);
+
 		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
 		finalMap.put("divider", anteDivider);
-		finalMap.put("maxAntePlayed", maxAntePlayed);
+		finalMap.put("maxAnteLost", maxAnteLost);
 
 
 		/////////////////// Dashboard Infos
@@ -292,7 +296,8 @@ public class BankrollService {
 		Double actualBankrollAmount = (Double) map.get("actualBankrollAmount");
 		Double topBankrollAmount = (Double) map.get("topBankrollAmount");
 		Double minimumBankrollAmount = (Double) map.get("minimumBankrollAmount");
-		Integer maxAntePlayed = (Integer) map.get("maxAntePlayed");
+		Double realBankrollAmount = (Double) map.get("realBankrollAmount");
+		Integer maxAnteLost = (Integer) map.get("maxAnteLost");
 
 		Double initialAnte = (Double) map.get("initialAnte");
 		Integer divider = (Integer) map.get("divider");
@@ -338,7 +343,8 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
-		betListInfos.put("Maximum de mises perdues consécutivement", String.valueOf(maxAntePlayed));
+		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", realBankrollAmount)));
+		betListInfos.put("Maximum de mises perdues consécutivement", String.valueOf(maxAnteLost) + " / " + divider);
 
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
 //		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / 20)));

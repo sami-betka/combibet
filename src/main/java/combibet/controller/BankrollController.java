@@ -76,6 +76,7 @@ public class BankrollController {
 			@RequestParam(name = "type", defaultValue = "") BetType type,
 			@RequestParam(name = "bankrollAmount", defaultValue = "", required = false) Double bankrollAmount,
 			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
+			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
 
@@ -91,6 +92,9 @@ public class BankrollController {
 		
 		if(bankrollAmount == null) {
 			bankrollAmount = bankroll.getStartAmount();
+		}
+		if(invest == null) {
+			invest = bankrollAmount;
 		}
         if(id == 63) {
         	bankroll = setMixMax(bankroll);
@@ -140,16 +144,16 @@ public class BankrollController {
 		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		
 		model.addAttribute("betListInfos", bankrollService
-				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount), minus));
+				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus));
 
 //		return "bet-list-simulation";
 
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
 
 		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
-				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount).get("bankrollAmounts");
+				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest).get("bankrollAmounts");
 		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
-				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount).get("betsDates");
+				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest).get("betsDates");
 
 		for (int i = 0; i < bankrollAmounts.size(); i++) {
 
