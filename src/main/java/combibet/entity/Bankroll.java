@@ -174,6 +174,24 @@ public class Bankroll {
 
 		return day + " " + date.getDayOfMonth() + " " + month + " " + date.getYear();
 	}
+	
+	public String getRoi() {
+		
+		List<Double> wonBetsOdds = this.bets.stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
+				.collect(Collectors.toList());
+//		List<Bet> bets = this.bets
+//				.stream()
+//				.filter(b -> b.getStatus())
+//				.collect(Collectors.toList());
+			
+		Double total = 0d;
+		for(Double odd : wonBetsOdds) {
+			total += odd;
+		}
+		float roi = (float) (1.0*(100 * total) / this.bets.size())/100;
+		
+		return String.valueOf(String.format("%.2f", roi)) + "%";
+	}
 
 	public Long getId() {
 		return id;

@@ -123,35 +123,6 @@ public class GamblerController {
 		return "bet-list-simulation";
 	}
 	
-	@GetMapping("/filtered-bet-list")
-	public String getMyBetsByType (
-			@RequestParam(name="type", defaultValue = "") BetType type,
-			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
-
-			Model model, Principal principal) {
-		
-
-		
-		if (principal == null) {
-			return "redirect:/login";
-		}
-		
-		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
-		
-		List<Bet> bets = betRepository.findAllByGamblerAndTypeOrderByDateAsc(gambler, type);
-
-		
-		model.addAttribute("betList", bets);
-		model.addAttribute("types", BetType.values());
-		
-		
-//		model.addAttribute("betListInfos", bankrollService.betListInfos(finalMap));
-		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
-
-
-		return "bet-list";
-	}
 	
 	@GetMapping("/multi-filter-bet-list")
 	public String getFilteredBetList (
@@ -162,6 +133,7 @@ public class GamblerController {
 			@RequestParam(name="confidenceIndex", defaultValue = "", required = false) ConfidenceIndex confidenceIndex,
 			@RequestParam(name="discipline", defaultValue = "", required = false) Discipline discipline,
 			@RequestParam(name="status", defaultValue = "", required = false) BetStatus status,
+			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
 			@RequestParam(name="bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
 			@RequestParam(name="divider", defaultValue = "10", required = false) Integer divider,
 			@RequestParam(name="notPlayed", defaultValue = "false", required = false) String notPlayed,
@@ -184,13 +156,13 @@ public class GamblerController {
 		if(notPlayed.equals("true")) {
 			model.addAttribute("betList", bets);
 			model.addAttribute("betListInfos", bankrollService
-					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount)));
+					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount), minus));
 
 		}
 		if(notPlayed.equals("false") || notPlayed.equals(null) ) {
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 			model.addAttribute("betListInfos", bankrollService
-					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount)));
+					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount), minus));
 
 		}
 		
@@ -238,35 +210,35 @@ public class GamblerController {
 		return "bet-list";
 	}
 	
-	@GetMapping("/filtered-bet-list-simulation")
-	public String getSimulatedBetListByType (
-			@RequestParam(name="type", defaultValue = "") BetType type,
-			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
-			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
-
-			
-			Model model, Principal principal) {
-		
-		System.out.println(type);
-		
-		
-		if (principal == null) {
-			return "redirect:/login";
-		}
-		
-		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
-		
-		List<Bet> bets = betRepository.findAllByGamblerAndTypeOrderByDateAsc(gambler, type);
-
-		
-		model.addAttribute("betList", bets);
-		model.addAttribute("types", BetType.values());
-				
-//		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
-		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
-
-		return "bet-list-simulation";
-	}
+//	@GetMapping("/filtered-bet-list-simulation")
+//	public String getSimulatedBetListByType (
+//			@RequestParam(name="type", defaultValue = "") BetType type,
+//			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
+//			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider,
+//
+//			
+//			Model model, Principal principal) {
+//		
+//		System.out.println(type);
+//		
+//		
+//		if (principal == null) {
+//			return "redirect:/login";
+//		}
+//		
+//		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
+//		
+//		List<Bet> bets = betRepository.findAllByGamblerAndTypeOrderByDateAsc(gambler, type);
+//
+//		
+//		model.addAttribute("betList", bets);
+//		model.addAttribute("types", BetType.values());
+//				
+////		model.addAttribute("betListInfos", betListInfos(bets, 1000d));
+//		model.addAttribute("betListInfos", bankrollService.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets,divider, bankrollAmount)));
+//
+//		return "bet-list-simulation";
+//	}
 	
 	// Ajouter un utilisateur
 
@@ -296,43 +268,4 @@ public class GamblerController {
 	
 ///////////////////////////////////////////////////////PRIVATE///////////////////////////////////////////////////////////////////
 	
-	
-	
-//	private LinkedHashMap<String, String> betListInfos (List<Bet> bets, Double bankrollAmount){
-//		
-//		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
-//		
-//		Double earnings = 0d;
-//		for(Bet b : bets) {
-//			earnings = earnings + b.getOdd();
-//		}
-//		Double benefit = earnings-bets.size();
-//		
-//		betListInfos.put("Nombre de paris", String.valueOf(bets.size()));
-//		
-//		List<Double> wonBetsOdds = bets
-//				.stream()
-//				.filter(b-> b.getStatus().equals(BetStatus.WON))
-//				.map(Bet::getOdd)
-//				.collect(Collectors.toList());
-//		
-//		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
-//		betListInfos.put("Paris perdants", String.valueOf(bets
-//				.stream()
-//				.filter(b-> b.getStatus().equals(BetStatus.LOSE))
-//				.collect(Collectors.toList())
-//				.size()));
-//		
-//		betListInfos.put("Gains", String.valueOf(earnings));
-//		betListInfos.put("Bénéfice", String.valueOf(benefit));
-//		
-//		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(wonBetsOdds
-//				.stream()
-//				.collect(Collectors.summingDouble(Double::doubleValue))/wonBetsOdds.size()));
-//
-//
-//		return betListInfos;
-//	}
-
-
 }

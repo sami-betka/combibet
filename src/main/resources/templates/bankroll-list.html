@@ -264,7 +264,7 @@
                       <th style="font-weight: bold;">Capital de départ</th>
 <!--                       <th style="font-weight: bold;">Capital actuel</th> -->
                       <th style="font-weight: bold;">Nombre de paris </th>
-<!--                       <th style="font-weight: bold;">Bénéfice</th> -->
+<!--                       <th style="font-weight: bold;">ROI</th> -->
                        <th></th>
                        <th></th>
                      </tr>
@@ -299,7 +299,7 @@
                                             
                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
                                             
-<!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.benefit}"></td> -->
+<!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.getRoi()}"></td> -->
                                        
                                             <td th:if="${bankroll.isActive() == true}"> <a class="text-primary" th:href="@{'/new-bankroll-details-simulation?id='+${bankroll.id}}">Détails</a></td>
                                             <td th:if="${bankroll.isActive() == true}"> <a class="text-success" th:href="@{'/edit-bankroll/'+${bankroll.id}}">Modifier</a></td>

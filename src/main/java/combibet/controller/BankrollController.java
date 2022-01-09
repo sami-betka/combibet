@@ -69,32 +69,7 @@ public class BankrollController {
 		model.addAttribute("active", true);
 
 		return "bankroll-list";
-	}
-	
-	@GetMapping("/transfer-bankroll")
-	public String transferToAnOtherGambler(
-			@RequestParam(name = "bankrollId") Long bankrollId, 
-			@RequestParam(name = "gamblerId") Long gamblerId,
-			Model model, Principal principal) {
-				
-		if (principal == null) {
-			return "redirect:/login";
-		}
-		
-		bankrollService.transferToAnOtherGambler(bankrollId, gamblerId);
-		
-		return "redirect:/bankroll-list";
-	}
-	
-
-	@GetMapping("/delete-bankroll/{id}")
-	public String deleteBankroll(@PathVariable("id") Long id) {
-
-		bankrollService.deleteBankroll(id);
-        
-		return "redirect:/bankroll-list";
-	}
-	
+	}	
 
 	@GetMapping("/new-bankroll-details-simulation")
 	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
@@ -165,7 +140,7 @@ public class BankrollController {
 		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		
 		model.addAttribute("betListInfos", bankrollService
-				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount)));
+				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount), minus));
 
 //		return "bet-list-simulation";
 
@@ -434,6 +409,8 @@ public class BankrollController {
 		List<Bet> betList3 = bank3.getBets();
 		Bankroll bank4 = bankrollRepository.findById(61l).get();
 		List<Bet> betList4 = bank4.getBets();
+		Bankroll bank5 = bankrollRepository.findById(67l).get();
+		List<Bet> betList5 = bank5.getBets();
 
 		for (Bet b : betList2) {
 			HorseRacingBet bet = (HorseRacingBet) b;
@@ -501,12 +478,59 @@ public class BankrollController {
 			
 			betList.add(savedBet);
 		}
+		for (Bet b : betList5) {
+			HorseRacingBet bet = (HorseRacingBet) b;
+
+			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setAnte(bet.getAnte());
+			newBet.setBankroll(bank);
+			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+			newBet.setDate(bet.getDate());
+			newBet.setGambler(bet.getGambler());
+			newBet.setOdd(bet.getOdd());
+			newBet.setSelection(bet.getSelection());
+			newBet.setStatus(bet.getStatus());
+			newBet.setType(bet.getType());
+			newBet.setField(bet.getField());
+			newBet.setDiscipline(bet.getDiscipline());
+			newBet.setFormattedDate(bet.getFormattedDate());
+			newBet.setId(null);
+			
+			Bet savedBet = betRepository.save(newBet);
+			
+			betList.add(savedBet);
+		}
 	
 		bank.setBets(betList);
 				
 		System.out.println("Stop");
 		
 		return bankrollRepository.save(bank);
+	}
+	
+	
+	@GetMapping("/transfer-bankroll")
+	public String transferToAnOtherGambler(
+			@RequestParam(name = "bankrollId") Long bankrollId, 
+			@RequestParam(name = "gamblerId") Long gamblerId,
+			Model model, Principal principal) {
+				
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		bankrollService.transferToAnOtherGambler(bankrollId, gamblerId);
+		
+		return "redirect:/bankroll-list";
+	}
+	
+
+	@GetMapping("/delete-bankroll/{id}")
+	public String deleteBankroll(@PathVariable("id") Long id) {
+
+		bankrollService.deleteBankroll(id);
+        
+		return "redirect:/bankroll-list";
 	}
 
 //	@PostMapping(value = "/save-bet-to-bankroll")
