@@ -48,6 +48,7 @@ public class BankrollService {
 		Double minimumBankrollAmount = initialBankrollAmount;
 		Double ante = topAmount / anteDivider;
 		Double refAnte = 0d;
+		int playedAntes = 1;
 		int maxAntePlayed = 1;
 
 
@@ -55,10 +56,13 @@ public class BankrollService {
 
 			Bet bet = bets.get(i);
 			if(bet.getStatus().equals(BetStatus.LOSE)) {
-				maxAntePlayed += 1;
+				playedAntes += 1;
+				if(playedAntes > maxAntePlayed) {
+					maxAntePlayed = playedAntes;
+				}
 			}
 			if(bet.getStatus().equals(BetStatus.WON)) {
-				maxAntePlayed = 1;
+				playedAntes = 1;
 			}
 			
 			Double realOdd = bet.getOdd();
@@ -334,7 +338,7 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
-		betListInfos.put("Maximum de mises jouées", String.valueOf(maxAntePlayed));
+		betListInfos.put("Maximum de mises perdues consécutivement", String.valueOf(maxAntePlayed));
 
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
 //		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / 20)));
