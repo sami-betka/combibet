@@ -64,6 +64,7 @@ public class MainController {
 	public String home(Model model, Principal principal,
 			@RequestParam(name="bankrollAmount", defaultValue = "200", required = false) Double bankrollAmount,
 			@RequestParam(name="type", defaultValue = "", required = false) BetType type,
+			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
 			@RequestParam(name="divider", defaultValue = "20", required = false) Integer divider) {
 		
 		if (principal == null) {
@@ -82,8 +83,8 @@ public class MainController {
 
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
 		
-		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("bankrollAmounts");
-		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount).get("betsDates");
+		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest).get("bankrollAmounts");
+		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest).get("betsDates");
 		
 		for(int i = 0; i<bankrollAmounts.size();i++) {
 			
