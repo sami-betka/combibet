@@ -46,8 +46,8 @@ public class BankrollService {
 		Double actualBankrollAmount = initialBankrollAmount;
 		Double topAmount = actualBankrollAmount;
 		Double minimumBankrollAmount = initialBankrollAmount;
-		Double realBankrollAmount = initialBankrollAmount - (initialBankrollAmount - invest);
 		double ante = topAmount / anteDivider;
+		Double anteWhenMinimumAmount = ante;
 		Double refAnte = 0d;
 		int lostAntes = 0;
 		int maxAnteLost = 0;
@@ -114,6 +114,7 @@ public class BankrollService {
 			
 			if(actualBankrollAmount < minimumBankrollAmount) {
 				minimumBankrollAmount = actualBankrollAmount;
+				anteWhenMinimumAmount = bet.getAnte();
 			}
 
 
@@ -123,6 +124,8 @@ public class BankrollService {
 		}
 
 		Map<String, Object> finalMap = new HashMap<>();
+		Double realBankrollAmount = actualBankrollAmount - (initialBankrollAmount - invest);
+
 		finalMap.put("initialList", betList);
 		finalMap.put("betList", arrangedBets);
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
@@ -130,10 +133,13 @@ public class BankrollService {
 		finalMap.put("topBankrollAmount", topAmount);
 		finalMap.put("minimumBankrollAmount", minimumBankrollAmount);
 		finalMap.put("realBankrollAmount", realBankrollAmount);
+		finalMap.put("anteWhenMinimumAmount", anteWhenMinimumAmount);		
 
 		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
 		finalMap.put("divider", anteDivider);
 		finalMap.put("maxAnteLost", maxAnteLost);
+		finalMap.put("invest", invest);
+
 
 
 		/////////////////// Dashboard Infos
@@ -279,16 +285,7 @@ public class BankrollService {
 
 		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
 
-//		Double earnings = 0d;
-//		for (Bet b : bets) {
-//			earnings = earnings + (b.getOdd() * b.getAnte());
-//			if(b.getStatus().equals(BetStatus.LOSE)) {
-//				earnings = earnings - b.getAnte();
-//			}
-//		}
-//		Double benefit = earnings - bankrollAmount;
-
-		System.out.println(map.size() + " !!!");
+//		System.out.println(map.size() + " !!!");
 
 		List<Bet> betList = (List<Bet>) map.get("betList");
 		List<Bet> initialList = (List<Bet>) map.get("initialList");
@@ -301,6 +298,11 @@ public class BankrollService {
 
 		Double initialAnte = (Double) map.get("initialAnte");
 		Integer divider = (Integer) map.get("divider");
+		Double invest = (Double) map.get("invest");
+
+		
+		Double topAmountWhenMinimum = (Double) map.get("anteWhenMinimumAmount") * divider;
+		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / topAmountWhenMinimum);		
 
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
@@ -343,20 +345,19 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
-		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", realBankrollAmount)));
+		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
+		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));
+		betListInfos.put("Montant bankroll réel actuel", String.valueOf(String.format("%.2f", realBankrollAmount)));
+
 		betListInfos.put("Maximum de mises perdues consécutivement", String.valueOf(maxAnteLost) + " / " + divider);
 
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
-//		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / 20)));
 		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", topBankrollAmount / divider)));
 
 
 		betListInfos.put("Diviseur", String.valueOf(divider));
 		betListInfos.put("Cotes arrangées", String.valueOf("- " + minus));
-		
-
-//		betListInfos.put("Gains", String.valueOf(String.format("%.2f", earnings)));
-		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
+				betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 
 		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f",
 				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));

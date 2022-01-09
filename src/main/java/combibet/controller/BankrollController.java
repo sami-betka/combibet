@@ -75,7 +75,7 @@ public class BankrollController {
 	public String newBankrollDetailsSimulation(@RequestParam(name = "id", defaultValue = "") Long id,
 			@RequestParam(name = "type", defaultValue = "") BetType type,
 			@RequestParam(name = "bankrollAmount", defaultValue = "", required = false) Double bankrollAmount,
-			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
+			@RequestParam(name = "minus", defaultValue = "0.10", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
