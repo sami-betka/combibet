@@ -193,6 +193,8 @@ public abstract class Bet {
 		
 		map.put("day", testDay);
 		map.put("hour", completeHour);
+		map.put("realHour", String.valueOf(date.getHour()));
+
 
 		return map;
 	}

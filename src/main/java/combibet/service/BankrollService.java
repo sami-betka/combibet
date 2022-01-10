@@ -46,9 +46,9 @@ public class BankrollService {
 		Double actualBankrollAmount = initialBankrollAmount;
 		Double topAmount = actualBankrollAmount;
 		Double minimumBankrollAmount = initialBankrollAmount;
-		double ante = topAmount / anteDivider;
+		Double ante = topAmount / anteDivider;
 		Double anteWhenMinimumAmount = ante;
-		Double refAnte = 0d;
+//		Double refAnte = ante;
 		int lostAntes = 0;
 		int maxAnteLost = 0;
 
@@ -56,6 +56,7 @@ public class BankrollService {
 		for (int i = 0; i < bets.size(); i++) {
 
 			Bet bet = bets.get(i);
+			
 			if(bet.getStatus().equals(BetStatus.LOSE)) {
 				lostAntes += 1;
 				if(lostAntes > maxAnteLost) {
@@ -67,17 +68,24 @@ public class BankrollService {
 			}
 			
 			Double realOdd = bet.getOdd();
-			Double realAnte = ante;
+//			Double realAnte = bet.getAnte();
 
 //			int anteInt = ((int) ante) + 1;
 //			ante = anteInt;
-			bet.setAnte(ante);
 			
-			if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))) {
-				bet.setAnte(bets.get(i-1).getAnte());
-				refAnte = bet.getAnte();
+			if(!bet.getBankroll().getId().equals(65l)) {
+				bet.setAnte(ante);
+				
+				if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))
+						&& (Integer.valueOf(bet.formatDate().get("realHour")) - 3) <= Integer.valueOf(bets.get(i-1).formatDate().get("realHour"))
+						) {
+					bet.setAnte(bets.get(i-1).getAnte());
+				}
 			}
-						
+			Double realAnte = bet.getAnte();
+
+			
+
 			if(bet.getStatus().equals(BetStatus.PENDING)) {
 				bet.setAnte(0d);
 			}
@@ -86,34 +94,25 @@ public class BankrollService {
 				bet.setOdd(0d);
 			}
 			
-//			System.out.println(i+1 + " 0) mise " + ante);
 
 			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
 
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
 
-//			    System.out.println(i+1 + " 1) " + String.format("%.2f", actualBankrollAmount));
-//				System.out.println(i+1 + " 2) bank actuelle " + String.format("%.2f", actualBankrollAmount));
-//				System.out.println(i+1 + " 3) bank max precedente " + String.format("%.2f", topAmount));
-
 			bankrollAmounts.add(actualBankrollAmount);
 			betsDates.add(String.valueOf(bet.getDate()));
 
-			
-//			if(newBankrollAmount > maximalBankrollAmount) {
-//				maximalBankrollAmount = newBankrollAmount;
-//				ante = maximalBankrollAmount/divider;
-//			}
+
 			if (actualBankrollAmount > topAmount) {
 				topAmount = actualBankrollAmount;
 
 				ante = actualBankrollAmount / anteDivider;
 				
-				
 			}
 			
 			if(actualBankrollAmount < minimumBankrollAmount) {
 				minimumBankrollAmount = actualBankrollAmount;
+				
 				anteWhenMinimumAmount = bet.getAnte();
 			}
 

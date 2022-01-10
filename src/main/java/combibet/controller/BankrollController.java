@@ -99,7 +99,7 @@ public class BankrollController {
         if(id == 63) {
         	bankroll = setMixMax(bankroll);
         }
-        if(bankroll.getId().equals(65l)) {
+        if(bankroll.getId().equals(65l) || bankroll.getId().equals(73l)) {
         	minus = 0d;
         }
     	final Double minus2 = minus;
