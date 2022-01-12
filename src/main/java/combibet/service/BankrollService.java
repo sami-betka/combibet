@@ -330,12 +330,19 @@ public class BankrollService {
 		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
 		betListInfos.put("Paris perdants", String.valueOf(betList.stream()
 				.filter(b -> b.getStatus().equals(BetStatus.LOSE)).collect(Collectors.toList()).size()));
+		
+		float winPercentage = (float) (1.0*(100 * wonBetsOdds.size()) / betList
+				.stream()
+				.filter(b -> !b.getStatus().equals(BetStatus.PENDING))
+				.collect(Collectors.toList()).size());
 
-		betListInfos.put("Gains", String.valueOf(total));
+		betListInfos.put("Gains", String.valueOf(String.format("%.2f", total)));
+		betListInfos.put("Pourcentage de paris gagnants", String.valueOf(String.format("%.2f", winPercentage)) + "%");
+
 		float roi = (float) (1.0*(100 * total) / betList
 				.stream()
 				.filter(b -> !b.getStatus().equals(BetStatus.PENDING))
-				.collect(Collectors.toList()).size())/100;
+				.collect(Collectors.toList()).size() - 100);
 		
 		betListInfos.put("ROI", String.valueOf(String.format("%.2f", roi)) + "%");
 

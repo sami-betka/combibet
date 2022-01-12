@@ -240,6 +240,9 @@ public class BankrollController {
 		if (bet.getWinOdd() > 0) {
 			bet.setHasWon(true);
 		}
+		if(bet.getConfidenceIndex() == null) {
+			bet.setConfidenceIndex(ConfidenceIndex.NON_RENSEIGNE);
+		}
 //		if (bet.getStatus().equals(BetStatus.LOSE)) {
 //			bet.setOdd(0d);
 //		}

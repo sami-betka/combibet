@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import combibet.entity.Bankroll;
 import combibet.entity.Bet;
+import combibet.entity.ConfidenceIndex;
 import combibet.entity.HorseRacingBet;
 import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
@@ -21,7 +22,17 @@ public class CombibetApplication {
 		
 		
 //		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
+		
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
+//		List<Bet> all = betRepository.findAll();
+//		
+//		all.forEach(bet->{
+//			if(bet.getConfidenceIndex() == null) {
+//				bet.setConfidenceIndex(ConfidenceIndex.NON_RENSEIGNE);
+//				betRepository.save(bet);
+//			}
+//		});
+		
 //
 //		Bankroll bank = bankrollRepository.findById(63l).get();
 //		List<Bet> toDelete = new ArrayList<>();

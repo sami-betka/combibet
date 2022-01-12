@@ -82,12 +82,12 @@ public class BetController {
 		HorseRacingBet hrb = (HorseRacingBet) betRepository.findById(bet.getId()).get();
 		
 		hrb.setDate(bet.getDate());
-		hrb.setType(bet.getType());
+//		hrb.setType(bet.getType());
 		hrb.setSelection(bet.getSelection());
 		if(bet.getWinOdd()>0) {
 			hrb.setHasWon(true);
 		}
-		hrb.setWinOdd(bet.getWinOdd());
+//		hrb.setWinOdd(bet.getWinOdd());
 		hrb.setOdd(bet.getOdd());
 		hrb.setStatus(bet.getStatus());
 //		if(bet.getStatus().equals(BetStatus.LOSE)) {
@@ -97,8 +97,8 @@ public class BetController {
 //		hrb.setAfterComment(bet.getAfterComment());
 //		hrb.setBeforeComment(bet.getBeforeComment());
 //		hrb.setField(bet.getField());
-		hrb.setDiscipline(bet.getDiscipline());
-		hrb.setConfidenceIndex(bet.getConfidenceIndex());
+//		hrb.setDiscipline(bet.getDiscipline());
+//		hrb.setConfidenceIndex(bet.getConfidenceIndex());
 
 		
 		Bet savedHrb = betRepository.save(hrb);
