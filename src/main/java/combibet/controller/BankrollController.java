@@ -150,7 +150,7 @@ public class BankrollController {
 		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		
 		model.addAttribute("betListInfos", bankrollService
-				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus));
+				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus, maxOdd));
 
 //		return "bet-list-simulation";
 

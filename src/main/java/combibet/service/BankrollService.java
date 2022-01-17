@@ -161,6 +161,7 @@ public class BankrollService {
 		finalMap.put("divider", anteDivider);
 		finalMap.put("maxAnteLost", maxAnteLost);
 		finalMap.put("invest", invest);
+
 //		finalMap.put("lastAnte", lastAnte);
 		List<Bet> filteredList = arrangedBets
 				.stream()
@@ -309,7 +310,7 @@ public class BankrollService {
 //		return betListInfos;
 //	}
 
-	public LinkedHashMap<String, String> betListInfosSimulation(Map<String, Object> map, Double minus) {
+	public LinkedHashMap<String, String> betListInfosSimulation(Map<String, Object> map, Double minus, Double maxOdd) {
 
 		LinkedHashMap<String, String> betListInfos = new LinkedHashMap<>();
 
@@ -400,7 +401,8 @@ public class BankrollService {
 
 		betListInfos.put("Diviseur", String.valueOf(divider));
 		betListInfos.put("Cotes arrangées", String.valueOf("- " + minus));
-				betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
+		betListInfos.put("Cote maximum autorisée", String.valueOf(String.format("%.2f", maxOdd)));
+		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 
 		betListInfos.put("Cote moyenne des paris gagnants", String.valueOf(String.format("%.2f",
 				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
