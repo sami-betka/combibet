@@ -135,6 +135,7 @@ public class GamblerController {
 			@RequestParam(name="status", defaultValue = "", required = false) BetStatus status,
 			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
+			@RequestParam(name = "maxOdd", defaultValue = "100", required = false) Double maxOdd,
 			@RequestParam(name="bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
 			@RequestParam(name="divider", defaultValue = "10", required = false) Integer divider,
 			@RequestParam(name="notPlayed", defaultValue = "false", required = false) String notPlayed,
@@ -157,13 +158,13 @@ public class GamblerController {
 		if(notPlayed.equals("true")) {
 			model.addAttribute("betList", bets);
 			model.addAttribute("betListInfos", bankrollService
-					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest), minus));
+					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest), minus, maxOdd));
 
 		}
 		if(notPlayed.equals("false") || notPlayed.equals(null) ) {
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 			model.addAttribute("betListInfos", bankrollService
-					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus));
+					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus, maxOdd));
 
 		}
 		
