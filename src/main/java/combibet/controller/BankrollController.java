@@ -77,6 +77,7 @@ public class BankrollController {
 			@RequestParam(name = "bankrollAmount", defaultValue = "", required = false) Double bankrollAmount,
 			@RequestParam(name = "minus", defaultValue = "0.10", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
+			@RequestParam(name = "maxOdd", defaultValue = "100", required = false) Double maxOdd,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
 
@@ -111,7 +112,7 @@ public class BankrollController {
 		if (type != null) {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type)
 					.stream()
-//					.filter(b -> b.getOdd() < 2)
+					.filter(b -> b.getOdd() < maxOdd)
 					.collect(Collectors.toList());
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
@@ -122,7 +123,7 @@ public class BankrollController {
 		} else {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll)
 					.stream()
-//					.filter(b -> b.getOdd() < 2)
+					.filter(b -> b.getOdd() < maxOdd)
 					.collect(Collectors.toList());
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
@@ -130,6 +131,7 @@ public class BankrollController {
 			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		}
+		
 		
 //		if(bankroll.getId().equals(65l)) {
 //			bets = bets.stream().filter(b->b.getOdd()<1.6).collect(Collectors.toList());

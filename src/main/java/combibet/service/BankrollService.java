@@ -75,7 +75,7 @@ public class BankrollService {
 //			int anteInt = ((int) ante) + 1;
 //			ante = anteInt;
 			
-			if(!bet.getBankroll().getId().equals(65l)) {
+//			if(!bet.getBankroll().getId().equals(65l)) {
 				
 				bet.setAnte(ante);
 
@@ -97,7 +97,7 @@ public class BankrollService {
 				}
 				///////////////////////////////////////////
 
-			}
+//			}
 		      else {
 			        lastAnte = ante;
 		           }
@@ -161,9 +161,13 @@ public class BankrollService {
 		finalMap.put("divider", anteDivider);
 		finalMap.put("maxAnteLost", maxAnteLost);
 		finalMap.put("invest", invest);
-		finalMap.put("lastAnte", lastAnte);
-
-
+//		finalMap.put("lastAnte", lastAnte);
+		List<Bet> filteredList = arrangedBets
+				.stream()
+				.filter(b -> !b.getStatus().equals(BetStatus.PENDING))
+				.collect(Collectors.toList());
+		
+		finalMap.put("lastAnte", filteredList.get(filteredList.size()-1).getAnte());
 
 
 		/////////////////// Dashboard Infos
@@ -381,7 +385,7 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
 		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
-		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", 555f)) + "%");
+		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount))) + "%");
 
 		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));
 		betListInfos.put("Montant bankroll réel actuel", String.valueOf(String.format("%.2f", realBankrollAmount)));
