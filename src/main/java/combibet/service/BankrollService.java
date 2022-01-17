@@ -48,6 +48,8 @@ public class BankrollService {
 		Double minimumBankrollAmount = initialBankrollAmount;
 		Double ante = topAmount / anteDivider;
 		Double anteWhenMinimumAmount = ante;
+		Double lastAnte = ante;
+
 //		Double refAnte = ante;
 		int lostAntes = 0;
 		int maxAnteLost = 0;
@@ -74,14 +76,32 @@ public class BankrollService {
 //			ante = anteInt;
 			
 			if(!bet.getBankroll().getId().equals(65l)) {
-				bet.setAnte(ante);
 				
+				bet.setAnte(ante);
+
 				if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))
-						&& (Integer.valueOf(bet.formatDate().get("realHour")) - 3) <= Integer.valueOf(bets.get(i-1).formatDate().get("realHour"))
+						&& (Integer.valueOf(bet.formatDate().get("realHour")) - 2) <= Integer.valueOf(bets.get(i-1).formatDate().get("realHour"))
 						) {
-					bet.setAnte(bets.get(i-1).getAnte());
+					bet.setAnte(lastAnte);
+					
+				} else {
+					lastAnte = ante;
 				}
+
+				////////////////////////////////////////////
+				if(bet.getOdd() > 3) {
+					
+					Double expectedWin = bet.getAnte() * 1.5;
+					Double newAnte = expectedWin/bet.getOdd();
+					bet.setAnte(newAnte);
+				}
+				///////////////////////////////////////////
+
 			}
+		      else {
+			        lastAnte = ante;
+		           }
+			
 			Double realAnte = bet.getAnte();
 
 			
@@ -105,15 +125,17 @@ public class BankrollService {
 
 			if (actualBankrollAmount > topAmount) {
 				topAmount = actualBankrollAmount;
-
+			
 				ante = actualBankrollAmount / anteDivider;
 				
+				anteWhenMinimumAmount = ante;
+
 			}
 			
 			if(actualBankrollAmount < minimumBankrollAmount) {
 				minimumBankrollAmount = actualBankrollAmount;
 				
-				anteWhenMinimumAmount = bet.getAnte();
+				anteWhenMinimumAmount = ante;
 			}
 
 
@@ -132,12 +154,15 @@ public class BankrollService {
 		finalMap.put("topBankrollAmount", topAmount);
 		finalMap.put("minimumBankrollAmount", minimumBankrollAmount);
 		finalMap.put("realBankrollAmount", realBankrollAmount);
-		finalMap.put("anteWhenMinimumAmount", anteWhenMinimumAmount);		
+		finalMap.put("anteWhenMinimumAmount", anteWhenMinimumAmount);	
+		System.out.println(anteWhenMinimumAmount);
 
 		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
 		finalMap.put("divider", anteDivider);
 		finalMap.put("maxAnteLost", maxAnteLost);
 		finalMap.put("invest", invest);
+		finalMap.put("lastAnte", lastAnte);
+
 
 
 
@@ -298,10 +323,14 @@ public class BankrollService {
 		Double initialAnte = (Double) map.get("initialAnte");
 		Integer divider = (Integer) map.get("divider");
 		Double invest = (Double) map.get("invest");
+		Double lastAnte = (Double) map.get("lastAnte");
+
 
 		
 		Double topAmountWhenMinimum = (Double) map.get("anteWhenMinimumAmount") * divider;
-		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / topAmountWhenMinimum);		
+		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / topAmountWhenMinimum);
+//		Double anteWhenMinimum = (Double) map.get("anteWhenMinimumAmount");
+//		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / anteWhenMinimum * divider);		
 
 		Double earnings = actualBankrollAmount;
 		Double benefit = earnings - initialBankrollAmount;
@@ -352,6 +381,8 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
 		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
+		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", 555f)) + "%");
+
 		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));
 		betListInfos.put("Montant bankroll réel actuel", String.valueOf(String.format("%.2f", realBankrollAmount)));
 
@@ -359,6 +390,8 @@ public class BankrollService {
 
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
 		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", topBankrollAmount / divider)));
+		betListInfos.put("Prochaine mise (si même jour)", String.valueOf(String.format("%.2f", lastAnte)));
+
 
 
 		betListInfos.put("Diviseur", String.valueOf(divider));

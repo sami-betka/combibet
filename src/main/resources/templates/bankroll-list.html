@@ -66,194 +66,10 @@
       
         <div class="row">
           <div class="col-md-12">
-            <div class="card op" style="">
-              <div class="card-header">
-                <h4 class="card-title"  style="font-weight: bold; color: blue; text-shadow: 1px 1px 2px #000000;">Détails bankroll: <span th:text="${ bankrollName}" class="text-danger"></span></h4>
-<!-- <a th:href="@{/add-combi-to-bankroll?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); -->
-<!-- ">Ajouter combi</button></a>     -->
-
-<!--                            <h1 th:text="${'Bankroll: ' + bankrollName}"></h1> -->
-
-
-
-            <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 200px; background-color: yellow;">
-<a th:href="@{/add-horse-racing-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Ajouter pari hippique</button></a>  
-            </div>
-            
-
-            <div th:if="${field} eq 'sport'" style="margin: 10px; padding: 10px; border: solid; width: 200px; background-color: yellow;">
-<a th:href="@{/add-sport-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Ajouter pari sportif</button></a> 
-            </div>
-            
-
-            <div style="margin: 10px; padding: 10px; border: solid; width: 410px; background-color: yellow;">
-<a th:href="@{/new-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-">Liste des paris classique</button></a> 
-
-<a th:href="@{/new-bankroll-details-with-not-played?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-">Liste des paris avec non-joués</button></a> 
-
-<a th:if="${field} eq 'hippique'" th:href="@{/win-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Liste des paris à la gagne</button></a> 
-            </div>
-
-            <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 420px; background-color: yellow;">
-               <a th:href="@{/new-bankroll-details-simulation?id={id}(id=${id})}"><button class="btn btn-danger" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Simulation gestion bankroll</button></a> 
-
-<a th:href="@{/win-bankroll-simulation?id={id}(id=${id})}"><button class="btn btn-danger" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Simulation à la gagne</button></a>  
-            </div>
-
-             </div>
-
-              <div class="card-body">
-              
-                            <div class="row">
-<!--                             <div class="col-md-6"> -->
-<!--                             <div th:if="${field} eq 'hippique'"  class="dropdown" style="margin: 10px; padding: 10px; background-color: gray; width: 400px"> -->
-<!--                              <a class="btn btn-primary" type="button" th:href="@{/bet-list}"> -->
-<!--                           Tous types de paris -->
-<!--                </a> -->
-<!--   <a><button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-<!--     Filtrer par type de pari -->
-<!--   </button></a> -->
-  
-  
-<!--   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
-<!--    <div th:each="t : ${types}" > -->
-<!--     <a class="dropdown-item" th:text="${t.name}" th:href="@{'/new-bankroll-details?type='+${t}+'&id='+${id}}"></a> -->
-
-<!--    </div> -->
-<!--   </div> -->
-<!--                      </div> -->
-<!--                      </div> -->
-                     
-                     <div class="col-md-6" style="margin: 10px; padding: 10px; border: solid;">
-                     
-                     						<form class="user" th:action="@{multi-filter-bet-list?id={id}(id=${id})}">
-<!--                      						<form class="user" th:action="@{'multi-filter-bet-list/'+${id}}" method="GET"> -->
-
-
-							<h3 class="text-dark" style="font-weight: bold;" th:text="'Bankroll N° ' + ${id}"></h3>
-
-<!-- 							    <label class="text-dark" style="font-weight: bold;">Id bankroll</label> -->
-								<input name="id" th:value="${id}" type="hidden"
-									class="form-control form-control-user" id="" placeholder="">
-									
-
-							<div class="form-group">
-								<label class="text-dark" style="font-weight: bold;">Type de pari:</label><br> 
-								<select class="form-control form-control-user" name="type">
-									<option value="">--Choisir--</option>
-
-									<option th:each="t : ${types}" th:value="${t}"
-										th:text="${t.name}"></option>
-								</select>
-							</div>
-							
-							<div class="form-group">
-								<label class="text-dark" style="font-weight: bold;">Discipline:</label><br> 
-								<select class="form-control form-control-user" name="discipline">
-									<option value="">--Choisir--</option>
-
-									<option th:each="d : ${disciplines}" th:value="${d}"
-										th:text="${d.name}"></option>
-								</select>
-							</div>
-
-<!-- 							<div class="form-group"> -->
-<!-- 							    <label class="text-dark" style="font-weight: bold;">Sélection</label> -->
-<!-- 								<input th:field="*{selection}" type="text" -->
-<!-- 									class="form-control form-control-user" id="" -->
-<!-- 									placeholder="Sélection"> -->
-<!-- 							</div> -->
-
-<!-- 							<div class="form-group"> -->
-<!-- 							    <label class="text-dark" style="font-weight: bold;">Cote</label> -->
-<!-- 								<input th:field="*{odd}" type="number" step="0.01" -->
-<!-- 									class="form-control form-control-user" id="" placeholder="Cote"> -->
-<!-- 							</div> -->
-							
-<!-- 							<div class="form-group"> -->
-<!-- 							    <label class="text-dark" style="font-weight: bold;">Cote à la gagne</label> -->
-<!-- 								<input th:field="*{winOdd}" type="number" step="0.01" -->
-<!-- 									class="form-control form-control-user" id="" placeholder="Cote à la gagne"> -->
-<!-- 							</div> -->
-								
-<!-- 							<div class="form-group"> -->
-<!-- 							    <label class="text-dark" style="font-weight: bold;">Mise</label> -->
-<!-- 								<input th:field="*{ante}" type="number" step="0.01" -->
-<!-- 									class="form-control form-control-user" id="" placeholder="Mise"> -->
-<!-- 							</div> -->
-							
-							<div class="form-group">
-								<label class="text-dark" style="font-weight: bold;">Indice de confiance:</label><br> 
-								<select class="form-control form-control-user" name="confidenceIndex">
-									<option value="">--Choisir--</option>
-
-									<option th:each="i : ${confidenceIndexs}" th:value="${i}"
-										th:text="${i.name}"></option>
-								</select>
-							</div>
-						
-							<div class="form-group">
-								<label class="text-dark" style="font-weight: bold;">Statut:</label><br> 
-								<select class="form-control form-control-user" name="status">
-									<option value="">--Choisir--</option>
-
-									<option th:each="s : ${status}" th:value="${s}"
-										th:text="${s.name}"></option>
-								</select>
-							</div>
-							
-							<div class="form-group">
-								<label class="text-dark" style="font-weight: bold;">Inclure les paris non-joués ?</label><br> 
-								<select class="form-control form-control-user" name="notPlayed">
-									<option value="">--Choisir--</option>
-
-									<option value="true"
-										th:text="Oui"></option>
-										
-										<option value="false"
-										th:text="Non"></option>
-								</select>
-							</div>
-							
-							<button type="submit" class="btn btn-primary btn-user btn-block"> 
- 								Envoyer</button> 
-						</form>
-                     
-                     </div>
-                     
-                     </div>
-              
-
-                                                      
-                           <div th:each="entry : ${betListInfos}" >
-                              <p th:text="${entry.key + ' : ' + entry.value}"></p>
-                           </div>
-                           
-                           
-                           
-                           
-                           
-<!--                            <div class="form-group"> -->
-<!-- 								<label class="text-dark" style="font-weight: bold;">Statut:</label><br>  -->
-<!-- 								<select class="form-control form-control-user" required="required"> -->
-<!-- 									<option value="">--Choisir--</option> -->
-
-<!-- 									<option th:each="t : ${types}" th:value="${t}" th:text="${t.name}"></option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-                           
-              
-
+           
 
             <div class="table-responsive">
-                  <table class="table-sm table-bordered table-hover">
+                  <table class="table-light border-dark table-striped table-sm table-bordered table-hover">
                     <thead style="text-align: center;">
                     <tr>
                       <th style="font-weight: bold;">Type</th>
@@ -285,7 +101,7 @@
                     <tbody>
                                       <tr th:each="bankroll:${bankrollList}">
                                       
-                                            <td><img th:src="@{img/horse.png}" style="text-align: center; height: 20px; width: 20px;"></td>
+                                            <td><img th:src="@{img/football.png}" style="text-align: center; height: 20px; width: 20px;"></td>
                                       
                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.id}"></td>
                                       
@@ -319,8 +135,6 @@
       </div>
                     <div th:replace="_components :: footer"></div>
 
-    </div>
-  </div>
   
   
   <!--   Core JS Files   -->
