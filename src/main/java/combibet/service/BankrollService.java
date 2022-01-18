@@ -168,8 +168,9 @@ public class BankrollService {
 				.filter(b -> !b.getStatus().equals(BetStatus.PENDING))
 				.collect(Collectors.toList());
 		
-		finalMap.put("lastAnte", filteredList.get(filteredList.size()-1).getAnte());
-
+		if(filteredList.size() > 0) {
+			finalMap.put("lastAnte", filteredList.get(filteredList.size()-1).getAnte());
+		}
 
 		/////////////////// Dashboard Infos
 
