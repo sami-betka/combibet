@@ -12,6 +12,9 @@ import combibet.entity.Gambler;
 public interface BankrollRepository extends JpaRepository<Bankroll, Long>{
 
 	List <Bankroll> findAllByGamblerOrderByStartDateDesc(Gambler gambler);
+	
+	Bankroll findByName(String name);
+
 
 	
 }
