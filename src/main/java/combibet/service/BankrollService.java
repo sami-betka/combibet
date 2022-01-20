@@ -75,7 +75,7 @@ public class BankrollService {
 //			int anteInt = ((int) ante) + 1;
 //			ante = anteInt;
 			
-//			if(!bet.getBankroll().getId().equals(65l)) {
+			if(!bet.getBankroll().getId().equals(65l)) {
 				
 				bet.setAnte(ante);
 
@@ -97,7 +97,7 @@ public class BankrollService {
 				}
 				///////////////////////////////////////////
 
-//			}
+			}
 		      else {
 			        lastAnte = ante;
 		           }

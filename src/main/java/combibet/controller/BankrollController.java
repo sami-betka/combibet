@@ -77,7 +77,7 @@ public class BankrollController {
 			@RequestParam(name = "bankrollAmount", defaultValue = "", required = false) Double bankrollAmount,
 			@RequestParam(name = "minus", defaultValue = "0", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
-			@RequestParam(name = "maxOdd", defaultValue = "100", required = false) Double maxOdd,
+			@RequestParam(name = "maxOdd", defaultValue = "2.5", required = false) Double maxOdd,
 			@RequestParam(name = "minOdd", defaultValue = "1", required = false) Double minOdd,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
@@ -89,8 +89,11 @@ public class BankrollController {
 //		List<Object> finalList = new ArrayList<>();
 
 		Bankroll bankroll = bankrollRepository.findById(id).get();
+		model.addAttribute("bankrollName", bankroll.getName());
 		
-		
+		if(bankroll.getId().equals(65l)) {
+			bankrollAmount = 100d;
+		}
 		
 		if(bankrollAmount == null) {
 			bankrollAmount = bankroll.getStartAmount();
@@ -448,6 +451,7 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank1.getName());
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -470,6 +474,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank2.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -492,6 +498,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank3.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -514,6 +522,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank4.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -536,6 +546,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank5.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -558,6 +570,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank6.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -580,6 +594,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank7.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -602,6 +618,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank8.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -624,6 +642,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank9.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());
@@ -646,6 +666,8 @@ public class BankrollController {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank10.getName());
+
 			newBet.setAnte(bet.getAnte());
 			newBet.setBankroll(bank);
 			newBet.setConfidenceIndex(bet.getConfidenceIndex());

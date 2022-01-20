@@ -40,7 +40,7 @@ public abstract class Bet {
 
 	public Bet(Long id, LocalDateTime date, Bankroll bankroll, String formattedDate, String field, String selection, double odd,
 			double currentOddInCombi, double ante, Gambler gambler, Combi combi, BetType type, BetStatus status, ConfidenceIndex confidenceIndex,
-			String beforeComment, String afterComment) {
+			String beforeComment, String afterComment, String bankrollName) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -54,6 +54,7 @@ public abstract class Bet {
 		this.combi = combi;
 		this.type = type;
 		this.bankroll = bankroll;
+		this.bankrollName = bankroll.getName();
 		this.status = status;
 		this.confidenceIndex = confidenceIndex;
 		this.beforeComment = beforeComment;
@@ -86,6 +87,9 @@ public abstract class Bet {
 	@ManyToOne
 	@JoinColumn(name = "bankroll_id")
 	private Bankroll bankroll;
+	
+	private String bankrollName;
+
 
 	@ManyToOne
 	@JoinColumn(name = "combi_id")
@@ -326,6 +330,14 @@ public abstract class Bet {
 
 	public void setConfidenceIndex(ConfidenceIndex confidenceIndex) {
 		this.confidenceIndex = confidenceIndex;
+	}
+
+	public String getBankrollName() {
+		return bankrollName;
+	}
+
+	public void setBankrollName(String bankrollName) {
+		this.bankrollName = bankrollName;
 	}
 
 }
