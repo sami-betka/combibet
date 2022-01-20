@@ -432,7 +432,12 @@ public class BankrollController {
 		List<Bet> betList4 = bank4.getBets();
 		Bankroll bank5 = bankrollRepository.findByName("MADI PRONOS");
 		List<Bet> betList5 = bank5.getBets();
-
+		Bankroll bank6 = bankrollRepository.findByName("TEMPÊTE BETTING");
+		List<Bet> betList6 = bank6.getBets();
+		Bankroll bank7 = bankrollRepository.findByName("JohnBet");
+		List<Bet> betList7 = bank7.getBets();
+		
+		
 		for (Bet b : betList1) {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
@@ -522,6 +527,50 @@ public class BankrollController {
 			betList.add(savedBet);
 		}
 		for (Bet b : betList5) {
+			HorseRacingBet bet = (HorseRacingBet) b;
+
+			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setAnte(bet.getAnte());
+			newBet.setBankroll(bank);
+			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+			newBet.setDate(bet.getDate());
+			newBet.setGambler(bet.getGambler());
+			newBet.setOdd(bet.getOdd());
+			newBet.setSelection(bet.getSelection());
+			newBet.setStatus(bet.getStatus());
+			newBet.setType(bet.getType());
+			newBet.setField(bet.getField());
+			newBet.setDiscipline(bet.getDiscipline());
+			newBet.setFormattedDate(bet.getFormattedDate());
+			newBet.setId(null);
+			
+			Bet savedBet = betRepository.save(newBet);
+			
+			betList.add(savedBet);
+		}
+		for (Bet b : betList6) {
+			HorseRacingBet bet = (HorseRacingBet) b;
+
+			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setAnte(bet.getAnte());
+			newBet.setBankroll(bank);
+			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+			newBet.setDate(bet.getDate());
+			newBet.setGambler(bet.getGambler());
+			newBet.setOdd(bet.getOdd());
+			newBet.setSelection(bet.getSelection());
+			newBet.setStatus(bet.getStatus());
+			newBet.setType(bet.getType());
+			newBet.setField(bet.getField());
+			newBet.setDiscipline(bet.getDiscipline());
+			newBet.setFormattedDate(bet.getFormattedDate());
+			newBet.setId(null);
+			
+			Bet savedBet = betRepository.save(newBet);
+			
+			betList.add(savedBet);
+		}
+		for (Bet b : betList7) {
 			HorseRacingBet bet = (HorseRacingBet) b;
 
 			HorseRacingBet newBet = new HorseRacingBet();
