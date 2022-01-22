@@ -1,5 +1,8 @@
 package combibet.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -47,6 +50,8 @@ public class BankrollService {
 		Double topAmount = actualBankrollAmount;
 		Double topAmountWhenMinimum = actualBankrollAmount;
 		Double minimumBankrollAmount = initialBankrollAmount;
+		float minimumBankrollPercent = (float) (1.0*(100 * actualBankrollAmount) / topAmount);
+
 		Double ante = topAmount / anteDivider;
 		Double anteWhenMinimumAmount = ante;
 		Double lastAnte = ante;
@@ -136,10 +141,19 @@ public class BankrollService {
 			if(actualBankrollAmount < minimumBankrollAmount) {
 				minimumBankrollAmount = actualBankrollAmount;
 //				topAmountWhenMinimum = topAmount;
-				
 				anteWhenMinimumAmount = ante;
 			}
+			
+			///////plus bas pourcentage
+			if (actualBankrollAmount < topAmount) {
+			
+				float newMinimumBankrollPercent = (float) (1.0*(100 * actualBankrollAmount) / topAmount);
 
+				if(newMinimumBankrollPercent < minimumBankrollPercent) {
+					minimumBankrollPercent = newMinimumBankrollPercent;
+				}
+
+			}
 
 			bet.setOdd(realOdd);
 			bet.setAnte(realAnte);
@@ -156,9 +170,10 @@ public class BankrollService {
 		finalMap.put("topBankrollAmount", topAmount);
 		finalMap.put("topAmountWhenMinimum", topAmountWhenMinimum);
 		finalMap.put("minimumBankrollAmount", minimumBankrollAmount);
+		finalMap.put("minimumBankrollPercent", minimumBankrollPercent);
+
 		finalMap.put("realBankrollAmount", realBankrollAmount);
 		finalMap.put("anteWhenMinimumAmount", anteWhenMinimumAmount);	
-		System.out.println(anteWhenMinimumAmount);
 
 		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
 		finalMap.put("divider", anteDivider);
@@ -336,10 +351,10 @@ public class BankrollService {
 		Double topAmountWhenMinimum = (Double) map.get("topAmountWhenMinimum");
 
 
-
+			
 		
 //		Double topAmountWhenMinimum = (Double) map.get("anteWhenMinimumAmount") * divider;
-		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / topAmountWhenMinimum);
+		float minimumBankrollPercent = (float) map.get("minimumBankrollPercent");
 //		Double anteWhenMinimum = (Double) map.get("anteWhenMinimumAmount");
 //		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / anteWhenMinimum * divider);		
 
@@ -348,6 +363,12 @@ public class BankrollService {
 		
 		if(betList.size() > 0) {
 			betListInfos.put("Période", String.valueOf("Date de début: " + betList.get(0).formatDate().get("day") + ", Date de fin: " + betList.get(betList.size() - 1).formatDate().get("day")));
+		}
+		if(betList.size() > 0) {
+			final LocalDate start = LocalDate.parse(betList.get(0).formatDate().get("day").substring(4), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			  final LocalDate end = LocalDate.parse(betList.get(betList.size()-1).formatDate().get("day").substring(4), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			  final long numberOfDays = start.until(end, ChronoUnit.DAYS);
+				betListInfos.put("Nombre de jours", String.valueOf(numberOfDays + 1));
 		}
 
 		betListInfos.put("Nombre de paris", String.valueOf(betList
@@ -391,7 +412,7 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
-//		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
+		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
 		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount))) + "%");
 
 		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));

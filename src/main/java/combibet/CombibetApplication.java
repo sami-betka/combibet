@@ -25,14 +25,13 @@ public class CombibetApplication {
 		
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
 //		List<Bet> all = betRepository.findAll();
-////		
+//////		
 //		all.forEach(bet->{
 ////			if(bet.getConfidenceIndex() == null) {
 ////				bet.setConfidenceIndex(ConfidenceIndex.NON_RENSEIGNE);
 ////				betRepository.save(bet);
 ////			}
-//			if(bet.formatDate().get("day").contains("22-01") && bet.getOdd() == 1d) {
-//				System.out.println(bet.getSelection());
+//			if(bet.getBankroll().getId() == 61l) {
 ////				betRepository.delete(bet);
 //			}
 //		});
