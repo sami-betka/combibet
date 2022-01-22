@@ -77,8 +77,8 @@ public class BankrollController {
 			@RequestParam(name = "bankrollAmount", defaultValue = "", required = false) Double bankrollAmount,
 			@RequestParam(name = "minus", defaultValue = "0", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
-			@RequestParam(name = "maxOdd", defaultValue = "2.5", required = false) Double maxOdd,
-			@RequestParam(name = "minOdd", defaultValue = "1", required = false) Double minOdd,
+			@RequestParam(name = "maxOdd", defaultValue = "10000", required = false) Double maxOdd,
+			@RequestParam(name = "minOdd", defaultValue = "0", required = false) Double minOdd,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
 

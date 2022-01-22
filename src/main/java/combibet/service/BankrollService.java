@@ -45,6 +45,7 @@ public class BankrollService {
 
 		Double actualBankrollAmount = initialBankrollAmount;
 		Double topAmount = actualBankrollAmount;
+		Double topAmountWhenMinimum = actualBankrollAmount;
 		Double minimumBankrollAmount = initialBankrollAmount;
 		Double ante = topAmount / anteDivider;
 		Double anteWhenMinimumAmount = ante;
@@ -89,12 +90,12 @@ public class BankrollService {
 				}
 
 				////////////////////////////////////////////
-				if(bet.getOdd() > 3) {
-					
-					Double expectedWin = bet.getAnte() * 1.5;
-					Double newAnte = expectedWin/bet.getOdd();
-					bet.setAnte(newAnte);
-				}
+//				if(bet.getOdd() > 3) {
+//					
+//					Double expectedWin = bet.getAnte() * 1.5;
+//					Double newAnte = expectedWin/bet.getOdd();
+//					bet.setAnte(newAnte);
+//				}
 				///////////////////////////////////////////
 
 			}
@@ -134,6 +135,7 @@ public class BankrollService {
 			
 			if(actualBankrollAmount < minimumBankrollAmount) {
 				minimumBankrollAmount = actualBankrollAmount;
+//				topAmountWhenMinimum = topAmount;
 				
 				anteWhenMinimumAmount = ante;
 			}
@@ -152,6 +154,7 @@ public class BankrollService {
 		finalMap.put("initialBankrollAmount", initialBankrollAmount);
 		finalMap.put("actualBankrollAmount", actualBankrollAmount);
 		finalMap.put("topBankrollAmount", topAmount);
+		finalMap.put("topAmountWhenMinimum", topAmountWhenMinimum);
 		finalMap.put("minimumBankrollAmount", minimumBankrollAmount);
 		finalMap.put("realBankrollAmount", realBankrollAmount);
 		finalMap.put("anteWhenMinimumAmount", anteWhenMinimumAmount);	
@@ -330,10 +333,12 @@ public class BankrollService {
 		Integer divider = (Integer) map.get("divider");
 		Double invest = (Double) map.get("invest");
 		Double lastAnte = (Double) map.get("lastAnte");
+		Double topAmountWhenMinimum = (Double) map.get("topAmountWhenMinimum");
+
 
 
 		
-		Double topAmountWhenMinimum = (Double) map.get("anteWhenMinimumAmount") * divider;
+//		Double topAmountWhenMinimum = (Double) map.get("anteWhenMinimumAmount") * divider;
 		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / topAmountWhenMinimum);
 //		Double anteWhenMinimum = (Double) map.get("anteWhenMinimumAmount");
 //		float minimumBankrollPercent = (float) (1.0*(100 * minimumBankrollAmount) / anteWhenMinimum * divider);		
@@ -386,7 +391,7 @@ public class BankrollService {
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
-		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
+//		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
 		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount))) + "%");
 
 		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));
