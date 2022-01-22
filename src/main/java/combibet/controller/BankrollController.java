@@ -78,7 +78,7 @@ public class BankrollController {
 			@RequestParam(name = "minus", defaultValue = "0", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
 			@RequestParam(name = "maxOdd", defaultValue = "10000", required = false) Double maxOdd,
-			@RequestParam(name = "minOdd", defaultValue = "0", required = false) Double minOdd,
+			@RequestParam(name = "minOdd", defaultValue = "-1", required = false) Double minOdd,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
 			Principal principal) {
 
@@ -263,8 +263,7 @@ public class BankrollController {
 
 		List<Bet> betList = bankroll.getBets();
 		HorseRacingBet savedHrb = betRepository.save(bet);
-		System.out.println(bet.getId());
-		System.out.println(savedHrb.getId());
+	
 		betList.add(savedHrb);
 //		combi.getBets().clear();
 		bankroll.setBets(betList);
@@ -272,7 +271,6 @@ public class BankrollController {
 				.stream()
 				.sorted(Comparator.comparing(Bet::getDate))
 				.findFirst().get().getDate());
-
 
 		bankrollRepository.save(bankroll);
 

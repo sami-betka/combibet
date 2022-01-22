@@ -1,6 +1,7 @@
 package combibet.entity;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,7 +109,10 @@ public class Bankroll {
 		LocalDateTime date = this.startDate;
 		
 		if(!this.bets.isEmpty()) {
-		date = this.bets.get(0).getDate();
+		date = this.bets
+				.stream()
+				.sorted(Comparator.comparing(Bet::getDate))
+				.findFirst().get().getDate();
 		}
 		String day = "";
 		String month = "";
