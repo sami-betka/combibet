@@ -103,17 +103,22 @@
                                       
                                             <td><img th:src="@{img/football.png}" style="text-align: center; height: 20px; width: 20px;"></td>
                                       
-                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.id}"></td>
-                                      
-                                            <td class="text-dark" style="font-weight: bold; text-align: center;" th:text="${bankroll.name}"></td>
-
-                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.formatStartDate}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == true}" class="text-dark btn-success" style="font-weight: bold;" th:text="${bankroll.id}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == false}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bankroll.id}"></td>
                                             
-                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.startAmount}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == true}" class="text-dark btn-success" style="font-weight: bold; text-align: center;" th:text="${bankroll.name}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == false}" class="text-white btn-danger" style="font-weight: bold; text-align: center;" th:text="${bankroll.name}"></td>
+
+                                            <td th:if="${bankroll.getIsPositive() == true}" class="text-dark btn-success" style="font-weight: bold;" th:text="${bankroll.formatStartDate}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == false}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bankroll.formatStartDate}"></td>
+                                            
+                                            <td th:if="${bankroll.getIsPositive() == true}" class="text-dark btn-success" style="font-weight: bold;" th:text="${bankroll.startAmount}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == false}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bankroll.startAmount}"></td>
                                             
 <!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.calculateCurrentAmount}"></td> -->
                                             
-                                            <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == true}" class="text-dark btn-success" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == false}" class="text-white btn-danger" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
                                             
 <!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.getRoi()}"></td> -->
                                        

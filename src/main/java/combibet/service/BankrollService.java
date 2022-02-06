@@ -387,6 +387,7 @@ public class BankrollService {
 			total += odd;
 		}
 		
+		betListInfos.put("Gains", String.valueOf(String.format("%.2f", total)));
 
 		betListInfos.put("Paris gagnants", String.valueOf(wonBetsOdds.size()));
 		betListInfos.put("Paris perdants", String.valueOf(betList.stream()
@@ -397,7 +398,6 @@ public class BankrollService {
 				.filter(b -> !b.getStatus().equals(BetStatus.PENDING))
 				.collect(Collectors.toList()).size());
 
-		betListInfos.put("Gains", String.valueOf(String.format("%.2f", total)));
 		betListInfos.put("Pourcentage de paris gagnants", String.valueOf(String.format("%.2f", winPercentage)) + "%");
 
 		float roi = (float) (1.0*(100 * total) / betList
@@ -438,6 +438,21 @@ public class BankrollService {
 
 		betListInfos.put("Multiplication du capital : X",
 				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
+		
+		if(betList.size()>0) {
+			Bankroll bankroll = betList.get(0).getBankroll();
+			if((earnings / initialBankrollAmount) < 1) {
+				bankroll.setPositive(false);
+			} else {
+				bankroll.setPositive(true);
+			}
+			if(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)).equals("1,00")) {
+				bankroll.setPositive(true);
+			}
+			bankrollRepository.save(bankroll);
+		}
+	
+		
 
 		return betListInfos;
 	}

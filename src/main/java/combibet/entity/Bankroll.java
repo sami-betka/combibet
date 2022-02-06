@@ -31,7 +31,8 @@ public class Bankroll {
 	}
 
 	public Bankroll(Long id, String name, LocalDateTime startDate, String formattedStartDate, LocalDateTime endDate,
-			double startAmount, Gambler gambler, List<Combi> combis, List<Bet> bets, boolean isActive, BankrollField bankrollField) {
+			double startAmount, Gambler gambler, List<Combi> combis, List<Bet> bets, boolean isActive, BankrollField bankrollField,
+			Boolean isPositive) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -43,6 +44,7 @@ public class Bankroll {
 		this.combis = combis;
 		this.bets = bets;
 		this.isActive = isActive;
+		this.isPositive = isPositive;
 		this.bankrollField = bankrollField;
 
 	}
@@ -77,6 +79,9 @@ public class Bankroll {
 	private BankrollField bankrollField;
 	
 	private boolean isActive;
+	
+	private Boolean isPositive;
+
 	
 	
 	public double calculateCurrentAmount() {
@@ -283,6 +288,14 @@ public class Bankroll {
 
 	public void setBankrollField(BankrollField bankrollField) {
 		this.bankrollField = bankrollField;
+	}
+
+	public Boolean getIsPositive() {
+		return isPositive;
+	}
+
+	public void setPositive(Boolean isPositive) {
+		this.isPositive = isPositive;
 	}
 	
 	

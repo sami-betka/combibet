@@ -78,7 +78,7 @@
 
             <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 200px; background-color: yellow;">
 <a th:href="@{/add-horse-racing-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Ajouter pari hippique</button></a>  
+">Ajouter pari</button></a>  
             </div>
             
 
@@ -88,24 +88,26 @@
             </div>
             
 
-            <div style="margin: 10px; padding: 10px; border: solid; width: 410px; background-color: yellow;">
-<a th:href="@{/new-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-">Liste des paris classique</button></a> 
+<!--             <div style="margin: 10px; padding: 10px; border: solid; width: 410px; background-color: yellow;"> -->
+<!-- <a th:href="@{/new-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  -->
+<!-- ">Liste des paris classique</button></a>  -->
 
-<a th:href="@{/new-bankroll-details-with-not-played?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-">Liste des paris avec non-joués</button></a> 
+<!-- <a th:href="@{/new-bankroll-details-with-not-played?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  -->
+<!-- ">Liste des paris avec non-joués</button></a>  -->
 
-<a th:if="${field} eq 'hippique'" th:href="@{/win-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Liste des paris à la gagne</button></a> 
-            </div>
+<!-- <a th:if="${field} eq 'hippique'" th:href="@{/win-bankroll-details?id={id}(id=${id})}"><button class="btn btn-primary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); -->
+<!-- ">Liste des paris à la gagne</button></a>  -->
+<!--             </div> -->
 
-            <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 420px; background-color: yellow;">
-               <a th:href="@{/new-bankroll-details-simulation?id={id}(id=${id})}"><button class="btn btn-danger" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Simulation gestion bankroll</button></a> 
 
-<a th:href="@{/win-bankroll-simulation?id={id}(id=${id})}"><button class="btn btn-danger" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-">Simulation à la gagne</button></a>  
-            </div>
+
+<!--             <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 420px; background-color: yellow;"> -->
+<!--                <a th:href="@{/new-bankroll-details-simulation?id={id}(id=${id})}"><button class="btn btn-danger" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); -->
+<!-- ">Simulation gestion bankroll</button></a>  -->
+
+<!-- <a th:href="@{/win-bankroll-simulation?id={id}(id=${id})}"><button class="btn btn-danger" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); -->
+<!-- ">Simulation à la gagne</button></a>   -->
+<!--             </div> -->
 
              </div>
 
