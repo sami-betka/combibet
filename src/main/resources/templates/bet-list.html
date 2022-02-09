@@ -76,7 +76,7 @@
 
 
 
-            <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 200px; background-color: yellow;">
+            <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 140px; background-color: yellow; font-weight: bold;">
 <a th:href="@{/add-horse-racing-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 ">Ajouter pari</button></a>  
             </div>
@@ -423,6 +423,12 @@
          
                     </tbody>
                   </table>
+                  
+                              <div th:if="${field} eq 'hippique'"  style="margin: 10px; padding: 10px; border: solid; width: 140px; background-color: yellow; font-weight: bold;">
+<a th:href="@{/add-horse-racing-bet-to-bankroll?id={id}(id=${id})}"><button class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+">Ajouter pari</button></a>  
+            </div>
+            
                 </div>
               </div>
             </div>

@@ -133,7 +133,7 @@ public class GamblerController {
 			@RequestParam(name="confidenceIndex", defaultValue = "", required = false) ConfidenceIndex confidenceIndex,
 			@RequestParam(name="discipline", defaultValue = "", required = false) Discipline discipline,
 			@RequestParam(name="status", defaultValue = "", required = false) BetStatus status,
-			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
+			@RequestParam(name = "minus", defaultValue = "0", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
 			@RequestParam(name = "maxOdd", defaultValue = "100", required = false) Double maxOdd,
 			@RequestParam(name = "minOdd", defaultValue = "1", required = false) Double minOdd,
