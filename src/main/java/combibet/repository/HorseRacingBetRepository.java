@@ -25,6 +25,13 @@ public interface HorseRacingBetRepository extends JpaRepository<HorseRacingBet, 
 			+ "AND (:status is null or b.status = :status) "   
 			+ "AND (:confidenceIndex is null or b.confidenceIndex = :confidenceIndex) "
 			+ "ORDER BY b.date")	 
-	
 	List<Bet> filterSearch(Long bankroll_id, BetType type, Discipline discipline, BetStatus status, ConfidenceIndex confidenceIndex);
+
+	@Query("SELECT b FROM Bet b "
+			+ "WHERE b.bankroll.id = :bankroll_id "  
+			+ "AND (:minOdd is null or b.odd >= :minOdd) "   
+			+ "AND (:maxOdd is null or b.odd <= :maxOdd) "
+			+ "ORDER BY b.date")	 
+	List<Bet> newFilterSearch(Long bankroll_id, Double maxOdd, Double minOdd);
+
 }

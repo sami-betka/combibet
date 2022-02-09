@@ -136,6 +136,7 @@ public class GamblerController {
 			@RequestParam(name = "minus", defaultValue = "0.15", required = false) Double minus,
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
 			@RequestParam(name = "maxOdd", defaultValue = "100", required = false) Double maxOdd,
+			@RequestParam(name = "minOdd", defaultValue = "1", required = false) Double minOdd,
 			@RequestParam(name="bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
 			@RequestParam(name="divider", defaultValue = "10", required = false) Integer divider,
 			@RequestParam(name="notPlayed", defaultValue = "false", required = false) String notPlayed,
@@ -151,22 +152,26 @@ public class GamblerController {
 		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 		
 //		List<Bet> bets = betRepository.findAllByGamblerAndTypeOrderByDateAsc(gambler, type);
-		List<Bet> bets = horseRacingBetRepository.filterSearch(id, type, discipline, status, confidenceIndex);
+		List<Bet> bets = horseRacingBetRepository.newFilterSearch(id, maxOdd, minOdd);
+//		List<Bet> bets = horseRacingBetRepository.filterSearch(id, type, discipline, status, confidenceIndex);
+		
+		
+
 		bankrollService.currentOddsInCombis(bets);
 
 		System.out.println(bets.size());
-		if(notPlayed.equals("true")) {
+//		if(notPlayed.equals("true")) {
 			model.addAttribute("betList", bets);
 			model.addAttribute("betListInfos", bankrollService
 					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest), minus, maxOdd));
 
-		}
-		if(notPlayed.equals("false") || notPlayed.equals(null) ) {
-			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
-			model.addAttribute("betListInfos", bankrollService
-					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus, maxOdd));
-
-		}
+//		}
+//		if(notPlayed.equals("false") || notPlayed.equals(null) ) {
+//			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
+//			model.addAttribute("betListInfos", bankrollService
+//					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus, maxOdd));
+//
+//		}
 		
 		model.addAttribute("id", id);
 		System.out.println(id);

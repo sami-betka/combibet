@@ -116,8 +116,8 @@ public class BankrollController {
 		if (type != null) {
 			bets = betRepository.findAllByBankrollAndTypeOrderByDateAsc(bankroll, type)
 					.stream()
-					.filter(b -> b.getOdd() < maxOdd
-							&& b.getOdd() > minOdd
+					.filter(b -> b.getOdd() <= maxOdd
+							&& b.getOdd() >= minOdd
 							)
 					.collect(Collectors.toList());
 			bets.forEach(bet->{
@@ -129,8 +129,8 @@ public class BankrollController {
 		} else {
 			bets = betRepository.findAllByBankrollOrderByDateAsc(bankroll)
 					.stream()
-					.filter(b -> b.getOdd() < maxOdd
-							&& b.getOdd() > minOdd
+					.filter(b -> b.getOdd() <= maxOdd
+							&& b.getOdd() >= minOdd
 							)
 					.collect(Collectors.toList());
 			bets.forEach(bet->{
