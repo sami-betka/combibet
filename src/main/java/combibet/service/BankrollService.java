@@ -436,7 +436,7 @@ public class BankrollService {
 		betListInfos.put("Cote moyenne des paris perdants", String.valueOf(String.format("%.2f",
 				lostBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / lostBetsOdds.size())));
 
-		betListInfos.put("Multiplication du capital : X",
+		betListInfos.put("Multiplication du capital de départ : X",
 				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
 		
 		if(betList.size()>0) {
