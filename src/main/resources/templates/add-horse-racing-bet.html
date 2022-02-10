@@ -130,7 +130,7 @@
 							
 							<div class="form-group">
 								<label class="text-dark" style="font-weight: bold;">Bankroll parente:</label><br> 
-								<select class="form-control form-control-user" th:field="*{bankrollName}" required="required">
+								<select class="form-control form-control-user" th:field="*{bankrollName}">
 									<option value="">--Choisir--</option>
 
 									<option th:each="b : ${bankrolls}" th:value="${b}"
