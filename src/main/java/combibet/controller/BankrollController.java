@@ -92,6 +92,21 @@ public class BankrollController {
 //		List<Object> finalList = new ArrayList<>();
 
 		Bankroll bankroll = bankrollRepository.findById(id).get();
+		
+		Integer pendings = 0;
+		for(Bet b : bankroll.getBets()) {
+			if(b.getStatus().equals(BetStatus.PENDING)) {
+				bankroll.setPendingBets(true);
+				pendings = 1;
+				break;
+			}
+		}
+		if(pendings == 0) {
+			bankroll.setPendingBets(false);
+		}
+		bankrollRepository.save(bankroll);
+
+		
 		model.addAttribute("bankrollName", bankroll.getName());
 		
 		if(bankroll.getId().equals(65l)) {
@@ -143,15 +158,7 @@ public class BankrollController {
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		}
 		
-//		Boolean pendingBets = false;
-//		
-//		for(Bet b : bets) {
-//			if(b.getStatus().equals(BetStatus.PENDING)) {
-//				pendingBets.equals(true);
-//			}
-//		}
-//		
-//		model.addAttribute("pendingBets", pendingBets);
+
 		
 //		if(bankroll.getId().equals(65l)) {
 //			bets = bets.stream().filter(b->b.getOdd()<1.6).collect(Collectors.toList());
@@ -246,9 +253,9 @@ public class BankrollController {
 //	 				.filter(ti-> ti.getJour().equals(jour))
 	        			.map(Bankroll :: getName)
 	        			.collect(Collectors.toSet());
-	        			List<String> list = new ArrayList<String>(bankrolls);
-	        			Collections.sort(list);        			
-	        			bankrolls = new LinkedHashSet<>(list);
+//	        			List<String> list = new ArrayList<String>(bankrolls);
+//	        			Collections.sort(list);        			
+//	        			bankrolls = new LinkedHashSet<>(list);
 	        	         model.addAttribute("bankrolls", bankrolls);
 	        	         
 		return "add-horse-racing-bet";

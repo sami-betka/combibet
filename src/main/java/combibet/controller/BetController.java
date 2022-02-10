@@ -72,9 +72,9 @@ public class BetController {
 //		 				.filter(ti-> ti.getJour().equals(jour))
 		        			.map(Bankroll :: getName)
 		        			.collect(Collectors.toSet());
-		        			List<String> list = new ArrayList<String>(bankrolls);
-		        			Collections.sort(list);        			
-		        			bankrolls = new LinkedHashSet<>(list);
+//		        			List<String> list = new ArrayList<String>(bankrolls);
+//		        			Collections.sort(list);        			
+//		        			bankrolls = new LinkedHashSet<>(list);
 		        	         model.addAttribute("bankrolls", bankrolls);
 			
 		    return "update-horse-racing-bet";
