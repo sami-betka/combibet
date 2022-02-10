@@ -1,6 +1,12 @@
 package combibet.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,6 +68,15 @@ public class BetController {
 			model.addAttribute("types", BetType.values());
 			model.addAttribute("disciplines", Discipline.values());
 			
+			  Set<String> bankrolls = bankrollRepository.findAll().stream()
+//		 				.filter(ti-> ti.getJour().equals(jour))
+		        			.map(Bankroll :: getName)
+		        			.collect(Collectors.toSet());
+//		        			List<String> list = new ArrayList<String>(bankrolls);
+//		        			Collections.sort(list);        			
+//		        			bankrolls = new LinkedHashSet<>(list);
+		        	         model.addAttribute("bankrolls", bankrolls);
+			
 		    return "update-horse-racing-bet";
 
 	}
@@ -78,6 +93,7 @@ public class BetController {
 		if (principal == null) {
 			return "redirect:/login";
 		}
+		
 
 		HorseRacingBet hrb = (HorseRacingBet) betRepository.findById(bet.getId()).get();
 		
@@ -98,7 +114,7 @@ public class BetController {
 //		hrb.setBeforeComment(bet.getBeforeComment());
 //		hrb.setField(bet.getField());
 //		hrb.setDiscipline(bet.getDiscipline());
-//		hrb.setConfidenceIndex(bet.getConfidenceIndex());
+		hrb.setBankrollName(bet.getBankrollName());
 
 		
 		Bet savedHrb = betRepository.save(hrb);

@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,7 +231,17 @@ public class BankrollController {
 		model.addAttribute("disciplines", Discipline.values());
 		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		model.addAttribute("emptyBet", new HorseRacingBet());
-
+		
+		
+		  Set<String> bankrolls = bankrollRepository.findAll().stream()
+//	 				.filter(ti-> ti.getJour().equals(jour))
+	        			.map(Bankroll :: getName)
+	        			.collect(Collectors.toSet());
+//	        			List<String> list = new ArrayList<String>(bankrolls);
+//	        			Collections.sort(list);        			
+//	        			bankrolls = new LinkedHashSet<>(list);
+	        	         model.addAttribute("bankrolls", bankrolls);
+	        	         
 		return "add-horse-racing-bet";
 	}
 
