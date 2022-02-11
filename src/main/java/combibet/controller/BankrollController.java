@@ -240,6 +240,8 @@ public class BankrollController {
 		if (principal == null) {
 			return "redirect:/login";
 		}
+		
+		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
 		model.addAttribute("id", id);
 		model.addAttribute("types", BetType.values());
@@ -249,7 +251,7 @@ public class BankrollController {
 		model.addAttribute("emptyBet", new HorseRacingBet());
 		
 		
-		  Set<String> bankrolls = bankrollRepository.findAll().stream()
+		  Set<String> bankrolls = bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler).stream()
 //	 				.filter(ti-> ti.getJour().equals(jour))
 	        			.map(Bankroll :: getName)
 	        			.collect(Collectors.toSet());

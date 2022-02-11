@@ -118,7 +118,7 @@
 <!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.calculateCurrentAmount}"></td> -->
                                             
                                             <td th:if="${bankroll.getIsPositive() == true}" th:classappend="${bankroll.pendingBets eq true ? 'text-dark btn-warning' : 'text-dark btn-success'}" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
-                                            <td th:if="${bankroll.getIsPositive() == false}" th:classappend="${bankroll.pendingBets eq true ? 'text-dark btn-warning' : 'text-dark btn-success'}" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
+                                            <td th:if="${bankroll.getIsPositive() == false}" th:classappend="${bankroll.pendingBets eq true ? 'text-dark btn-warning' : 'text-white btn-danger'}" style="font-weight: bold;" th:text="${bankroll.betNumber}"></td>
                                             
 <!--                                             <td class="text-dark" style="font-weight: bold;" th:text="${bankroll.getRoi()}"></td> -->
                                        

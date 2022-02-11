@@ -23,11 +23,13 @@ import combibet.entity.BetStatus;
 import combibet.entity.BetType;
 import combibet.entity.ConfidenceIndex;
 import combibet.entity.Discipline;
+import combibet.entity.Gambler;
 import combibet.entity.HorseRacingBet;
 import combibet.entity.SportBet;
 import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
 import combibet.repository.CombiRepository;
+import combibet.repository.GamblerRepository;
 
 @Controller
 public class BetController {
@@ -41,6 +43,9 @@ public class BetController {
 	@Autowired
 	BankrollRepository bankrollRepository;
 	
+	@Autowired
+	GamblerRepository gamblerRepository;
+	
 //	@Autowired
 //    TwilioService service;
 
@@ -50,6 +55,8 @@ public class BetController {
 		if (principal == null) {
 			return "redirect:/login";
 		}
+		
+		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
 		Bet bet = betRepository.findById(id).get();
 
@@ -68,7 +75,7 @@ public class BetController {
 			model.addAttribute("types", BetType.values());
 			model.addAttribute("disciplines", Discipline.values());
 			
-			  Set<String> bankrolls = bankrollRepository.findAll().stream()
+			  Set<String> bankrolls = bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler).stream()
 //		 				.filter(ti-> ti.getJour().equals(jour))
 		        			.map(Bankroll :: getName)
 		        			.collect(Collectors.toSet());
