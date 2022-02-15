@@ -449,7 +449,12 @@ public class BankrollService {
 			if(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)).equals("1,00")) {
 				bankroll.setPositive(true);
 			}
+			
+			
+			bankroll.setRoi(String.valueOf(String.format("%.2f", roi)) + "%");
+			bankroll.setCapitalMultiplication(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
 			bankrollRepository.save(bankroll);
+
 		}
 	
 		

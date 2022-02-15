@@ -133,7 +133,7 @@
 								<select class="form-control form-control-user" th:field="*{bankrollName}">
 									<option value="">--Choisir--</option>
 
-									<option th:each="b : ${bankrolls}" th:value="${b}"
+									<option style="font-weight: bold;" th:each="b : ${bankrolls}" th:value="${b}"
 										th:text="${b}"></option>
 								</select>
 							</div>
