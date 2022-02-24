@@ -468,12 +468,12 @@ public class BankrollController {
 //		List<Bet> betList5 = bank5.getBets();
 		Bankroll bank6 = bankrollRepository.findByName("TEMPÊTE BETTING");
 		List<Bet> betList6 = bank6.getBets();
-//		Bankroll bank7 = bankrollRepository.findByName("JohnBet");
-//		List<Bet> betList7 = bank7.getBets();
+		Bankroll bank7 = bankrollRepository.findByName("JohnBet");
+		List<Bet> betList7 = bank7.getBets();
 //		Bankroll bank8 = bankrollRepository.findByName("+1,5");
 //		List<Bet> betList8 = bank8.getBets();
-		Bankroll bank9 = bankrollRepository.findByName("NABIL");
-		List<Bet> betList9 = bank9.getBets();
+//		Bankroll bank9 = bankrollRepository.findByName("NABIL");
+//		List<Bet> betList9 = bank9.getBets();
 //		Bankroll bank10 = bankrollRepository.findByName("TEMPÊTE TENNIS");
 //		List<Bet> betList10 = bank10.getBets();
 //		Bankroll bank11 = bankrollRepository.findByName("Fou2Tennis");
@@ -625,30 +625,30 @@ public class BankrollController {
 			
 			betList.add(savedBet);
 		}
-//		for (Bet b : betList7) {
-//			HorseRacingBet bet = (HorseRacingBet) b;
-//
-//			HorseRacingBet newBet = new HorseRacingBet();
-//			newBet.setBankrollName(bank7.getName());
-//
-//			newBet.setAnte(bet.getAnte());
-//			newBet.setBankroll(bank);
-//			newBet.setConfidenceIndex(bet.getConfidenceIndex());
-//			newBet.setDate(bet.getDate());
-//			newBet.setGambler(bet.getGambler());
-//			newBet.setOdd(bet.getOdd());
-//			newBet.setSelection(bet.getSelection());
-//			newBet.setStatus(bet.getStatus());
-//			newBet.setType(bet.getType());
-//			newBet.setField(bet.getField());
-//			newBet.setDiscipline(bet.getDiscipline());
-//			newBet.setFormattedDate(bet.getFormattedDate());
-//			newBet.setId(null);
-//			
-//			Bet savedBet = betRepository.save(newBet);
-//			
-//			betList.add(savedBet);
-//		}
+		for (Bet b : betList7) {
+			HorseRacingBet bet = (HorseRacingBet) b;
+
+			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank7.getName());
+
+			newBet.setAnte(bet.getAnte());
+			newBet.setBankroll(bank);
+			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+			newBet.setDate(bet.getDate());
+			newBet.setGambler(bet.getGambler());
+			newBet.setOdd(bet.getOdd());
+			newBet.setSelection(bet.getSelection());
+			newBet.setStatus(bet.getStatus());
+			newBet.setType(bet.getType());
+			newBet.setField(bet.getField());
+			newBet.setDiscipline(bet.getDiscipline());
+			newBet.setFormattedDate(bet.getFormattedDate());
+			newBet.setId(null);
+			
+			Bet savedBet = betRepository.save(newBet);
+			
+			betList.add(savedBet);
+		}
 //		for (Bet b : betList8) {
 //			HorseRacingBet bet = (HorseRacingBet) b;
 //
@@ -673,30 +673,30 @@ public class BankrollController {
 //			
 //			betList.add(savedBet);
 //		}
-		for (Bet b : betList9) {
-			HorseRacingBet bet = (HorseRacingBet) b;
-
-			HorseRacingBet newBet = new HorseRacingBet();
-			newBet.setBankrollName(bank9.getName());
-
-			newBet.setAnte(bet.getAnte());
-			newBet.setBankroll(bank);
-			newBet.setConfidenceIndex(bet.getConfidenceIndex());
-			newBet.setDate(bet.getDate());
-			newBet.setGambler(bet.getGambler());
-			newBet.setOdd(bet.getOdd());
-			newBet.setSelection(bet.getSelection());
-			newBet.setStatus(bet.getStatus());
-			newBet.setType(bet.getType());
-			newBet.setField(bet.getField());
-			newBet.setDiscipline(bet.getDiscipline());
-			newBet.setFormattedDate(bet.getFormattedDate());
-			newBet.setId(null);
-			
-			Bet savedBet = betRepository.save(newBet);
-			
-			betList.add(savedBet);
-		}
+//		for (Bet b : betList9) {
+//			HorseRacingBet bet = (HorseRacingBet) b;
+//
+//			HorseRacingBet newBet = new HorseRacingBet();
+//			newBet.setBankrollName(bank9.getName());
+//
+//			newBet.setAnte(bet.getAnte());
+//			newBet.setBankroll(bank);
+//			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+//			newBet.setDate(bet.getDate());
+//			newBet.setGambler(bet.getGambler());
+//			newBet.setOdd(bet.getOdd());
+//			newBet.setSelection(bet.getSelection());
+//			newBet.setStatus(bet.getStatus());
+//			newBet.setType(bet.getType());
+//			newBet.setField(bet.getField());
+//			newBet.setDiscipline(bet.getDiscipline());
+//			newBet.setFormattedDate(bet.getFormattedDate());
+//			newBet.setId(null);
+//			
+//			Bet savedBet = betRepository.save(newBet);
+//			
+//			betList.add(savedBet);
+//		}
 //		for (Bet b : betList10) {
 //			HorseRacingBet bet = (HorseRacingBet) b;
 //
