@@ -2,6 +2,7 @@ package combibet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +25,13 @@ public class CombibetApplication {
 //		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
 		
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
-//		List<Bet> all = betRepository.findAll();
+//		List<Bet> list = betRepository.findAll().stream().filter(b->b.getDate() == null).collect(Collectors.toList());
+//		for(Bet b : list){
+//			System.out.println(b.getBankroll().getName());
+//			System.out.println(b.getSelection());
+//			System.out.println(b.getId());
+//
+//		}
 //////		
 //		all.forEach(bet->{
 ////			if(bet.getConfidenceIndex() == null) {

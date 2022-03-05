@@ -82,7 +82,11 @@ public class BankrollController {
 			@RequestParam(name = "invest", defaultValue = "100", required = false) Double invest,
 			@RequestParam(name = "maxOdd", defaultValue = "10000", required = false) Double maxOdd,
 			@RequestParam(name = "minOdd", defaultValue = "-1", required = false) Double minOdd,
-			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider, Model model,
+			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider,
+			@RequestParam(name = "coteSouhaitee", defaultValue = "", required = false) Double coteSouhaitee,
+			@RequestParam(name = "montantePaliers", defaultValue = "", required = false) Double montantePaliers,
+
+			Model model,
 			Principal principal) {
 
 		if (principal == null) {
