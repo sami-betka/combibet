@@ -140,6 +140,7 @@ public class GamblerController {
 			@RequestParam(name="bankrollAmount", defaultValue = "1000", required = false) Double bankrollAmount,
 			@RequestParam(name="divider", defaultValue = "10", required = false) Integer divider,
 			@RequestParam(name="notPlayed", defaultValue = "false", required = false) String notPlayed,
+			@RequestParam(name = "coteCombi", defaultValue = "", required = false) Double coteCombi,
 
 			Model model, Principal principal) {
 		
@@ -163,7 +164,7 @@ public class GamblerController {
 //		if(notPlayed.equals("true")) {
 			model.addAttribute("betList", bets);
 			model.addAttribute("betListInfos", bankrollService
-					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest), minus, maxOdd));
+					.betListInfosSimulation(bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest, coteCombi), minus, maxOdd));
 
 //		}
 //		if(notPlayed.equals("false") || notPlayed.equals(null) ) {

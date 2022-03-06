@@ -83,8 +83,8 @@ public class MainController {
 
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
 		
-		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest).get("bankrollAmounts");
-		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest).get("betsDates");
+		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest, null).get("bankrollAmounts");
+		LinkedList<String> betsDates = (LinkedList<String>) bankrollService.managedBankrollSimulation(bets, divider, bankrollAmount, invest, null).get("betsDates");
 		
 		for(int i = 0; i<bankrollAmounts.size();i++) {
 			

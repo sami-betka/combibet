@@ -83,7 +83,7 @@ public class BankrollController {
 			@RequestParam(name = "maxOdd", defaultValue = "10000", required = false) Double maxOdd,
 			@RequestParam(name = "minOdd", defaultValue = "-1", required = false) Double minOdd,
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider,
-			@RequestParam(name = "coteSouhaitee", defaultValue = "", required = false) Double coteSouhaitee,
+			@RequestParam(name = "coteCombi", defaultValue = "", required = false) Double coteCombi,
 			@RequestParam(name = "montantePaliers", defaultValue = "", required = false) Double montantePaliers,
 
 			Model model,
@@ -125,6 +125,9 @@ public class BankrollController {
 		}
         if(bankroll.getName().equals("TOTAL-MIX-MAX")) {
         	bankroll = setMixMax(bankroll);
+        }
+        if(bankroll.getName().equals("SAMI-TOTAL")) {
+        	bankroll = setSamiTotal(bankroll);
         }
         if(bankroll.getId().equals(65l) || bankroll.getId().equals(79l) || bankroll.getId().equals(73l) || bankroll.getId().equals(77l) || bankroll.getId().equals(78l)) {
         	minus = 0d;
@@ -181,16 +184,16 @@ public class BankrollController {
 		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		
 		model.addAttribute("betListInfos", bankrollService
-				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest), minus, maxOdd));
+				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi), minus, maxOdd));
 
 //		return "bet-list-simulation";
 
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
 
 		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
-				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest).get("bankrollAmounts");
+				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi).get("bankrollAmounts");
 		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
-				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest).get("betsDates");
+				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi).get("betsDates");
 
 		for (int i = 0; i < bankrollAmounts.size(); i++) {
 
@@ -449,6 +452,80 @@ public class BankrollController {
 	}
 
 ////////////////////
+	public Bankroll setSamiTotal(Bankroll bankroll) {
+
+		Bankroll bank = bankroll;
+		List<Bet> toDelete = new ArrayList<>();
+		for(Bet bet : bank.getBets()) {
+			toDelete.add(bet);
+		}
+		betRepository.deleteAll(toDelete);
+		
+		List<Bet> betList = new ArrayList<>();;
+		
+		Bankroll bank1 = bankrollRepository.findByName("SAMI PMU (WEEK-END)");
+		List<Bet> betList1 = bank1.getBets();
+		Bankroll bank2 = bankrollRepository.findByName("SAMI (SPORTS)");
+		List<Bet> betList2 = bank2.getBets();
+
+		
+		for (Bet b : betList1) {
+			HorseRacingBet bet = (HorseRacingBet) b;
+
+			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank1.getName());
+			newBet.setAnte(bet.getAnte());
+			newBet.setBankroll(bank);
+			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+			newBet.setDate(bet.getDate());
+			newBet.setGambler(bet.getGambler());
+			newBet.setOdd(bet.getOdd());
+			newBet.setSelection(bet.getSelection());
+			newBet.setStatus(bet.getStatus());
+			newBet.setType(bet.getType());
+			newBet.setField(bet.getField());
+			newBet.setDiscipline(bet.getDiscipline());
+			newBet.setFormattedDate(bet.getFormattedDate());
+			newBet.setId(null);
+			
+			Bet savedBet = betRepository.save(newBet);
+			
+			betList.add(savedBet);
+		}
+		for (Bet b : betList2) {
+			HorseRacingBet bet = (HorseRacingBet) b;
+
+			HorseRacingBet newBet = new HorseRacingBet();
+			newBet.setBankrollName(bank2.getName());
+
+			newBet.setAnte(bet.getAnte());
+			newBet.setBankroll(bank);
+			newBet.setConfidenceIndex(bet.getConfidenceIndex());
+			newBet.setDate(bet.getDate());
+			newBet.setGambler(bet.getGambler());
+			newBet.setOdd(bet.getOdd());
+			newBet.setSelection(bet.getSelection());
+			newBet.setStatus(bet.getStatus());
+			newBet.setType(bet.getType());
+			newBet.setField(bet.getField());
+			newBet.setDiscipline(bet.getDiscipline());
+			newBet.setFormattedDate(bet.getFormattedDate());
+			newBet.setId(null);
+			
+			Bet savedBet = betRepository.save(newBet);
+			
+			betList.add(savedBet);
+		}
+
+	
+		bank.setBets(betList);
+				
+		System.out.println("Stop");
+		
+		return bankrollRepository.save(bank);
+	}
+	
+	
 	public Bankroll setMixMax(Bankroll bankroll) {
 
 		Bankroll bank = bankroll;
@@ -780,7 +857,6 @@ public class BankrollController {
 		
 		return bankrollRepository.save(bank);
 	}
-	
 	
 	@GetMapping("/transfer-bankroll")
 	public String transferToAnOtherGambler(

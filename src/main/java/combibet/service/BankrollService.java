@@ -39,9 +39,10 @@ public class BankrollService {
 	BetRepository betRepository;
 
 	public Map<String, Object> managedBankrollSimulation(List<Bet> betList, Integer anteDivider,
-			Double initialBankrollAmount, Double invest) {
+			Double initialBankrollAmount, Double invest, Double coteCombi) {
 
-		List<Bet> bets = betList;
+		List<Bet> bets = currentOddsInCombis(betList);
+//		List<Bet> bets = betList;
 		List<Bet> arrangedBets = new ArrayList<>();
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
 		LinkedList<String> betsDates = new LinkedList<>();
@@ -128,15 +129,39 @@ public class BankrollService {
 			bankrollAmounts.add(actualBankrollAmount);
 			betsDates.add(String.valueOf(bet.getDate()));
 
-
-			if (actualBankrollAmount > topAmount) {
-				topAmount = actualBankrollAmount;
 			
-				ante = actualBankrollAmount / anteDivider;
+			//Conditions si combi...
+			int iter = 1;
+			if(coteCombi != null && bet.getCurrentOddInCombi() != 0 && coteCombi > bet.getCurrentOddInCombi()) {
 				
-				anteWhenMinimumAmount = ante;
+				
+				ante = ante * bet.getOdd();
+//				if(bet.getId().equals(betList.get(0).getId())) {
+//					ante = initialBankrollAmount/anteDivider;
+//				};
+//				realAnte = ante;
 
 			}
+			else {
+				//si cotecombi == null...
+				if (actualBankrollAmount > topAmount) {
+					topAmount = actualBankrollAmount;
+
+						ante = actualBankrollAmount / anteDivider;
+
+					anteWhenMinimumAmount = ante;
+				}
+			}
+			////////////////////////////
+			
+//			if (actualBankrollAmount > topAmount) {
+//				topAmount = actualBankrollAmount;
+//
+//					ante = actualBankrollAmount / anteDivider;
+//
+//				anteWhenMinimumAmount = ante;
+//			}
+			/////////////////////////////
 			
 			if(actualBankrollAmount < minimumBankrollAmount) {
 				minimumBankrollAmount = actualBankrollAmount;
@@ -620,7 +645,22 @@ public class BankrollService {
 
 	}
 
-	public void currentOddsInCombis(List<Bet> bets) {
+//	public void currentOddsInCombis(List<Bet> bets) {
+//
+//		double currentOdd = 1d;
+//
+//		for (int i = 0; i < bets.size(); i++) {
+//
+//			bets.get(i).setCurrentOddInCombi(currentOdd * bets.get(i).getOdd());
+//			currentOdd = bets.get(i).getCurrentOddInCombi();
+//			if(currentOdd == 0 || bets.get(i).getStatus().equals(BetStatus.LOSE)) {
+//				currentOdd = 1;
+//				bets.get(i).setCurrentOddInCombi(0d);
+//			}
+//			
+//		}
+//	}
+	public List<Bet> currentOddsInCombis(List<Bet> bets) {
 
 		double currentOdd = 1d;
 
@@ -634,6 +674,7 @@ public class BankrollService {
 			}
 			
 		}
+		return bets;
 	}
 	
 	public List<Bankroll> getBankrollList (Gambler gambler) {
