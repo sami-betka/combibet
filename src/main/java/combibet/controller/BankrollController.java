@@ -132,6 +132,10 @@ public class BankrollController {
         if(bankroll.getId().equals(65l) || bankroll.getId().equals(79l) || bankroll.getId().equals(73l) || bankroll.getId().equals(77l) || bankroll.getId().equals(78l)) {
         	minus = 0d;
         }
+        
+        if(bankroll.getName().equals("SAMI (COMBIS COTE 50 EN 2 MyMatch) (DIVISEUR 20)")) {
+        	divider = 20;
+        }
     	final Double minus2 = minus;
 		
 //		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
