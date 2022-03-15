@@ -133,7 +133,7 @@ public class BankrollController {
         	minus = 0d;
         }
         
-        if(bankroll.getName().equals("SAMI (COMBIS COTE 50 EN 2 MyMatch) (DIVISEUR 20)")) {
+        if(bankroll.getName().equals("SAMI (COTE 7 PAR SOIR - 2 PALIERS ---> COTE 49) (DIVISEUR 20)")) {
         	divider = 20;
         }
     	final Double minus2 = minus;

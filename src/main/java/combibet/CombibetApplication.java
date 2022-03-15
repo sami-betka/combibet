@@ -1,8 +1,6 @@
 package combibet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 import combibet.entity.Bankroll;
 import combibet.entity.Bet;
-import combibet.entity.ConfidenceIndex;
+import combibet.entity.BetStatus;
 import combibet.entity.HorseRacingBet;
 import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
@@ -23,8 +21,25 @@ public class CombibetApplication {
 		
 		
 //		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
-		
+////		
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
+//		Bankroll bank = bankrollRepository.findByName("TEST");
+//		for(int i = 0; i<8; i++) {
+//		    LocalDateTime date = LocalDateTime.of(2022, 3, 14, 00, 00);  
+//
+//			Bet bet = new HorseRacingBet();
+//			bet.setSelection(String.valueOf(i));
+//			bet.setOdd(1.65);
+//			bet.setAnte(1);
+//			bet.setDate(date);
+//			bet.setStatus(BetStatus.WON);
+//			bet.setBankroll(bank);
+//			
+//			betRepository.save(bet);
+//			bank.getBets().add(bet);
+//			bankrollRepository.save(bank);
+//		}
+		
 //		List<Bet> list = betRepository.findAll().stream().filter(b->b.getDate() == null).collect(Collectors.toList());
 //		for(Bet b : list){
 //			System.out.println(b.getBankroll().getName());
