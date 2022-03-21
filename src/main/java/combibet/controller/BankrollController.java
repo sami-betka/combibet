@@ -133,7 +133,8 @@ public class BankrollController {
         	minus = 0d;
         }
         
-        if(bankroll.getName().equals("SAMI (COTE 10 PAR SOIR - 2 PALIERS ---> COTE 100) (DIVISEUR 20)")) {
+        if(bankroll.getName().equals("SAMI (COTE 10 PAR SOIR - 2 PALIERS ---> COTE 100) (DIVISEUR 20)")
+        		|| bankroll.getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")) {
         	divider = 20;
         	bankrollAmount = 40d;
         }

@@ -1,16 +1,13 @@
 package combibet;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import combibet.entity.Bankroll;
 import combibet.entity.Bet;
-import combibet.entity.BetStatus;
-import combibet.entity.HorseRacingBet;
-import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
 
 @SpringBootApplication
@@ -45,6 +42,7 @@ public class CombibetApplication {
 //			System.out.println(b.getBankroll().getName());
 //			System.out.println(b.getSelection());
 //			System.out.println(b.getId());
+//			
 //
 //		}
 //////		
