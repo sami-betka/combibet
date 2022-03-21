@@ -85,15 +85,19 @@ public class BankrollService {
 			if(!bet.getBankroll().getId().equals(100l) && !bet.getBankroll().getId().equals(90l)) {
 				
 				bet.setAnte(ante);
-
-				if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))
-//						&& (Integer.valueOf(bet.formatDate().get("realHour")) - 2) <= Integer.valueOf(bets.get(i-1).formatDate().get("realHour"))
-						) {
-					bet.setAnte(lastAnte);
+				
+				if(!bet.getBankroll().getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")) {
 					
-				} else {
-					lastAnte = ante;
+					if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))
+//							&& (Integer.valueOf(bet.formatDate().get("realHour")) - 2) <= Integer.valueOf(bets.get(i-1).formatDate().get("realHour"))
+							) {
+						bet.setAnte(lastAnte);
+						
+					} else {
+						lastAnte = ante;
+					}
 				}
+
 
 				////////////////////////////////////////////
 //				if(bet.getOdd() > 3) {
