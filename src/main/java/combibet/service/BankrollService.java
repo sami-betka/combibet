@@ -86,7 +86,7 @@ public class BankrollService {
 				
 				bet.setAnte(ante);
 				
-				if(!bet.getBankroll().getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")) {
+				if(bet.getBankroll().getName() != null && !bet.getBankroll().getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")) {
 					
 					if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))
 //							&& (Integer.valueOf(bet.formatDate().get("realHour")) - 2) <= Integer.valueOf(bets.get(i-1).formatDate().get("realHour"))

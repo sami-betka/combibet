@@ -85,6 +85,8 @@ public class BankrollController {
 			@RequestParam(name = "divider", defaultValue = "10", required = false) Integer divider,
 			@RequestParam(name = "coteCombi", defaultValue = "", required = false) Double coteCombi,
 			@RequestParam(name = "montantePaliers", defaultValue = "", required = false) Double montantePaliers,
+			@RequestParam(name = "discipline", defaultValue = "", required = false) String discipline,
+
 
 			Model model,
 			Principal principal) {
@@ -137,6 +139,10 @@ public class BankrollController {
         		|| bankroll.getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")) {
         	divider = 20;
         	bankrollAmount = 40d;
+        }
+        
+        if(bankroll.getName().contains("PMU")) {
+        	model.addAttribute("ispmu", true);
         }
     	final Double minus2 = minus;
 		
