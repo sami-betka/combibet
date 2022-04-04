@@ -1,14 +1,11 @@
 package combibet;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import combibet.entity.Bet;
-import combibet.repository.BetRepository;
+import combibet.entity.Bankroll;
+import combibet.repository.BankrollRepository;
 
 @SpringBootApplication
 public class CombibetApplication {
@@ -18,9 +15,12 @@ public class CombibetApplication {
 		
 		
 //		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
-////		
 //		BetRepository betRepository = ctx.getBean(BetRepository.class);
-//		Bankroll bank = bankrollRepository.findByName("TEST");
+		
+//		Bankroll bank = bankrollRepository.findByName("PMU QUOTIDIEN STOP À 0,80 OU 1,350 DU CAPITAL");
+//		bank.setName("PMU QUOTIDIEN STOP À 0,80 OU 1,50 DU CAPITAL");
+//		bankrollRepository.save(bank);
+		
 //		for(int i = 0; i<8; i++) {
 //		    LocalDateTime date = LocalDateTime.of(2022, 3, 14, 00, 00);  
 //
@@ -43,7 +43,6 @@ public class CombibetApplication {
 //			System.out.println(b.getSelection());
 //			System.out.println(b.getId());
 //			
-//
 //		}
 //////		
 //		all.forEach(bet->{

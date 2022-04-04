@@ -136,7 +136,12 @@ public class BankrollController {
         }
         
         if(bankroll.getName().equals("SAMI (COTE 10 PAR SOIR - 2 PALIERS ---> COTE 100) (DIVISEUR 20)")
-        		|| bankroll.getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")) {
+        		|| bankroll.getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")
+        		|| bankroll.getName().equals("SAMI ( COMBIS 2/4 MyMatchs à 2,40 CHACUN )")
+        		
+        		) {
+        	
+        	
         	divider = 20;
         	bankrollAmount = 40d;
         }
@@ -549,7 +554,7 @@ public class BankrollController {
 		
 		List<Bet> betList = new ArrayList<>();;
 		
-//		Bankroll bank1 = bankrollRepository.findByName("Le meilleur Pronostic");
+//		Bankroll bank1 = bankrollRepository.findByName("SAMI PMU (WEEK-END)");
 //		List<Bet> betList1 = bank1.getBets();
 //		Bankroll bank2 = bankrollRepository.findByName("ROCCA PRONOS");
 //		List<Bet> betList2 = bank2.getBets();

@@ -65,7 +65,7 @@ public class BankrollService {
 		for (int i = 0; i < bets.size(); i++) {
 
 			Bet bet = bets.get(i);
-			
+						
 			if(bet.getStatus().equals(BetStatus.LOSE)) {
 				lostAntes += 1;
 				if(lostAntes > maxAnteLost) {
@@ -82,11 +82,19 @@ public class BankrollService {
 //			int anteInt = ((int) ante) + 1;
 //			ante = anteInt;
 			
-			if(!bet.getBankroll().getId().equals(100l) && !bet.getBankroll().getId().equals(90l)) {
+			if(!bet.getBankroll().getId().equals(100l) && !bet.getBankroll().getId().equals(90l) && !bet.getBankroll().getId().equals(128l)) 
+			{
 				
 				bet.setAnte(ante);
 				
-				if(bet.getBankroll().getName() != null && !bet.getBankroll().getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")) {
+				if(bet.getBankroll().getName() != null 
+						&& !bet.getBankroll().getName().equals("SAMI PMU QUOTIDIEN (DIVISEUR 20)")
+						&& !bet.getBankroll().getName().equals("SAMI PMU (WEEK-END)")
+						&& !bet.getBankroll().getName().equals("100 000 €")
+						&& !bet.getBankroll().getGambler().getUserName().equals("stup")
+
+						
+						) {
 					
 					if(i > 0 && bet.formatDate().get("day").equals(bets.get(i-1).formatDate().get("day"))
 //							&& (Integer.valueOf(bet.formatDate().get("realHour")) - 2) <= Integer.valueOf(bets.get(i-1).formatDate().get("realHour"))
@@ -183,6 +191,11 @@ public class BankrollService {
 				}
 
 			}
+			
+//			if(bet.getBankroll().getName().equals("100 000 €")) {
+//				realOdd = bet.getOdd();
+//				realAnte = bet.getAnte();
+//			}
 
 			bet.setOdd(realOdd);
 			bet.setAnte(realAnte);
@@ -576,6 +589,9 @@ public class BankrollService {
 				wonBetsOdds.stream().collect(Collectors.summingDouble(Double::doubleValue)) / wonBetsOdds.size())));
 		infos.put("Multiplication du capital : X",
 				String.valueOf(String.format("%.2f", actualBankrollAmount / initialBankrollAmount)));
+		Bankroll bank = betList.get(0).getBankroll();
+		bank.setCapitalMultiplication(String.valueOf(String.format("%.2f", actualBankrollAmount / initialBankrollAmount)));
+//		bank.setRoi(null);
 
 		return infos;
 	}
@@ -683,7 +699,11 @@ public class BankrollService {
 	
 	public List<Bankroll> getBankrollList (Gambler gambler) {
 	
-		return bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler);
+		if(gambler.getUserName().equals("stup")) {
+			return bankrollRepository.findAllByGamblerOrderByStartDateAsc(gambler);
+		} else {
+			return bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler);
+		}
 	}
 	
 	public void deleteBankroll (Long bankrollId) {

@@ -13,6 +13,8 @@ public interface BankrollRepository extends JpaRepository<Bankroll, Long>{
 
 	List <Bankroll> findAllByGamblerOrderByStartDateDesc(Gambler gambler);
 	
+	List <Bankroll> findAllByGamblerOrderByStartDateAsc(Gambler gambler);
+	
 	Bankroll findByName(String name);
 
 
