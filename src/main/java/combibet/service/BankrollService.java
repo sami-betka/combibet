@@ -144,26 +144,32 @@ public class BankrollService {
 			
 			//Conditions si combi...
 			int iter = 1;
-			if(coteCombi != null && bet.getCurrentOddInCombi() != 0 && coteCombi > bet.getCurrentOddInCombi()) {
-				
-				
-				ante = ante * bet.getOdd();
-//				if(bet.getId().equals(betList.get(0).getId())) {
-//					ante = initialBankrollAmount/anteDivider;
-//				};
-//				realAnte = ante;
-
-			}
-			else {
+//			if(coteCombi != null && bet.getCurrentOddInCombi() != 0 && coteCombi > bet.getCurrentOddInCombi()) {
+//				
+//				
+//				ante = ante * bet.getOdd();
+////				if(bet.getId().equals(betList.get(0).getId())) {
+////					ante = initialBankrollAmount/anteDivider;
+////				};
+////				realAnte = ante;
+//
+//			}
+//			else {
 				//si cotecombi == null...
-				if (actualBankrollAmount > topAmount) {
+				if (actualBankrollAmount > topAmount
+						&& i+1 <= bets.size()-1
+						&& !bet.formatDate().get("day").equals(bets.get(i+1).formatDate().get("day")
+								)
+						
+					) {
 					topAmount = actualBankrollAmount;
 
 						ante = actualBankrollAmount / anteDivider;
 
 					anteWhenMinimumAmount = ante;
 				}
-			}
+//			}
+			
 			////////////////////////////
 			
 //			if (actualBankrollAmount > topAmount) {

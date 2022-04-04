@@ -1,11 +1,17 @@
 package combibet;
 
+import java.time.LocalDateTime;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import combibet.entity.Bankroll;
+import combibet.entity.Bet;
+import combibet.entity.BetStatus;
+import combibet.entity.HorseRacingBet;
 import combibet.repository.BankrollRepository;
+import combibet.repository.BetRepository;
 
 @SpringBootApplication
 public class CombibetApplication {
@@ -14,15 +20,25 @@ public class CombibetApplication {
 		ApplicationContext ctx = SpringApplication.run(CombibetApplication.class, args);
 		
 		
-//		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
-//		BetRepository betRepository = ctx.getBean(BetRepository.class);
+		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
+		BetRepository betRepository = ctx.getBean(BetRepository.class);
 		
 //		Bankroll bank = bankrollRepository.findByName("PMU QUOTIDIEN STOP À 0,80 OU 1,350 DU CAPITAL");
 //		bank.setName("PMU QUOTIDIEN STOP À 0,80 OU 1,50 DU CAPITAL");
 //		bankrollRepository.save(bank);
 		
-//		for(int i = 0; i<8; i++) {
-//		    LocalDateTime date = LocalDateTime.of(2022, 3, 14, 00, 00);  
+		
+//		Bankroll test = bankrollRepository.findByName("TEST");
+//		List<Bet> list = test.getBets();
+//		list.forEach(b->{
+//			betRepository.delete(b);
+//		});
+		
+//		for(int z = 1; z<31; z++) {
+//
+//
+//			for(int i = 0; i<2; i++) {
+//		    LocalDateTime date = LocalDateTime.of(2022, 4, z, 00, 00);  
 //
 //			Bet bet = new HorseRacingBet();
 //			bet.setSelection(String.valueOf(i));
@@ -30,12 +46,32 @@ public class CombibetApplication {
 //			bet.setAnte(1);
 //			bet.setDate(date);
 //			bet.setStatus(BetStatus.WON);
-//			bet.setBankroll(bank);
+//			bet.setBankroll(test);
 //			
 //			betRepository.save(bet);
-//			bank.getBets().add(bet);
-//			bankrollRepository.save(bank);
+//			test.getBets().add(bet);
+//			bankrollRepository.save(test);
 //		}
+//			for(int i = 0; i<1; i++) {
+//			    LocalDateTime date = LocalDateTime.of(2022, 4, z, 00, 00);  
+//
+//				Bet bet = new HorseRacingBet();
+//				bet.setSelection(String.valueOf(i));
+//				bet.setOdd(1.65);
+//				bet.setAnte(1);
+//				bet.setDate(date);
+//				bet.setStatus(BetStatus.LOSE);
+//				bet.setBankroll(test);
+//				
+//				betRepository.save(bet);
+//				test.getBets().add(bet);
+//				bankrollRepository.save(test);
+//			}
+//		}
+
+
+		
+		
 		
 //		List<Bet> list = betRepository.findAll().stream().filter(b->b.getDate() == null).collect(Collectors.toList());
 //		for(Bet b : list){
