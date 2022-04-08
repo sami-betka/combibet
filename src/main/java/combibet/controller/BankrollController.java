@@ -99,6 +99,34 @@ public class BankrollController {
 
 		Bankroll bankroll = bankrollRepository.findById(id).get();
 		
+		///// Set positive or not
+		if(bankroll.getBets().size()>0) {
+			
+			List<Double> wonBetsOdds = bankroll.getBets().stream().filter(b -> b.getStatus().equals(BetStatus.WON)).map(Bet::getOdd)
+					.collect(Collectors.toList());
+//			List<Double> lostBetsOdds = betList.stream().filter(b -> b.getStatus().equals(BetStatus.LOSE)).map(Bet::getOdd)
+//					.collect(Collectors.toList());
+			Double total = 0d;
+			for(Double odd : wonBetsOdds) {
+				total += odd;
+			}
+			
+			if((total / bankroll.getBets().size()) < 1) {
+				bankroll.setPositive(false);
+			} else {
+				bankroll.setPositive(true);
+			}
+			if(String.valueOf(String.format("%.2f", total /  bankroll.getBets().size())).equals("1,00")) {
+				bankroll.setPositive(true);
+			}
+			
+//			bankroll.setRoi(String.valueOf(String.format("%.2f", roi)) + "%");
+//			bankroll.setCapitalMultiplication(String.valueOf(String.format("%.2f", earnings /  bankroll.getStartAmount())));
+			bankrollRepository.save(bankroll);
+
+		}
+		/////////////////
+		
 		Integer pendings = 0;
 		for(Bet b : bankroll.getBets()) {
 			if(b.getStatus().equals(BetStatus.PENDING)) {

@@ -487,23 +487,23 @@ public class BankrollService {
 		betListInfos.put("Multiplication du capital de départ : X",
 				String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
 		
-		if(betList.size()>0) {
-			Bankroll bankroll = betList.get(0).getBankroll();
-			if((earnings / initialBankrollAmount) < 1) {
-				bankroll.setPositive(false);
-			} else {
-				bankroll.setPositive(true);
-			}
-			if(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)).equals("1,00")) {
-				bankroll.setPositive(true);
-			}
-			
-			
-			bankroll.setRoi(String.valueOf(String.format("%.2f", roi)) + "%");
-			bankroll.setCapitalMultiplication(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
-//			bankrollRepository.save(bankroll);
-
-		}
+//		if(betList.size()>0) {
+//			Bankroll bankroll = betList.get(0).getBankroll();
+//			if((earnings / initialBankrollAmount) < 1) {
+//				bankroll.setPositive(false);
+//			} else {
+//				bankroll.setPositive(true);
+//			}
+//			if(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)).equals("1,00")) {
+//				bankroll.setPositive(true);
+//			}
+//			
+//			
+//			bankroll.setRoi(String.valueOf(String.format("%.2f", roi)) + "%");
+//			bankroll.setCapitalMultiplication(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
+////			bankrollRepository.save(bankroll);
+//
+//		}
 	
 		
 
