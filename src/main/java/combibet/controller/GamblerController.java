@@ -154,6 +154,11 @@ public class GamblerController {
 		
 //		List<Bet> bets = betRepository.findAllByGamblerAndTypeOrderByDateAsc(gambler, type);
 		List<Bet> bets = horseRacingBetRepository.newFilterSearch(id, maxOdd, minOdd);
+    	final Double minus2 = minus;
+    	bets.forEach(b->{
+    		b.setOdd(b.getOdd() - minus2);
+    	});
+
 //		List<Bet> bets = horseRacingBetRepository.filterSearch(id, type, discipline, status, confidenceIndex);
 		
 		
