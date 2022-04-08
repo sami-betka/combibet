@@ -1,6 +1,7 @@
 package combibet;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,19 +31,21 @@ public class CombibetApplication {
 		
 //		Bankroll test = bankrollRepository.findByName("TEST");
 //		List<Bet> list = test.getBets();
-//		list.forEach(b->{
-//			betRepository.delete(b);
+//		list.
+////		stream().filter(b->b.getOdd() != 2).
+//		forEach(b->{
+//			b.setOdd(1.8);
+//			betRepository.save(b);
 //		});
 		
 //		for(int z = 1; z<31; z++) {
-//
 //
 //			for(int i = 0; i<2; i++) {
 //		    LocalDateTime date = LocalDateTime.of(2022, 4, z, 00, 00);  
 //
 //			Bet bet = new HorseRacingBet();
 //			bet.setSelection(String.valueOf(i));
-//			bet.setOdd(1.65);
+//			bet.setOdd(2);
 //			bet.setAnte(1);
 //			bet.setDate(date);
 //			bet.setStatus(BetStatus.WON);
@@ -57,7 +60,7 @@ public class CombibetApplication {
 //
 //				Bet bet = new HorseRacingBet();
 //				bet.setSelection(String.valueOf(i));
-//				bet.setOdd(1.65);
+//				bet.setOdd(2);
 //				bet.setAnte(1);
 //				bet.setDate(date);
 //				bet.setStatus(BetStatus.LOSE);
@@ -68,6 +71,8 @@ public class CombibetApplication {
 //				bankrollRepository.save(test);
 //			}
 //		}
+		
+		System.out.println("STOP");
 
 
 		

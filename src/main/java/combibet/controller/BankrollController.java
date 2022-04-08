@@ -203,7 +203,6 @@ public class BankrollController {
 		model.addAttribute("betListInfos", bankrollService
 				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi), minus, maxOdd));
 
-//		return "bet-list-simulation";
 
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
 

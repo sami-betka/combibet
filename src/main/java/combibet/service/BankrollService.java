@@ -501,7 +501,7 @@ public class BankrollService {
 			
 			bankroll.setRoi(String.valueOf(String.format("%.2f", roi)) + "%");
 			bankroll.setCapitalMultiplication(String.valueOf(String.format("%.2f", earnings / initialBankrollAmount)));
-			bankrollRepository.save(bankroll);
+//			bankrollRepository.save(bankroll);
 
 		}
 	
