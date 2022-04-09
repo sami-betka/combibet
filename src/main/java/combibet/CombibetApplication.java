@@ -29,18 +29,19 @@ public class CombibetApplication {
 //		bankrollRepository.save(bank);
 		
 		
-//		Bankroll test = bankrollRepository.findByName("TEST");
-//		List<Bet> list = test.getBets();
-//		list.
-////		stream().filter(b->b.getOdd() != 2).
-//		forEach(b->{
+		Bankroll test = bankrollRepository.findByName("TEST");
+		List<Bet> list = test.getBets();
+		list.
+//		stream().filter(b->b.getOdd() != 2).
+		forEach(b->{
 //			b.setOdd(1.8);
 //			betRepository.save(b);
-//		});
+			betRepository.delete(b);
+		});
 		
-//		for(int z = 1; z<31; z++) {
+//		for(int z = 1; z<29; z=+2) {
 //
-//			for(int i = 0; i<2; i++) {
+//			for(int i = 0; i<3; i++) {
 //		    LocalDateTime date = LocalDateTime.of(2022, 4, z, 00, 00);  
 //
 //			Bet bet = new HorseRacingBet();
@@ -55,7 +56,7 @@ public class CombibetApplication {
 //			test.getBets().add(bet);
 //			bankrollRepository.save(test);
 //		}
-//			for(int i = 0; i<1; i++) {
+//			for(int i = 0; i<2; i++) {
 //			    LocalDateTime date = LocalDateTime.of(2022, 4, z, 00, 00);  
 //
 //				Bet bet = new HorseRacingBet();

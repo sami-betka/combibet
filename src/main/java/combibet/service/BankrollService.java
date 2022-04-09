@@ -464,9 +464,9 @@ public class BankrollService {
 		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount))) + "%");
 
 		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));
-		betListInfos.put("Montant bankroll réel actuel", String.valueOf(String.format("%.2f", realBankrollAmount)));
+//		betListInfos.put("Montant bankroll réel actuel", String.valueOf(String.format("%.2f", realBankrollAmount)));
 
-		betListInfos.put("Maximum de mises perdues consécutivement", String.valueOf(maxAnteLost) + " / " + divider);
+		betListInfos.put("Maximum de défaites consécutives", String.valueOf(maxAnteLost) + " / " + divider);
 
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
 		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", topBankrollAmount / divider)));

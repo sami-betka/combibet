@@ -59,6 +59,8 @@ public class BetController {
 		Gambler gambler = gamblerRepository.findByUserName(principal.getName());
 
 		Bet bet = betRepository.findById(id).get();
+		model.addAttribute("bankrollName", bankrollRepository.findById(bet.getBankroll().getId()).get().getName());
+
 
 //		model.addAttribute("bet", bet);
 		model.addAttribute("status", BetStatus.values());

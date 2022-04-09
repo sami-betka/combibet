@@ -300,6 +300,10 @@ public class BankrollController {
 		model.addAttribute("disciplines", Discipline.values());
 		model.addAttribute("confidenceIndexs", ConfidenceIndex.values());
 		model.addAttribute("emptyBet", new HorseRacingBet());
+		model.addAttribute("bankrollName", bankrollRepository.findById(id).get().getName());
+
+		
+		
 		
 		
 		  Set<String> bankrolls = bankrollRepository.findAllByGamblerOrderByStartDateDesc(gambler).stream()
