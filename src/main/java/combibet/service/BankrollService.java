@@ -436,30 +436,30 @@ public class BankrollService {
 		}
 		
 		//higher amount
-		LinkedList<Double> bankrollAmounts = new LinkedList<>();
-		Double higherAmount = actualBankrollAmount;
-		Double smallerAmount = actualBankrollAmount;
-
-		bankrollAmounts.add(actualBankrollAmount);
-
-		for (int i = 0; i < betList.size(); i++) {
-
-			Bet bet = betList.get(i);
-
-			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
-
-			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
-			
-			if(actualBankrollAmount > higherAmount) {
-				higherAmount = actualBankrollAmount;
-			}
-			if(actualBankrollAmount < smallerAmount) {
-				smallerAmount = actualBankrollAmount;
-			}
-
-			bankrollAmounts.add(actualBankrollAmount);
-
-		}
+//		LinkedList<Double> bankrollAmounts = new LinkedList<>();
+//		Double higherAmount = actualBankrollAmount;
+//		Double smallerAmount = actualBankrollAmount;
+//
+//		bankrollAmounts.add(actualBankrollAmount);
+//
+//		for (int i = 0; i < betList.size(); i++) {
+//
+//			Bet bet = betList.get(i);
+//
+//			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
+//
+//			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
+//			
+//			if(actualBankrollAmount > higherAmount) {
+//				higherAmount = actualBankrollAmount;
+//			}
+//			if(actualBankrollAmount < smallerAmount) {
+//				smallerAmount = actualBankrollAmount;
+//			}
+//
+//			bankrollAmounts.add(actualBankrollAmount);
+//
+//		}
 		
 		betListInfos.put("Gains", String.valueOf(String.format("%.2f", total)));
 
@@ -484,8 +484,8 @@ public class BankrollService {
 		
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
-//		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
-		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", higherAmount)));
+		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
+//		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", higherAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
 		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
 		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount))) + "%");
