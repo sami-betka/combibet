@@ -123,6 +123,9 @@ public class BankrollService {
 			
 			Double realAnte = bet.getAnte();
 
+			//// KELLY CRITERION
+//			bet.setAnte(maxAnteLost);
+			////////////////////////////////
 			
 
 			if(bet.getStatus().equals(BetStatus.PENDING)) {
@@ -155,19 +158,20 @@ public class BankrollService {
 //
 //			}
 //			else {
-				//si cotecombi == null...
-				if (actualBankrollAmount > topAmount
-						&& i+1 <= bets.size()-1
-						&& !bet.formatDate().get("day").equals(bets.get(i+1).formatDate().get("day")
-								)
-						
-					) {
+				//si cotecombi == null...}
+				if (actualBankrollAmount > topAmount && i+1 <= bets.size()-1 && !bet.formatDate().get("day").equals(bets.get(i+1).formatDate().get("day"))) 
+				{
 					topAmount = actualBankrollAmount;
 
 						ante = actualBankrollAmount / anteDivider;
 
 					anteWhenMinimumAmount = ante;
 				}
+				//topamount
+//				if (actualBankrollAmount > topAmount) {
+//				topAmount = actualBankrollAmount;
+//			     }
+				
 //			}
 			
 			////////////////////////////
@@ -484,13 +488,21 @@ public class BankrollService {
 		
 		betListInfos.put("Montant bankroll initial", String.valueOf(initialBankrollAmount));
 		betListInfos.put("Montant bankroll actuel", String.valueOf(String.format("%.2f", actualBankrollAmount)));
-		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
+		if(actualBankrollAmount > topBankrollAmount) {
+			betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", actualBankrollAmount)));
+		}else {
+			betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", topBankrollAmount)));
+		}
 //		betListInfos.put("Montant bankroll le plus elevé", String.valueOf(String.format("%.2f", higherAmount)));
 		betListInfos.put("Montant bankroll le plus bas", String.valueOf(String.format("%.2f", minimumBankrollAmount)));
 		betListInfos.put("Plus bas pourcentage bankroll restant", String.valueOf(String.format("%.2f", minimumBankrollPercent)) + "%");
-		betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount))) + "%");
+		if((float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount) >= 100) {
+			betListInfos.put("Pourcentage bankroll actuel", "100 %");
+		}else {
+			betListInfos.put("Pourcentage bankroll actuel", String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topBankrollAmount))) + "%");
+		}
 
-		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));
+//		betListInfos.put("Montant réel investi", String.valueOf(String.format("%.2f", invest)));
 //		betListInfos.put("Montant bankroll réel actuel", String.valueOf(String.format("%.2f", realBankrollAmount)));
 
 		betListInfos.put("Maximum de défaites consécutives", String.valueOf(maxAnteLost) + " / " + divider);
