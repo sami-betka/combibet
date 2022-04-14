@@ -82,7 +82,9 @@ public class BankrollService {
 //			int anteInt = ((int) ante) + 1;
 //			ante = anteInt;
 			
-			if(!bet.getBankroll().getId().equals(100l) && !bet.getBankroll().getId().equals(90l) && !bet.getBankroll().getId().equals(128l)) 
+			if(!bet.getBankroll().getId().equals(100l) && !bet.getBankroll().getId().equals(90l) 
+					&& !bet.getBankroll().getId().equals(128l)
+					) 
 			{
 				
 				bet.setAnte(ante);
@@ -508,8 +510,12 @@ public class BankrollService {
 		betListInfos.put("Maximum de défaites consécutives", String.valueOf(maxAnteLost) + " / " + divider);
 
 		betListInfos.put("Mise initiale", String.valueOf(String.format("%.2f", initialAnte)));
-		betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", topBankrollAmount / divider)));
-		betListInfos.put("Prochaine mise (si même jour)", String.valueOf(String.format("%.2f", lastAnte)));
+		if(actualBankrollAmount > topBankrollAmount) {
+			betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", actualBankrollAmount / divider)));
+		}else {
+			betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", topBankrollAmount / divider)));
+		}
+		betListInfos.put("Prochaine mise (si paris en attente)", String.valueOf(String.format("%.2f", lastAnte)));
 
 
 
