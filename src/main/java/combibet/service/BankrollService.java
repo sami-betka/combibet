@@ -170,11 +170,11 @@ public class BankrollService {
 					anteWhenMinimumAmount = ante;
 				}
 				//topamount
-				if (actualBankrollAmount > topAmount
-						&& bet.getBankroll().getName().equals("100 000 €")
-						) {
-				topAmount = actualBankrollAmount;
-			     }
+//				if (actualBankrollAmount > topAmount
+//						&& bet.getBankroll().getName().equals("100 000 €")
+//						) {
+//				topAmount = actualBankrollAmount;
+//			     }
 				
 //			}
 			
@@ -439,7 +439,7 @@ public class BankrollService {
 		}else {
 			betListInfos.put("Prochaine mise", String.valueOf(String.format("%.2f", topBankrollAmount / divider)));
 		}
-		betListInfos.put("Prochaine mise (si paris en attente)", String.valueOf(String.format("%.2f", lastAnte)));
+//		betListInfos.put("Prochaine mise (si paris en attente)", String.valueOf(String.format("%.2f", lastAnte)));
 
 
 
