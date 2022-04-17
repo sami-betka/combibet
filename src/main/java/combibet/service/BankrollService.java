@@ -170,9 +170,11 @@ public class BankrollService {
 					anteWhenMinimumAmount = ante;
 				}
 				//topamount
-//				if (actualBankrollAmount > topAmount) {
-//				topAmount = actualBankrollAmount;
-//			     }
+				if (actualBankrollAmount > topAmount
+						&& bet.getBankroll().getName().equals("100 000 €")
+						) {
+				topAmount = actualBankrollAmount;
+			     }
 				
 //			}
 			
@@ -252,84 +254,6 @@ public class BankrollService {
 		return finalMap;
 	}
 
-//	public Map<String, Object> winManagedBankrollSimulation(List<Bet> betList, Integer anteDivider,
-//			Double initialBankrollAmount) {
-//
-//		List<Bet> bets = betList;
-//		List<Bet> arrangedBets = new ArrayList<>();
-//		LinkedList<Double> bankrollAmounts = new LinkedList<>();
-//		LinkedList<String> betsDates = new LinkedList<>();
-//
-////		Map<String, Object> finalMap = new HashMap<>();
-////		finalMap.put("InitialBankrollAmount", initialBankrollAmount);
-//
-////        Double initialBankrollAmount = bets.get(0).getBankroll().getStartAmount();
-//		Double actualBankrollAmount = initialBankrollAmount;
-//		Double topAmount = actualBankrollAmount;
-//		Double ante = topAmount / anteDivider;
-//
-////		bets.get(0).setAnte(ante);
-//
-//		for (int i = 0; i < bets.size(); i++) {
-//
-//			Bet bet = bets.get(i);
-//			bet.setType(BetType.SIMPLE_GAGNANT);
-//			HorseRacingBet hrb = (HorseRacingBet) bet;
-//
-//			if (!bet.getStatus().equals(BetStatus.WON)) {
-//				bet.setOdd(0d);
-//			}
-//			if (hrb.isHasWon() == false) {
-//				bet.setOdd(0d);
-//				bet.setStatus(BetStatus.LOSE);
-//			} else {
-//				hrb.setOdd(hrb.getWinOdd());
-//			}
-//			bet.setAnte(ante);
-//			System.out.println(i + 1 + " 0) mise " + ante);
-//
-//			actualBankrollAmount = actualBankrollAmount - bet.getAnte();
-//
-//			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
-//
-//			System.out.println(i + 1 + " 1) " + String.format("%.2f", actualBankrollAmount));
-//			System.out.println(i + 1 + " 2) bank actuelle " + String.format("%.2f", actualBankrollAmount));
-//			System.out.println(i + 1 + " 3) bank max precedente " + String.format("%.2f", topAmount));
-//
-//			bankrollAmounts.add(actualBankrollAmount);
-//			betsDates.add(String.valueOf(bet.getDate()));
-//
-//			if (actualBankrollAmount > topAmount) {
-//
-//				ante = actualBankrollAmount / anteDivider;
-//
-//				topAmount = actualBankrollAmount;
-//			}
-//
-//			System.out.println("");
-//
-////				if(actualBankrollAmount<0) {
-////                   return null;
-////                  }
-//
-//			arrangedBets.add(bet);
-//		}
-//
-//		Map<String, Object> finalMap = new HashMap<>();
-//		finalMap.put("betList", arrangedBets);
-//		finalMap.put("initialBankrollAmount", initialBankrollAmount);
-//		finalMap.put("actualBankrollAmount", actualBankrollAmount);
-//		finalMap.put("initialAnte", initialBankrollAmount / anteDivider);
-//		finalMap.put("divider", anteDivider);
-//
-//		/////////////////// Dashboard Infos
-//
-//		finalMap.put("bankrollAmounts", bankrollAmounts);
-//		finalMap.put("betsDates", betsDates);
-//
-////		return arrangedBets;
-//		return finalMap;
-//	}
 
 //	public LinkedHashMap<String, String> betListInfos(Map<String, Object> map) {
 //
