@@ -46,6 +46,8 @@ public class BankrollService {
 		List<Bet> arrangedBets = new ArrayList<>();
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
 		LinkedList<String> betsDates = new LinkedList<>();
+		LinkedList<String> percentages = new LinkedList<>();
+
 
 		Double actualBankrollAmount = initialBankrollAmount;
 		Double topAmount = actualBankrollAmount;
@@ -144,7 +146,9 @@ public class BankrollService {
 			actualBankrollAmount = actualBankrollAmount + (bet.getAnte() * bet.getOdd());
 
 			bankrollAmounts.add(actualBankrollAmount);
-			betsDates.add(String.valueOf(bet.getDate()));
+//			betsDates.add(String.valueOf(bet.getDate()));
+			betsDates.add(String.valueOf(bet.getDate().getDayOfMonth() + "-" + bet.getDate().getMonthValue() + "-" + bet.getDate().getYear() + "(" + String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topAmount))) + "%)"));
+			percentages.add(String.valueOf(String.format("%.2f", (float) (1.0*(100 * actualBankrollAmount) / topAmount))) + "%");
 
 			
 			//Conditions si combi...
@@ -170,11 +174,11 @@ public class BankrollService {
 					anteWhenMinimumAmount = ante;
 				}
 				//topamount
-//				if (actualBankrollAmount > topAmount
-//						&& bet.getBankroll().getName().equals("100 000 €")
-//						) {
-//				topAmount = actualBankrollAmount;
-//			     }
+				if (actualBankrollAmount > topAmount
+						&& bet.getBankroll().getName().equals("100 000 €")
+						) {
+				topAmount = actualBankrollAmount;
+			     }
 				
 //			}
 			
@@ -250,6 +254,7 @@ public class BankrollService {
 
 		finalMap.put("bankrollAmounts", bankrollAmounts);
 		finalMap.put("betsDates", betsDates);
+		finalMap.put("percentages", percentages);
 
 		return finalMap;
 	}

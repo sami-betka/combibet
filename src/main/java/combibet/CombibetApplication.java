@@ -21,59 +21,65 @@ public class CombibetApplication {
 		ApplicationContext ctx = SpringApplication.run(CombibetApplication.class, args);
 		
 		
-		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
-		BetRepository betRepository = ctx.getBean(BetRepository.class);
+//		BankrollRepository bankrollRepository = ctx.getBean(BankrollRepository.class);
+//		BetRepository betRepository = ctx.getBean(BetRepository.class);
 		
 //		Bankroll bank = bankrollRepository.findByName("PMU QUOTIDIEN STOP À 0,80 OU 1,350 DU CAPITAL");
 //		bank.setName("PMU QUOTIDIEN STOP À 0,80 OU 1,50 DU CAPITAL");
 //		bankrollRepository.save(bank);
 		
 		
-		Bankroll test = bankrollRepository.findByName("TEST");
-		List<Bet> list = test.getBets();
-		list.
-//		stream().filter(b->b.getOdd() != 2).
-		forEach(b->{
-//			b.setOdd(1.8);
-//			betRepository.save(b);
-			betRepository.delete(b);
-		});
+//		Bankroll test = bankrollRepository.findByName("TEST");
+//		List<Bet> list = test.getBets();
+//		list.
+////		stream().filter(b->b.getOdd() != 2).
+//		forEach(b->{
+////			b.setOdd(1.8);
+////			betRepository.save(b);
+//			betRepository.delete(b);
+//		});
 		
-//		for(int z = 1; z<29; z=+2) {
-//
-//			for(int i = 0; i<3; i++) {
-//		    LocalDateTime date = LocalDateTime.of(2022, 4, z, 00, 00);  
-//
-//			Bet bet = new HorseRacingBet();
-//			bet.setSelection(String.valueOf(i));
-//			bet.setOdd(2);
-//			bet.setAnte(1);
-//			bet.setDate(date);
-//			bet.setStatus(BetStatus.WON);
-//			bet.setBankroll(test);
+//		for(int m = 1; m < 4; m++) {
 //			
-//			betRepository.save(bet);
-//			test.getBets().add(bet);
-//			bankrollRepository.save(test);
+//			for(int j = 1; j<7; j++) {
+//			
+//						for(int i = 0; i<4; i++) {
+//					    LocalDateTime date = LocalDateTime.of(2022, m, j, 00, 00);  
+//			
+//						Bet bet = new HorseRacingBet();
+//						bet.setSelection(String.valueOf(i));
+//						bet.setOdd(8);
+//						bet.setAnte(1);
+//						bet.setDate(date);
+//						bet.setStatus(BetStatus.LOSE);
+//						bet.setBankroll(test);
+//						
+//						betRepository.save(bet);
+//						test.getBets().add(bet);
+////						bankrollRepository.save(test);
+//					}
+//						for(int i = 0; i<1; i++) {
+//						    LocalDateTime date = LocalDateTime.of(2022, m, j, 00, 00);  
+//			
+//							Bet bet = new HorseRacingBet();
+//							bet.setSelection(String.valueOf(i));
+//							bet.setOdd(8);
+//							bet.setAnte(1);
+//							bet.setDate(date);
+//							bet.setStatus(BetStatus.WON);
+//							bet.setBankroll(test);
+//							
+//							betRepository.save(bet);
+//							test.getBets().add(bet);
+////							bankrollRepository.save(test);
+//						}
+//						
+//					}
+//			
 //		}
-//			for(int i = 0; i<2; i++) {
-//			    LocalDateTime date = LocalDateTime.of(2022, 4, z, 00, 00);  
-//
-//				Bet bet = new HorseRacingBet();
-//				bet.setSelection(String.valueOf(i));
-//				bet.setOdd(2);
-//				bet.setAnte(1);
-//				bet.setDate(date);
-//				bet.setStatus(BetStatus.LOSE);
-//				bet.setBankroll(test);
-//				
-//				betRepository.save(bet);
-//				test.getBets().add(bet);
-//				bankrollRepository.save(test);
-//			}
-//		}
-		
-		System.out.println("STOP");
+//			
+//		bankrollRepository.save(test);
+//		System.out.println("STOP");
 
 
 		

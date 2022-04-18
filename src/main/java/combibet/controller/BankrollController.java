@@ -232,16 +232,22 @@ public class BankrollController {
 				.betListInfosSimulation(bankrollService.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi), minus, maxOdd));
 
 
+//		Map<String, String> surveyMap = new LinkedHashMap<>();
 		Map<String, Double> surveyMap = new LinkedHashMap<>();
+
 
 		LinkedList<Double> bankrollAmounts = (LinkedList<Double>) bankrollService
 				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi).get("bankrollAmounts");
 		LinkedList<String> betsDates = (LinkedList<String>) bankrollService
 				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi).get("betsDates");
+		LinkedList<String> percentages = (LinkedList<String>) bankrollService
+				.managedBankrollSimulation(bankrollService.suppressNotPlayed(bets), divider, bankrollAmount, invest, coteCombi).get("percentages");
 
 		for (int i = 0; i < bankrollAmounts.size(); i++) {
 
 			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i));
+//			surveyMap.put(betsDates.get(i), bankrollAmounts.get(i) + " - " + percentages.get(i) + "%");
+
 
 		}
 

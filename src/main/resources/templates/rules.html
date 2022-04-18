@@ -1,0 +1,98 @@
+<!--
+
+=========================================================
+* Now UI Dashboard - v1.5.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/now-ui-dashboard
+* Copyright 2019 Creative Tim (http://www.creative-tim.com)
+
+* Designed by www.invisionapp.com Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>Détails bankroll</title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <!-- CSS Files -->
+  <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{css/now-ui-dashboard.css?v=1.5.0}" rel="stylesheet" />
+  <link th:href="@{css/style.css}" rel="stylesheet" />
+  
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link th:href="@{demo/demo.css}" rel="stylesheet" />
+  
+  <link href="css/highchart-dashboard.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body class="">
+  <div class="wrapper ">
+                 <div th:replace="_components :: sidebar"></div>
+  
+
+    <div class="main-panel" id="main-panel">
+<!--       Navbar -->
+                 <div th:replace="_components :: navbar"></div>
+
+
+    	<div class="panel-header panel-header-lg" style="">
+				<canvas id="myChart"></canvas>
+				<!-- <div class="highcharts-figure"> -->
+				<!--   <div id="container"></div> -->
+				<!--   <p class="highcharts-description"> -->
+				<!--     This chart shows how data labels can be added to the data series. This -->
+				<!--     can increase readability and comprehension for small datasets. -->
+				<!--   </p> -->
+				<!-- </div> -->
+			</div>
+			
+      <div class="content backg">
+      
+      
+        <div class="row">
+          <div class="col-md-12">
+           
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+                    <div th:replace="_components :: footer"></div>
+
+  
+  
+  <!--   Core JS Files   -->
+  <script src="js/core/jquery.min.js"></script>
+  <script src="js/core/popper.min.js"></script>
+  <script src="js/core/bootstrap.min.js"></script>
+  <script src="js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+  <script src="demo/demo.js"></script>
+</body>
+
+</html>
