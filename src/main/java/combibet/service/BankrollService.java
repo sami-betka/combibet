@@ -46,6 +46,10 @@ public class BankrollService {
 		List<Bet> arrangedBets = new ArrayList<>();
 		LinkedList<Double> bankrollAmounts = new LinkedList<>();
 		LinkedList<String> betsDates = new LinkedList<>();
+		if(betList.size() > 0) {
+			bankrollAmounts.add(betList.get(0).getBankroll().getStartAmount());
+			betsDates.add(betList.get(0).getBankroll().getStartDate().toString());
+		}
 		LinkedList<String> percentages = new LinkedList<>();
 
 
@@ -449,7 +453,7 @@ public class BankrollService {
 
 
 		betListInfos.put("Diviseur", String.valueOf(divider));
-		betListInfos.put("Cotes arrangées", String.valueOf("- " + minus));
+		betListInfos.put("Cotes arrangées", String.valueOf("+ " + minus));
 		betListInfos.put("Cote maximum autorisée", String.valueOf(String.format("%.2f", maxOdd)));
 		betListInfos.put("Bénéfice", String.valueOf(String.format("%.2f", benefit)));
 

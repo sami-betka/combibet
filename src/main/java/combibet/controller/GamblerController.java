@@ -1,6 +1,7 @@
 package combibet.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,12 +23,14 @@ import combibet.entity.BetType;
 import combibet.entity.ConfidenceIndex;
 import combibet.entity.Discipline;
 import combibet.entity.Gambler;
+import combibet.entity.Rule;
 import combibet.entity.UserRole;
 import combibet.repository.AppRoleRepository;
 import combibet.repository.BankrollRepository;
 import combibet.repository.BetRepository;
 import combibet.repository.GamblerRepository;
 import combibet.repository.HorseRacingBetRepository;
+import combibet.repository.RuleRepository;
 import combibet.repository.UserRoleRepository;
 import combibet.service.BankrollService;
 import combibet.utils.EncrytedPasswordUtils;
@@ -56,6 +60,9 @@ public class GamblerController {
 	BankrollService bankrollService;
 	
 	@Autowired
+	RuleRepository ruleRepository;
+	
+	@Autowired
 	static EncrytedPasswordUtils encrytedPasswordUtils;
 	
 	
@@ -70,6 +77,74 @@ public class GamblerController {
 
 		return "user";
 	}
+	
+	@GetMapping("/rules-nabil")
+	public String getNabilRules (Model model, Principal principal
+//			,@PathVariable(name="gambler", required = true) String gambler
+			) {
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		List<Rule> rulesList = ruleRepository.findAllByGambler("nabil");
+		Map<String, String> rulesMap = new LinkedHashMap<>();
+		
+		for (int i = 0; i < rulesList.size(); i++) {
+			Rule rule = rulesList.get(i);
+			rulesMap.put((i+1) + ") " + rule.getTitle(), rule.getDescription());
+		} 
+		
+		model.addAttribute("active", true);
+		model.addAttribute("rules", rulesMap);
+		model.addAttribute("gambler", "Nabil");
+
+		return "rules";
+	}
+	@GetMapping("/rules-sami")
+	public String getSamiRules (Model model, Principal principal
+//			,@PathVariable(name="gambler", required = true) String gambler
+			) {
+		
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		
+		List<Rule> rulesList = ruleRepository.findAllByGambler("sami");
+		Map<String, String> rulesMap = new LinkedHashMap<>();
+		
+		for (int i = 0; i < rulesList.size(); i++) {
+			Rule rule = rulesList.get(i);
+			rulesMap.put((i+1) + ") " + rule.getTitle(), rule.getDescription());
+		} 
+		
+		model.addAttribute("active", true);
+		model.addAttribute("rules", rulesMap);
+		model.addAttribute("gambler", "Sami");
+
+		return "rules";
+	}
+	
+	@GetMapping(value = "/add-rule")
+	public String addRule(Model model, Principal principal) {
+
+		model.addAttribute("emptyRule", new Rule());
+
+		return "add-rule";
+	}
+
+	@PostMapping("/save-rule")
+	public String saveRule(Rule rule, BindingResult result, Model model, RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			redirect.addFlashAttribute("createsuccess", true);
+			return "redirect:/add-rule";
+		}
+		ruleRepository.save(rule);
+
+		return "redirect:/rules-" + rule.getGambler();
+	}
+	
+	
 	
 	@GetMapping("/bet-list")
 	public String getMyBets (Model model, Principal principal) {

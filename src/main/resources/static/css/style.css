@@ -2,7 +2,9 @@
 
 .backg {
 /* 	background-color: black; */
-	background-image: url('../img/turfiste.jpg');
+/* 	background-image: url('../img/turfiste.jpg'); */
+		background-image: url('../img/jordan.jpg');
+	
 	background-size: cover;
 	background-repeat: no-repeat;
 }

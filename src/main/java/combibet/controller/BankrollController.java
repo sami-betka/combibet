@@ -111,12 +111,14 @@ public class BankrollController {
 				total += odd;
 			}
 			
-			if((total / bankroll.getBets().size()) < 1) {
+			if((total / Double.valueOf(bankroll.getBets().stream().filter(b -> !b.getStatus().equals(BetStatus.PENDING))
+					.collect(Collectors.toList()).size())) < 1) {
 				bankroll.setPositive(false);
 			} else {
 				bankroll.setPositive(true);
 			}
-			if(String.valueOf(String.format("%.2f", total /  bankroll.getBets().size())).equals("1,00")) {
+			if(String.valueOf(String.format("%.2f", total /  bankroll.getBets().stream().filter(b -> !b.getStatus().equals(BetStatus.PENDING))
+					.collect(Collectors.toList()).size())).equals("1,00")) {
 				bankroll.setPositive(true);
 			}
 			
@@ -192,7 +194,7 @@ public class BankrollController {
 					.collect(Collectors.toList());
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
-				bet.setOdd(odd - minus2);
+				bet.setOdd(odd + minus2);
 			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 
@@ -205,7 +207,7 @@ public class BankrollController {
 					.collect(Collectors.toList());
 			bets.forEach(bet->{
 				Double odd = bet.getOdd();
-				bet.setOdd(odd - minus2);
+				bet.setOdd(odd + minus2);
 			});
 			model.addAttribute("betList", bankrollService.suppressNotPlayed(bets));
 		}
